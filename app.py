@@ -391,17 +391,24 @@ def upload_progress():
                 # Generate embeddings
                 embedding = generate_embeddings(chunk)
                 
-                # Store in Pinecone
+                # Store in Pinecone with comprehensive metadata
                 metadata = {
                     'text': chunk,
                     'filename': orig_filename,
                     'filetype': file_ext,
-                    'subject': subject,
+                    'subject': file_metadata.get('subject', subject),  # Use AI-generated subject if available
                     'tags': tags_list,
                     'chunk_id': i,
                     'source': 'user_upload',
                     'user_id': session.get('user_id', 'anonymous')
                 }
+                
+                # Add comprehensive AI-generated metadata if available
+                if file_metadata:
+                    # Add all detailed metadata fields
+                    for key, value in file_metadata.items():
+                        if key != 'general_tags':  # Skip general tags as they're already in the tags field
+                            metadata[key] = value
                 
                 pinecone_manager.upsert(
                     id=f"{uuid.uuid4()}",
