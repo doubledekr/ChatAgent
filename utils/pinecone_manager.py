@@ -2,7 +2,7 @@ import logging
 import time
 import os
 import json
-import pinecone
+from pinecone import Pinecone, ServerlessSpec
 
 logger = logging.getLogger(__name__)
 
@@ -32,25 +32,26 @@ class PineconeManager:
             raise ValueError("Pinecone API key must be provided")
         
         try:
-            # Initialize Pinecone client with the correct format
-            pinecone.init(api_key=api_key, environment=environment)
+            # Initialize Pinecone client with the API key
+            self.pc = Pinecone(api_key=api_key)
             
             # Get list of indexes
-            existing_indexes = pinecone.list_indexes()
+            existing_indexes = [idx.name for idx in self.pc.list_indexes().indexes]
             
             # Check if index exists, if not create it
             if index_name not in existing_indexes:
                 logger.info(f"Creating new Pinecone index: {index_name}")
-                pinecone.create_index(
+                self.pc.create_index(
                     name=index_name,
                     dimension=dimension,
-                    metric="cosine"
+                    metric="cosine",
+                    spec=ServerlessSpec(cloud='aws', region='us-east-1')
                 )
                 # Wait for index to be ready
                 time.sleep(5)  # Wait a bit longer for index creation
             
             # Connect to the index
-            self.index = pinecone.Index(index_name)
+            self.index = self.pc.Index(index_name)
             logger.info(f"Connected to Pinecone index: {index_name}")
             
         except Exception as e:
