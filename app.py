@@ -2,6 +2,10 @@ import os
 import logging
 import tempfile
 import uuid
+import shutil
+import subprocess
+import threading
+import time
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
 import json
@@ -13,6 +17,9 @@ from utils.pinecone_manager import PineconeManager
 from utils.chat import generate_chat_response, generate_tags, generate_comprehensive_metadata
 import utils.embedding as embedding_module
 import utils.chat as chat_module
+
+# Import folder processor
+import folder_processor
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -562,6 +569,160 @@ def too_large(e):
     else:
         flash(f"File too large. Maximum size is {MAX_CONTENT_LENGTH/(1024*1024)}MB", "danger")
         return redirect(url_for('index'))
+
+# Global variable to track the background processor thread
+processor_thread = None
+
+@app.route('/folder-monitor')
+def folder_monitor():
+    """Render the folder monitoring interface"""
+    return render_template('folder_monitor.html',
+                          openai_available=openai_available,
+                          pinecone_available=pinecone_available)
+
+@app.route('/api/upload-status')
+def api_upload_status():
+    """Get the status of files in upload and processed folders"""
+    try:
+        # Get files from upload folder
+        pending_files = []
+        if os.path.exists(folder_processor.UPLOAD_FOLDER):
+            for filename in os.listdir(folder_processor.UPLOAD_FOLDER):
+                filepath = os.path.join(folder_processor.UPLOAD_FOLDER, filename)
+                if os.path.isfile(filepath) and folder_processor.allowed_file(filename):
+                    pending_files.append(filename)
+        
+        # Get files from processed folder
+        processed_files = []
+        if os.path.exists(folder_processor.PROCESSED_FOLDER):
+            for filename in os.listdir(folder_processor.PROCESSED_FOLDER):
+                filepath = os.path.join(folder_processor.PROCESSED_FOLDER, filename)
+                if os.path.isfile(filepath) and folder_processor.allowed_file(filename):
+                    processed_files.append(filename)
+        
+        # Get processing status
+        processing_status = folder_processor.load_status()
+        
+        return jsonify({
+            'status': 'success',
+            'pending_files': pending_files,
+            'processed_files': processed_files,
+            'processing_status': processing_status
+        })
+    except Exception as e:
+        logger.error(f"Error getting upload status: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Error getting status: {str(e)}'
+        }), 500
+
+@app.route('/start-processing')
+def start_processing():
+    """Start the background processor to process files in the upload folder"""
+    global processor_thread
+    
+    try:
+        # Check if processor is already running
+        if processor_thread and processor_thread.is_alive():
+            return jsonify({
+                'status': 'success',
+                'message': 'Processor is already running'
+            })
+        
+        # Start the processor in a background thread
+        processor_thread = threading.Thread(target=folder_processor.run_processor, args=(False,))
+        processor_thread.daemon = True
+        processor_thread.start()
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'Processing started'
+        })
+    except Exception as e:
+        logger.error(f"Error starting processor: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Error starting processor: {str(e)}'
+        }), 500
+
+@app.route('/upload-to-folder', methods=['POST'])
+def upload_to_folder():
+    """Handle file upload to the processing folder"""
+    # Check if file is in request
+    if 'file' not in request.files:
+        flash('No file part', 'danger')
+        return redirect(url_for('folder_monitor'))
+    
+    file = request.files['file']
+    if file.filename == '':
+        flash('No file selected', 'danger')
+        return redirect(url_for('folder_monitor'))
+    
+    if not allowed_file(file.filename):
+        flash(f'Invalid file type. Supported formats: {", ".join(ALLOWED_EXTENSIONS)}', 'danger')
+        return redirect(url_for('folder_monitor'))
+    
+    try:
+        # Save file to upload folder
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(folder_processor.UPLOAD_FOLDER, filename)
+        
+        # Create folder if it doesn't exist
+        os.makedirs(folder_processor.UPLOAD_FOLDER, exist_ok=True)
+        
+        # Save the file
+        file.save(filepath)
+        
+        # Initialize the status
+        folder_processor.update_file_status(
+            filename, 
+            'pending', 
+            0, 
+            f"File uploaded and ready for processing"
+        )
+        
+        flash(f'File "{filename}" uploaded successfully and is ready for processing', 'success')
+        return redirect(url_for('folder_monitor'))
+    except Exception as e:
+        logger.error(f"Error uploading file to folder: {e}")
+        flash(f'Error uploading file: {str(e)}', 'danger')
+        return redirect(url_for('folder_monitor'))
+
+@app.route('/process-file/<filename>')
+def process_single_file(filename):
+    """Process a single file from the upload folder"""
+    try:
+        # Check if file exists
+        filepath = os.path.join(folder_processor.UPLOAD_FOLDER, filename)
+        if not os.path.exists(filepath):
+            return jsonify({
+                'status': 'error',
+                'message': f'File not found: {filename}'
+            }), 404
+        
+        # Start processing in a background thread
+        def process_and_update():
+            folder_processor.process_file(filename)
+        
+        thread = threading.Thread(target=process_and_update)
+        thread.daemon = True
+        thread.start()
+        
+        return jsonify({
+            'status': 'success',
+            'message': f'Started processing {filename}'
+        })
+    except Exception as e:
+        logger.error(f"Error processing single file: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Error: {str(e)}'
+        }), 500
+
+@app.route('/process-all-files')
+def process_all_files():
+    """Process all files in the upload folder"""
+    return start_processing()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

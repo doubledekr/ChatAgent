@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Folder Processing Monitor{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Folder Processing Monitor</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Upload Folder Status</h5>
+                </div>
+                <div class="card-body">
+                    <div id="upload-status">Loading...</div>
+                </div>
+                <div class="card-footer">
+                    <button id="refresh-btn" class="btn btn-sm btn-outline-primary">Refresh</button>
+                    <button id="process-btn" class="btn btn-sm btn-primary">Process Files</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Processed Files</h5>
+                </div>
+                <div class="card-body">
+                    <div id="processed-status">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Processing Status</h5>
+        </div>
+        <div class="card-body">
+            <div id="processing-status">
+                <p>Loading processing status...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Manual File Upload</h5>
+        </div>
+        <div class="card-body">
+            <form action="/upload-to-folder" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Select File</label>
+                    <input type="file" class="form-control" id="file" name="file" required>
+                    <div class="form-text">Supported formats: PDF, EPUB, TXT, MOBI, AZW, AZW3</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload to Processing Folder</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize
+    refreshStatus();
+    
+    // Set up refresh button
+    document.getElementById('refresh-btn').addEventListener('click', function() {
+        refreshStatus();
+    });
+    
+    // Set up process button
+    document.getElementById('process-btn').addEventListener('click', function() {
+        fetch('/start-processing')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Processing started!');
+                    setTimeout(refreshStatus, 1000);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please check the console.');
+            });
+    });
+    
+    // Auto-refresh every 5 seconds
+    setInterval(refreshStatus, 5000);
+});
+
+function refreshStatus() {
+    // Get upload folder status
+    fetch('/api/upload-status')
+        .then(response => response.json())
+        .then(data => {
+            updateUploadStatus(data);
+            updateProcessedStatus(data);
+            updateProcessingStatus(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('upload-status').innerHTML = 
+                '<div class="alert alert-danger">Error loading status. Please try again.</div>';
+        });
+}
+
+function updateUploadStatus(data) {
+    let html = '';
+    if (data.pending_files && data.pending_files.length > 0) {
+        html += '<h6 class="mb-3">Pending Files (' + data.pending_files.length + ')</h6>';
+        html += '<ul class="list-group">';
+        data.pending_files.forEach(file => {
+            html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
+            html += file;
+            html += '<span class="badge bg-warning rounded-pill">Pending</span>';
+            html += '</li>';
+        });
+        html += '</ul>';
+    } else {
+        html += '<div class="alert alert-info">No files pending processing</div>';
+    }
+    document.getElementById('upload-status').innerHTML = html;
+}
+
+function updateProcessedStatus(data) {
+    let html = '';
+    if (data.processed_files && data.processed_files.length > 0) {
+        html += '<h6 class="mb-3">Processed Files (' + data.processed_files.length + ')</h6>';
+        html += '<ul class="list-group">';
+        data.processed_files.forEach(file => {
+            html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
+            html += file;
+            html += '<span class="badge bg-success rounded-pill">Processed</span>';
+            html += '</li>';
+        });
+        html += '</ul>';
+    } else {
+        html += '<div class="alert alert-info">No processed files found</div>';
+    }
+    document.getElementById('processed-status').innerHTML = html;
+}
+
+function updateProcessingStatus(data) {
+    let html = '';
+    
+    if (data.processing_status) {
+        const files = Object.keys(data.processing_status);
+        
+        if (files.length > 0) {
+            html += '<div class="list-group">';
+            
+            files.forEach(file => {
+                const fileStatus = data.processing_status[file];
+                let statusBadge = '';
+                let progressBarClass = 'bg-info';
+                
+                // Determine badge color based on status
+                switch(fileStatus.status) {
+                    case 'completed':
+                        statusBadge = '<span class="badge bg-success">Completed</span>';
+                        progressBarClass = 'bg-success';
+                        break;
+                    case 'processing':
+                        statusBadge = '<span class="badge bg-primary">Processing</span>';
+                        progressBarClass = 'bg-primary';
+                        break;
+                    case 'verifying':
+                        statusBadge = '<span class="badge bg-info">Verifying</span>';
+                        break;
+                    case 'error':
+                        statusBadge = '<span class="badge bg-danger">Error</span>';
+                        progressBarClass = 'bg-danger';
+                        break;
+                    case 'warning':
+                        statusBadge = '<span class="badge bg-warning">Warning</span>';
+                        progressBarClass = 'bg-warning';
+                        break;
+                    default:
+                        statusBadge = '<span class="badge bg-secondary">' + fileStatus.status + '</span>';
+                }
+                
+                html += '<div class="list-group-item">';
+                html += '<div class="d-flex justify-content-between align-items-center mb-2">';
+                html += '<h6 class="mb-0">' + file + '</h6>';
+                html += statusBadge;
+                html += '</div>';
+                
+                // Progress bar
+                html += '<div class="progress mb-3" style="height: 20px;">';
+                html += '<div class="progress-bar ' + progressBarClass + '" role="progressbar" style="width: ' + fileStatus.progress + '%;"';
+                html += ' aria-valuenow="' + fileStatus.progress + '" aria-valuemin="0" aria-valuemax="100">' + fileStatus.progress + '%</div>';
+                html += '</div>';
+                
+                // Last message
+                if (fileStatus.messages && fileStatus.messages.length > 0) {
+                    const lastMessage = fileStatus.messages[fileStatus.messages.length - 1];
+                    html += '<div class="text-muted small">' + lastMessage.message + '</div>';
+                }
+                
+                // Errors
+                if (fileStatus.errors && fileStatus.errors.length > 0) {
+                    html += '<div class="mt-2">';
+                    html += '<a class="btn btn-sm btn-outline-danger" data-bs-toggle="collapse" href="#errors-' + file.replace(/\./g, '-') + '">';
+                    html += 'Show Errors (' + fileStatus.errors.length + ')';
+                    html += '</a>';
+                    html += '<div class="collapse mt-2" id="errors-' + file.replace(/\./g, '-') + '">';
+                    html += '<div class="card card-body bg-light">';
+                    fileStatus.errors.forEach(error => {
+                        html += '<div class="text-danger small">' + error.error + '</div>';
+                    });
+                    html += '</div></div></div>';
+                }
+                
+                html += '</div>';
+            });
+            
+            html += '</div>';
+        } else {
+            html += '<div class="alert alert-info">No processing activity found</div>';
+        }
+    } else {
+        html += '<div class="alert alert-warning">Processing status not available</div>';
+    }
+    
+    document.getElementById('processing-status').innerHTML = html;
+}
+</script>
+{% endblock %}
