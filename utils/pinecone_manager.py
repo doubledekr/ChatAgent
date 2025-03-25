@@ -1,7 +1,7 @@
 import logging
 import time
 import os
-from pinecone import Pinecone as PineconeClient
+import pinecone
 import json
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,6 @@ class PineconeManager:
         self.environment = environment
         self.index_name = index_name
         self.dimension = dimension
-        self.pinecone = None
         self.index = None
         
         if not api_key:
@@ -33,32 +32,25 @@ class PineconeManager:
             raise ValueError("Pinecone API key must be provided")
         
         try:
-            # Initialize Pinecone client with the latest API format
-            self.pinecone = PineconeClient(api_key=api_key)
+            # Initialize Pinecone client with the correct API format
+            pinecone.init(api_key=api_key, environment=environment)
             
             # Get list of indexes
-            indexes = self.pinecone.list_indexes()
-            index_names = [idx.name for idx in indexes]
+            indexes = pinecone.list_indexes()
             
             # Check if index exists, if not create it
-            if index_name not in index_names:
+            if index_name not in indexes:
                 logger.info(f"Creating new Pinecone index: {index_name}")
-                self.pinecone.create_index(
+                pinecone.create_index(
                     name=index_name,
                     dimension=dimension,
-                    metric="cosine",
-                    spec={
-                        "serverless": {
-                            "cloud": "aws", 
-                            "region": environment
-                        }
-                    }
+                    metric="cosine"
                 )
                 # Wait for index to be ready
                 time.sleep(1)
             
             # Connect to the index
-            self.index = self.pinecone.Index(index_name)
+            self.index = pinecone.Index(index_name)
             logger.info(f"Connected to Pinecone index: {index_name}")
             
         except Exception as e:
