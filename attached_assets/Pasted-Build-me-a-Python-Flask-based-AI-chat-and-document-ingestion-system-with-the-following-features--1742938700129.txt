@@ -1,0 +1,95 @@
+Build me a Python Flask-based AI chat and document ingestion system with the following features:
+
+---
+
+📤 FILE UPLOAD & PROCESSING
+
+1. Allow users to upload `.pdf`, `.epub`, `.txt`, `.mobi`, `.azw`, and `.azw3` documents.
+2. Add **robust upload validation**, including:
+   - File type and extension check
+   - File size limit (e.g., 20MB)
+   - Unique filename enforcement
+   - User feedback for invalid uploads
+3. Extract text using:
+   - `PyMuPDF` for `.pdf`
+   - `ebooklib` for `.epub`
+   - `chardet` for `.txt`
+   - `ebook-convert` (Calibre CLI) for `.mobi`, `.azw`, `.azw3`, or fall back to `kindleunpack` if not available
+   - Use temp directories for file handling
+4. Chunk extracted text into ~500-token segments (use `tiktoken` for GPT-compatible tokenization)
+
+---
+
+🧠 EMBEDDING & VECTOR STORAGE
+
+5. Generate embeddings for each chunk using `text-embedding-ada-002` from OpenAI.
+6. Store in Pinecone (`dimension=1536`) with custom metadata including:
+   - `text`: original chunk
+   - `filename`, `filetype`, `title`, `chapter`, `page`
+   - `subject`: a tag like "finance", "AI", "history"
+   - `key_points`: list of key ideas extracted from the chunk
+   - `user_id`: to associate with uploader
+   - `tags`: for educational tracking (e.g. `["compound_interest", "investment_basics"]`)
+   - `source`: "user_upload" or "default_doc"
+
+---
+
+💬 CHAT EXPERIENCE
+
+7. Create a chat interface that:
+   - Embeds user questions
+   - Queries Pinecone for top 5 relevant chunks
+   - Sends results to GPT-4 to generate context-aware answers
+   - Returns answers in **HTML format** that:
+     - ✨ Highlights keywords and turns them into **clickable buttons or tooltips** for extra context
+     - 📚 Suggests **follow-up topics** based on the conversation (e.g., “Want to explore ETFs next?”)
+
+8. The chat agent should respond in a **witty, friendly tone** that:
+   - Uses **metaphors and analogies** to explain complex concepts (e.g., “Compound interest is like a snowball rolling downhill... the longer it rolls, the bigger it gets.”)
+   - Maintains educational clarity while being fun and memorable
+
+---
+
+🧠 LEARNING FEATURES
+
+9. Allow tagging of content for:
+   - Learning paths
+   - Quiz-style questions
+   - Subject-specific filtering (e.g. only return "personal_finance" chunks)
+10. Architect the system to support future:
+   - Learning dashboards
+   - Flashcards
+   - Topic suggestions
+   - Course generation from document metadata
+
+---
+
+🧩 UI REQUIREMENTS
+
+11. Create:
+   - `main.py` for Flask app logic
+   - `utils/extract_text.py` for all file parsing
+   - `templates/upload.html` for upload and chat interface
+   - Chat box that includes follow-up topic suggestions and auto-expanding keywords
+
+---
+
+🔐 SECURITY & ENV
+
+12. Use environment variables for:
+   - `OPENAI_API_KEY`
+   - `PINECONE_API_KEY`
+   - `PINECONE_ENV`
+13. Add basic input sanitization and error handling throughout the app
+
+---
+
+📦 DEPENDENCIES
+
+Install: `flask`, `openai`, `pinecone-client`, `PyMuPDF`, `ebooklib`, `chardet`, `tiktoken`, `uuid`, `kindleunpack`
+
+---
+
+🧠 GOAL
+
+Build a delightful, intelligent, and context-aware AI chat assistant powered by real user documents, able to teach with charm, depth, and humor — like a finance professor crossed with a stand-up comic.
