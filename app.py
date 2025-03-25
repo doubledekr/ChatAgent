@@ -25,7 +25,7 @@ app.secret_key = os.environ.get("SESSION_SECRET", "dev_secret_key")
 # Configuration
 UPLOAD_FOLDER = tempfile.gettempdir()
 ALLOWED_EXTENSIONS = {'pdf', 'epub', 'txt', 'mobi', 'azw', 'azw3'}
-MAX_CONTENT_LENGTH = 20 * 1024 * 1024  # 20MB max file size
+MAX_CONTENT_LENGTH = 200 * 1024 * 1024  # 200MB max file size
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
@@ -70,7 +70,7 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    """Handle file uploads, extract text, and store in Pinecone"""
+    """Handle file uploads (single or multiple), extract text, and store in Pinecone"""
     # Check if required API keys are available
     if not openai_available:
         flash("OpenAI API key is required for document processing. Please set the OPENAI_API_KEY environment variable.", "danger")
@@ -80,101 +80,146 @@ def upload_file():
         flash("Pinecone API key is required for document storage. Please set the PINECONE_API_KEY environment variable.", "danger")
         return redirect(url_for('index'))
     
-    if 'file' not in request.files:
+    # Handle single file upload (traditional form submit)
+    if 'file' in request.files:
+        files = request.files.getlist('file')  # Get all files with 'file' name
+        
+        if not files or files[0].filename == '':
+            flash('No files selected', 'danger')
+            return redirect(request.url)
+        
+        # Check if all files are allowed
+        invalid_files = [f.filename for f in files if not allowed_file(f.filename)]
+        if invalid_files:
+            flash(f'Invalid file types: {", ".join(invalid_files)}. Supported formats: {", ".join(ALLOWED_EXTENSIONS)}', 'danger')
+            return redirect(request.url)
+            
+    # Handle AJAX bulk upload (gets handled in /upload-progress route)
+    elif request.form.get('_ajax_upload') == 'true':
+        return jsonify({'status': 'error', 'message': 'No files received'}), 400
+    else:
         flash('No file part', 'danger')
         return redirect(request.url)
     
-    file = request.files['file']
-    
-    if file.filename == '':
-        flash('No selected file', 'danger')
-        return redirect(request.url)
-    
-    if not allowed_file(file.filename):
-        flash(f'File type not allowed. Supported formats: {", ".join(ALLOWED_EXTENSIONS)}', 'danger')
-        return redirect(request.url)
-    
     try:
-        # Generate a unique filename
-        orig_filename = secure_filename(file.filename)
-        file_ext = orig_filename.rsplit('.', 1)[1].lower()
-        unique_filename = f"{uuid.uuid4().hex}.{file_ext}"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        
-        # Save file to temp directory
-        file.save(filepath)
-        logger.debug(f"File saved to {filepath}")
-        
-        # Extract text from file
-        extracted_text = extract_text_from_file(filepath, file_ext)
-        if not extracted_text:
-            flash("Unable to extract text from file. Please check if the file is valid.", "danger")
-            return redirect(request.url)
-        
-        # Get metadata from form
+        # Get common metadata for all files
         subject = request.form.get('subject', 'general')
         tags = request.form.get('tags', '')
         manual_tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
         
-        # Generate AI tags if OpenAI is available
-        ai_tags = []
-        if openai_available:
+        # Process multiple files
+        processed_files = []
+        failed_files = []
+        all_ai_tags = set()  # To collect all AI tags across files
+        
+        for file in files:
             try:
-                # Use the first chunk or a portion of text for tag generation
-                sample_text = extracted_text[:20000]  # Use first 20k chars for tag generation
-                ai_tags = generate_tags(sample_text, max_tags=10)
-                logger.debug(f"Generated {len(ai_tags)} AI tags: {ai_tags}")
-            except Exception as tag_error:
-                logger.error(f"Error generating AI tags: {tag_error}")
-                # Continue even if AI tagging fails
-        
-        # Combine manual and AI tags, removing duplicates (case-insensitive)
-        tags_list = manual_tags_list.copy()
-        for ai_tag in ai_tags:
-            if ai_tag.lower() not in [tag.lower() for tag in tags_list]:
-                tags_list.append(ai_tag)
-        
-        # Chunk the text
-        chunks = chunk_text(extracted_text)
-        logger.debug(f"Created {len(chunks)} chunks from the text")
-        
-        # Process each chunk
-        for i, chunk in enumerate(chunks):
-            try:
-                # Generate embeddings
-                embedding = generate_embeddings(chunk)
+                # Generate a unique filename
+                orig_filename = secure_filename(file.filename)
+                file_ext = orig_filename.rsplit('.', 1)[1].lower()
+                unique_filename = f"{uuid.uuid4().hex}.{file_ext}"
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
                 
-                # Store in Pinecone with metadata
-                metadata = {
-                    'text': chunk,
+                # Save file to temp directory
+                file.save(filepath)
+                logger.debug(f"File saved to {filepath}")
+                
+                # Extract text from file
+                extracted_text = extract_text_from_file(filepath, file_ext)
+                if not extracted_text:
+                    failed_files.append(f"{orig_filename} (unable to extract text)")
+                    os.remove(filepath)
+                    continue
+                
+                # Generate AI tags if OpenAI is available
+                file_ai_tags = []
+                if openai_available:
+                    try:
+                        # Use the first chunk or a portion of text for tag generation
+                        sample_text = extracted_text[:20000]  # Use first 20k chars for tag generation
+                        file_ai_tags = generate_tags(sample_text, max_tags=10)
+                        logger.debug(f"Generated {len(file_ai_tags)} AI tags for {orig_filename}: {file_ai_tags}")
+                        all_ai_tags.update(file_ai_tags)  # Add to the set of all tags
+                    except Exception as tag_error:
+                        logger.error(f"Error generating AI tags for {orig_filename}: {tag_error}")
+                        # Continue even if AI tagging fails
+                
+                # Combine manual and AI tags for this file, removing duplicates
+                file_tags_list = manual_tags_list.copy()
+                for ai_tag in file_ai_tags:
+                    if ai_tag.lower() not in [tag.lower() for tag in file_tags_list]:
+                        file_tags_list.append(ai_tag)
+                
+                # Chunk the text
+                chunks = chunk_text(extracted_text)
+                logger.debug(f"Created {len(chunks)} chunks from {orig_filename}")
+                
+                # Process each chunk
+                chunk_count = 0
+                for i, chunk in enumerate(chunks):
+                    try:
+                        # Generate embeddings
+                        embedding = generate_embeddings(chunk)
+                        
+                        # Store in Pinecone with metadata
+                        metadata = {
+                            'text': chunk,
+                            'filename': orig_filename,
+                            'filetype': file_ext,
+                            'subject': subject,
+                            'tags': file_tags_list,
+                            'chunk_id': i,
+                            'source': 'user_upload',
+                            'user_id': session.get('user_id', 'anonymous')
+                        }
+                        
+                        pinecone_manager.upsert(
+                            id=f"{uuid.uuid4()}",
+                            vector=embedding,
+                            metadata=metadata
+                        )
+                        chunk_count += 1
+                    except Exception as chunk_error:
+                        logger.error(f"Error processing chunk {i} of {orig_filename}: {chunk_error}")
+                        # Continue with other chunks even if one fails
+                        continue
+                
+                # Clean up temp file
+                os.remove(filepath)
+                
+                # Add to successfully processed files list
+                processed_files.append({
                     'filename': orig_filename,
-                    'filetype': file_ext,
-                    'subject': subject,
-                    'tags': tags_list,
-                    'chunk_id': i,
-                    'source': 'user_upload',
-                    'user_id': session.get('user_id', 'anonymous')
-                }
+                    'chunks': chunk_count,
+                    'tags': file_tags_list
+                })
                 
-                pinecone_manager.upsert(
-                    id=f"{uuid.uuid4()}",
-                    vector=embedding,
-                    metadata=metadata
-                )
-            except Exception as chunk_error:
-                logger.error(f"Error processing chunk {i}: {chunk_error}")
-                # Continue with other chunks even if one fails
-                continue
+            except Exception as file_error:
+                logger.error(f"Error processing file {file.filename}: {file_error}")
+                failed_files.append(f"{file.filename} ({str(file_error)})")
+                # Try to clean up temp file if it exists
+                try:
+                    if 'filepath' in locals() and os.path.exists(filepath):
+                        os.remove(filepath)
+                except:
+                    pass
         
-        # Clean up temp file
-        os.remove(filepath)
+        # Prepare success/error messages
+        if processed_files:
+            if len(processed_files) == 1:
+                file_info = processed_files[0]
+                success_message = f"File '{file_info['filename']}' successfully processed with {file_info['chunks']} chunks!"
+                if file_info['tags']:
+                    success_message += f" Tags: {', '.join(file_info['tags'])}"
+                flash(success_message, "success")
+            else:
+                flash(f"Successfully processed {len(processed_files)} files with a total of {sum(f['chunks'] for f in processed_files)} chunks!", "success")
+                if all_ai_tags:
+                    flash(f"AI identified tags across all files: {', '.join(all_ai_tags)}", "info")
         
-        # Prepare success message with tag information
-        success_message = f"File '{orig_filename}' successfully processed and stored!"
-        if ai_tags:
-            success_message += f" AI identified {len(ai_tags)} tags: {', '.join(ai_tags)}"
-        
-        flash(success_message, "success")
+        if failed_files:
+            flash(f"Failed to process {len(failed_files)} files: {', '.join(failed_files)}", "danger")
+            
         return redirect(url_for('index'))
         
     except Exception as e:
@@ -232,10 +277,151 @@ def chat():
             'follow_up_questions': []
         }), 500
 
+@app.route('/upload-progress', methods=['POST'])
+def upload_progress():
+    """Handle AJAX file uploads with progress tracking"""
+    # Check if required API keys are available
+    if not openai_available or not pinecone_available:
+        return jsonify({
+            'status': 'error',
+            'message': 'API keys missing. Please check OpenAI and Pinecone API keys.'
+        }), 400
+    
+    # Check if file is in request
+    if 'file' not in request.files:
+        return jsonify({
+            'status': 'error',
+            'message': 'No file uploaded'
+        }), 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({
+            'status': 'error',
+            'message': 'Empty filename'
+        }), 400
+    
+    if not allowed_file(file.filename):
+        return jsonify({
+            'status': 'error',
+            'message': f'Invalid file type. Supported formats: {", ".join(ALLOWED_EXTENSIONS)}'
+        }), 400
+    
+    try:
+        # Generate a unique filename
+        orig_filename = secure_filename(file.filename)
+        file_ext = orig_filename.rsplit('.', 1)[1].lower()
+        unique_filename = f"{uuid.uuid4().hex}.{file_ext}"
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        
+        # Save file
+        file.save(filepath)
+        
+        # Get metadata from request
+        subject = request.form.get('subject', 'general')
+        tags = request.form.get('tags', '')
+        manual_tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
+        
+        # Process the file and return progress updates
+        # Extract text
+        extracted_text = extract_text_from_file(filepath, file_ext)
+        if not extracted_text:
+            os.remove(filepath)
+            return jsonify({
+                'status': 'error',
+                'message': 'Unable to extract text from file'
+            }), 400
+        
+        # Generate AI tags
+        ai_tags = []
+        if openai_available:
+            try:
+                sample_text = extracted_text[:20000]
+                ai_tags = generate_tags(sample_text, max_tags=10)
+            except Exception as e:
+                logger.error(f"Error generating AI tags: {e}")
+                # Continue even if AI tagging fails
+        
+        # Combine tags
+        tags_list = manual_tags_list.copy()
+        for ai_tag in ai_tags:
+            if ai_tag.lower() not in [tag.lower() for tag in tags_list]:
+                tags_list.append(ai_tag)
+        
+        # Chunk the text
+        chunks = chunk_text(extracted_text)
+        total_chunks = len(chunks)
+        
+        # Process each chunk with progress tracking
+        processed_chunks = 0
+        for i, chunk in enumerate(chunks):
+            try:
+                # Generate embeddings
+                embedding = generate_embeddings(chunk)
+                
+                # Store in Pinecone
+                metadata = {
+                    'text': chunk,
+                    'filename': orig_filename,
+                    'filetype': file_ext,
+                    'subject': subject,
+                    'tags': tags_list,
+                    'chunk_id': i,
+                    'source': 'user_upload',
+                    'user_id': session.get('user_id', 'anonymous')
+                }
+                
+                pinecone_manager.upsert(
+                    id=f"{uuid.uuid4()}",
+                    vector=embedding,
+                    metadata=metadata
+                )
+                processed_chunks += 1
+                
+                # For long files, send progress updates every 5 chunks or at the end
+                if i == total_chunks - 1 or i % 5 == 0:
+                    progress = int((processed_chunks / total_chunks) * 100)
+            except Exception as e:
+                logger.error(f"Error processing chunk {i}: {e}")
+                # Continue with other chunks
+        
+        # Clean up temp file
+        os.remove(filepath)
+        
+        # Return success response
+        return jsonify({
+            'status': 'success',
+            'message': 'File processed successfully',
+            'filename': orig_filename,
+            'chunks_processed': processed_chunks,
+            'total_chunks': total_chunks,
+            'tags': tags_list
+        })
+        
+    except Exception as e:
+        logger.error(f"Error in upload-progress: {e}")
+        # Try to clean up the temp file if it exists
+        try:
+            if 'filepath' in locals() and os.path.exists(filepath):
+                os.remove(filepath)
+        except:
+            pass
+            
+        return jsonify({
+            'status': 'error',
+            'message': f'Error processing file: {str(e)}'
+        }), 500
+
 @app.errorhandler(413)
 def too_large(e):
-    flash(f"File too large. Maximum size is {MAX_CONTENT_LENGTH/(1024*1024)}MB", "danger")
-    return redirect(url_for('index'))
+    if request.path == '/upload-progress':
+        return jsonify({
+            'status': 'error',
+            'message': f'File too large. Maximum size is {MAX_CONTENT_LENGTH/(1024*1024)}MB'
+        }), 413
+    else:
+        flash(f"File too large. Maximum size is {MAX_CONTENT_LENGTH/(1024*1024)}MB", "danger")
+        return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

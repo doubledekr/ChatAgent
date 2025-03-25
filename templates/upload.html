@@ -10,11 +10,30 @@
             <div class="card-body">
                 <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="upload-form">
                     <div class="mb-3">
-                        <label for="file" class="form-label">Choose File</label>
-                        <input type="file" class="form-control" id="file" name="file" required>
+                        <label for="file" class="form-label">Choose Files</label>
+                        <input type="file" class="form-control" id="file" name="file" multiple required>
                         <div class="form-text">
                             Supported formats: PDF, EPUB, TXT, MOBI, AZW, AZW3<br>
-                            Max size: 20MB
+                            Max size: 200MB per file
+                        </div>
+                    </div>
+                    
+                    <!-- Upload progress container -->
+                    <div id="upload-progress-container" class="mb-3 d-none">
+                        <h6 class="mb-2">Upload Progress</h6>
+                        <div id="overall-progress" class="mb-3">
+                            <label class="form-label d-flex justify-content-between">
+                                <span>Overall Progress</span>
+                                <span id="overall-progress-text">0%</span>
+                            </label>
+                            <div class="progress">
+                                <div id="overall-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                                     role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="file-progress-container">
+                            <!-- Individual file progress bars will be added here -->
                         </div>
                     </div>
                     
@@ -50,13 +69,16 @@
             </div>
             <div class="card-body">
                 <p>
-                    <strong>1. Upload a document</strong> - Choose from various formats like PDF, EPUB, or TXT.
+                    <strong>1. Upload documents</strong> - Upload single or multiple files (up to 200MB each) in formats like PDF, EPUB, or TXT.
                 </p>
                 <p>
-                    <strong>2. Ask questions</strong> - Chat with the AI about the content of your document.
+                    <strong>2. Track progress</strong> - Watch the progress bars as your documents are processed and indexed.
                 </p>
                 <p>
-                    <strong>3. Explore topics</strong> - Click on suggested follow-up questions or keywords to dive deeper.
+                    <strong>3. Ask questions</strong> - Chat with the AI about the content of your documents.
+                </p>
+                <p>
+                    <strong>4. Explore topics</strong> - Click on suggested follow-up questions or keywords to dive deeper.
                 </p>
             </div>
         </div>
@@ -97,6 +119,145 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const uploadForm = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file');
+        const subjectSelect = document.getElementById('subject');
+        const tagsInput = document.getElementById('tags');
+        const uploadProgressContainer = document.getElementById('upload-progress-container');
+        const overallProgressBar = document.getElementById('overall-progress-bar');
+        const overallProgressText = document.getElementById('overall-progress-text');
+        const fileProgressContainer = document.getElementById('file-progress-container');
+        
+        // Handle file upload form submission
+        uploadForm.addEventListener('submit', function(e) {
+            const files = fileInput.files;
+            
+            if (files.length > 1) {
+                // For multiple files, handle the upload with progress tracking
+                e.preventDefault();
+                handleBulkUpload(files);
+            }
+            // For a single file, let the form submit normally
+        });
+        
+        // Function to handle bulk upload with progress tracking
+        function handleBulkUpload(files) {
+            // Reset and show progress container
+            fileProgressContainer.innerHTML = '';
+            uploadProgressContainer.classList.remove('d-none');
+            
+            // Create progress bars for each file
+            const fileProgressBars = {};
+            const totalFiles = files.length;
+            let filesProcessed = 0;
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileId = `file-${i}`;
+                
+                // Create progress bar for this file
+                const fileProgressElement = document.createElement('div');
+                fileProgressElement.className = 'mb-2';
+                fileProgressElement.innerHTML = `
+                    <label class="form-label d-flex justify-content-between">
+                        <span class="text-truncate" style="max-width: 80%;">${file.name}</span>
+                        <span class="file-progress-text">Waiting...</span>
+                    </label>
+                    <div class="progress">
+                        <div id="${fileId}-progress" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                `;
+                
+                fileProgressContainer.appendChild(fileProgressElement);
+                fileProgressBars[fileId] = {
+                    bar: document.getElementById(`${fileId}-progress`),
+                    text: fileProgressElement.querySelector('.file-progress-text'),
+                    status: 'waiting' // waiting, uploading, processing, complete, error
+                };
+            }
+            
+            // Update overall progress
+            function updateOverallProgress() {
+                const percent = Math.round((filesProcessed / totalFiles) * 100);
+                overallProgressBar.style.width = `${percent}%`;
+                overallProgressText.textContent = `${percent}%`;
+            }
+            
+            // Process files sequentially to avoid overwhelming the server
+            processNextFile(0);
+            
+            function processNextFile(index) {
+                if (index >= files.length) {
+                    // All files processed
+                    return;
+                }
+                
+                const file = files[index];
+                const fileId = `file-${index}`;
+                const progressData = fileProgressBars[fileId];
+                
+                // Update status to uploading
+                progressData.status = 'uploading';
+                progressData.text.textContent = 'Uploading...';
+                progressData.bar.style.width = '10%';
+                progressData.bar.className = 'progress-bar progress-bar-striped progress-bar-animated';
+                
+                // Create form data for this file
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('subject', subjectSelect.value);
+                formData.append('tags', tagsInput.value);
+                formData.append('_ajax_upload', 'true');
+                
+                // Send upload request
+                fetch('/upload-progress', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Upload failed');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Update progress to complete
+                    progressData.status = 'complete';
+                    progressData.bar.style.width = '100%';
+                    progressData.bar.className = 'progress-bar bg-success';
+                    
+                    let statusText = 'Completed';
+                    if (data.chunks_processed) {
+                        statusText += ` (${data.chunks_processed} chunks)`;
+                    }
+                    progressData.text.textContent = statusText;
+                    
+                    // Update overall progress
+                    filesProcessed++;
+                    updateOverallProgress();
+                    
+                    // Process next file
+                    setTimeout(() => processNextFile(index + 1), 500);
+                })
+                .catch(error => {
+                    // Update progress to error
+                    progressData.status = 'error';
+                    progressData.bar.style.width = '100%';
+                    progressData.bar.className = 'progress-bar bg-danger';
+                    progressData.text.textContent = 'Error: ' + error.message;
+                    
+                    // Update overall progress
+                    filesProcessed++;
+                    updateOverallProgress();
+                    
+                    // Process next file
+                    setTimeout(() => processNextFile(index + 1), 500);
+                });
+            }
+        }
+        
         const chatForm = document.getElementById('chat-form');
         const chatHistory = document.getElementById('chat-history');
         const userMessage = document.getElementById('user-message');
