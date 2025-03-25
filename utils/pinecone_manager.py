@@ -1,8 +1,8 @@
 import logging
 import time
 import os
-import pinecone
 import json
+import pinecone
 
 logger = logging.getLogger(__name__)
 
@@ -32,14 +32,14 @@ class PineconeManager:
             raise ValueError("Pinecone API key must be provided")
         
         try:
-            # Initialize Pinecone client with the correct API format
+            # Initialize Pinecone client with the correct format
             pinecone.init(api_key=api_key, environment=environment)
             
             # Get list of indexes
-            indexes = pinecone.list_indexes()
+            existing_indexes = pinecone.list_indexes()
             
             # Check if index exists, if not create it
-            if index_name not in indexes:
+            if index_name not in existing_indexes:
                 logger.info(f"Creating new Pinecone index: {index_name}")
                 pinecone.create_index(
                     name=index_name,
@@ -47,7 +47,7 @@ class PineconeManager:
                     metric="cosine"
                 )
                 # Wait for index to be ready
-                time.sleep(1)
+                time.sleep(5)  # Wait a bit longer for index creation
             
             # Connect to the index
             self.index = pinecone.Index(index_name)
