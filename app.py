@@ -10,7 +10,7 @@ import json
 from utils.extract_text import extract_text_from_file, chunk_text
 from utils.embedding import generate_embeddings
 from utils.pinecone_manager import PineconeManager
-from utils.chat import generate_chat_response
+from utils.chat import generate_chat_response, generate_tags
 import utils.embedding as embedding_module
 import utils.chat as chat_module
 
@@ -114,7 +114,25 @@ def upload_file():
         # Get metadata from form
         subject = request.form.get('subject', 'general')
         tags = request.form.get('tags', '')
-        tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
+        manual_tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
+        
+        # Generate AI tags if OpenAI is available
+        ai_tags = []
+        if openai_available:
+            try:
+                # Use the first chunk or a portion of text for tag generation
+                sample_text = extracted_text[:20000]  # Use first 20k chars for tag generation
+                ai_tags = generate_tags(sample_text, max_tags=10)
+                logger.debug(f"Generated {len(ai_tags)} AI tags: {ai_tags}")
+            except Exception as tag_error:
+                logger.error(f"Error generating AI tags: {tag_error}")
+                # Continue even if AI tagging fails
+        
+        # Combine manual and AI tags, removing duplicates (case-insensitive)
+        tags_list = manual_tags_list.copy()
+        for ai_tag in ai_tags:
+            if ai_tag.lower() not in [tag.lower() for tag in tags_list]:
+                tags_list.append(ai_tag)
         
         # Chunk the text
         chunks = chunk_text(extracted_text)
@@ -151,7 +169,12 @@ def upload_file():
         # Clean up temp file
         os.remove(filepath)
         
-        flash(f"File '{orig_filename}' successfully processed and stored!", "success")
+        # Prepare success message with tag information
+        success_message = f"File '{orig_filename}' successfully processed and stored!"
+        if ai_tags:
+            success_message += f" AI identified {len(ai_tags)} tags: {', '.join(ai_tags)}"
+        
+        flash(success_message, "success")
         return redirect(url_for('index'))
         
     except Exception as e:

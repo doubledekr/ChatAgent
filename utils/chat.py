@@ -16,6 +16,79 @@ else:
     logger.warning("OPENAI_API_KEY not set in environment variables")
     # Client will be initialized later when the key is available
 
+def generate_tags(text, max_tags=8):
+    """
+    Generate relevant tags for a text using OpenAI's GPT-4o model
+    
+    Args:
+        text (str): Text to generate tags for
+        max_tags (int): Maximum number of tags to generate
+        
+    Returns:
+        list: List of tags
+    """
+    global client, OPENAI_API_KEY
+    
+    # Check if client is available
+    if client is None:
+        # Try to get API key again in case it was added after initialization
+        OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+        if OPENAI_API_KEY:
+            client = OpenAI(api_key=OPENAI_API_KEY)
+        else:
+            logger.error("OpenAI client not initialized - API key is missing")
+            return []
+    
+    try:
+        # Truncate text if it's very long
+        if len(text) > 10000:
+            logger.warning(f"Text too long ({len(text)} chars), truncating to 10000 chars for tag generation")
+            text = text[:10000]
+        
+        system_message = f"""
+        You are a precise document tagging system.
+        Extract {max_tags} relevant and specific tags from the text.
+        Focus on key concepts, technologies, methodologies, and important named entities.
+        Respond with tags only in JSON format as an array of strings.
+        Keep tags short (1-3 words each) and specific.
+        """
+        
+        # Prepare conversation for OpenAI
+        messages = [
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": f"Text for tagging: {text}"}
+        ]
+        
+        # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+        # do not change this unless explicitly requested by the user
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            temperature=0.3,
+            max_tokens=200,
+            response_format={"type": "json_object"}
+        )
+        
+        tags_response = response.choices[0].message.content
+        
+        # Parse JSON response
+        try:
+            tags_data = json.loads(tags_response)
+            if isinstance(tags_data, dict) and "tags" in tags_data:
+                return tags_data["tags"]
+            elif isinstance(tags_data, list):
+                return tags_data
+            else:
+                logger.warning(f"Unexpected tags format from OpenAI: {tags_response}")
+                return []
+        except json.JSONDecodeError:
+            logger.error(f"Failed to parse JSON response for tags: {tags_response}")
+            return []
+        
+    except Exception as e:
+        logger.error(f"Error generating tags: {e}")
+        return []
+
 def generate_chat_response(query, search_results):
     """
     Generate context-aware responses using OpenAI's GPT-4o model
