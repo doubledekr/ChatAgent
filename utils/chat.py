@@ -16,7 +16,7 @@ else:
     logger.warning("OPENAI_API_KEY not set in environment variables")
     # Client will be initialized later when the key is available
 
-def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8):
+def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8, max_retries=3):
     """
     Generate comprehensive metadata and tags for document chunks using OpenAI's GPT-4o model
     
@@ -25,6 +25,7 @@ def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8):
         filename (str): Original filename
         file_ext (str): File extension/type
         max_tags (int): Maximum number of general tags to generate
+        max_retries (int): Maximum number of retry attempts for API calls
         
     Returns:
         dict: Comprehensive metadata including various tag categories
@@ -41,11 +42,17 @@ def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8):
             logger.error("OpenAI client not initialized - API key is missing")
             return {}
     
-    try:
-        # Truncate text if it's very long
-        if len(text) > 15000:
-            logger.warning(f"Text too long ({len(text)} chars), truncating to 15000 chars for metadata generation")
-            text = text[:15000]
+    import time
+    
+    # Clean and prepare text
+    if not text or text.strip() == "":
+        logger.warning("Empty text provided for metadata generation")
+        return {"general_tags": [], "subject": "unknown", "chunk_summary": "Empty document"}
+    
+    # Truncate text if it's very long
+    if len(text) > 15000:
+        logger.warning(f"Text too long ({len(text)} chars), truncating to 15000 chars for metadata generation")
+        text = text[:15000]
         
         system_message = f"""
         You are an expert document analyzer and metadata tagger. Analyze the provided text and extract detailed, structured metadata.
@@ -76,45 +83,78 @@ def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8):
             {"role": "user", "content": f"Filename: {filename}\nFile type: {file_ext}\n\nContent for analysis: {text}"}
         ]
         
-        # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-        # do not change this unless explicitly requested by the user
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=messages,
-            temperature=0.3,
-            max_tokens=1000,
-            response_format={"type": "json_object"}
-        )
+        # Retry logic for API calls
+        retries = 0
+        last_error = None
         
-        metadata_response = response.choices[0].message.content
-        
-        # Parse JSON response
-        try:
-            metadata = json.loads(metadata_response)
-            # Add source filename if provided
-            if filename:
-                metadata["source_filename"] = filename
-            
-            # Convert lists to string for compatibility with existing code where needed
-            if isinstance(metadata.get("key_points"), list):
-                metadata["key_points"] = "\n".join([f"• {point}" for point in metadata["key_points"]])
+        while retries <= max_retries:
+            try:
+                # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+                # do not change this unless explicitly requested by the user
+                response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=messages,
+                    temperature=0.3,
+                    max_tokens=1000,
+                    response_format={"type": "json_object"}
+                )
                 
-            if isinstance(metadata.get("concepts_covered"), list):
-                metadata["concepts_covered"] = ", ".join(metadata["concepts_covered"])
+                metadata_response = response.choices[0].message.content
                 
-            if isinstance(metadata.get("prerequisites"), list):
-                metadata["prerequisites"] = ", ".join(metadata["prerequisites"])
+                # Parse JSON response
+                try:
+                    metadata = json.loads(metadata_response)
+                    # Add source filename if provided
+                    if filename:
+                        metadata["source_filename"] = filename
+                    
+                    # Convert lists to string for compatibility with existing code where needed
+                    if isinstance(metadata.get("key_points"), list):
+                        metadata["key_points"] = "\n".join([f"• {point}" for point in metadata["key_points"]])
+                        
+                    if isinstance(metadata.get("concepts_covered"), list):
+                        metadata["concepts_covered"] = ", ".join(metadata["concepts_covered"])
+                        
+                    if isinstance(metadata.get("prerequisites"), list):
+                        metadata["prerequisites"] = ", ".join(metadata["prerequisites"])
+                        
+                    logger.debug(f"Generated comprehensive metadata with {len(metadata)} categories")
+                    return metadata
+                    
+                except json.JSONDecodeError:
+                    logger.error(f"Failed to parse JSON response for metadata: {metadata_response}")
+                    retries += 1
+                    if retries > max_retries:
+                        logger.error("Max retries reached for JSON parsing")
+                        return {"general_tags": [], "error": "JSON parse error"}
+                    else:
+                        logger.info(f"Retrying after JSON parse error (attempt {retries}/{max_retries})")
+                        time.sleep(1)  # Brief pause before retry
                 
-            logger.debug(f"Generated comprehensive metadata with {len(metadata)} categories")
-            return metadata
-            
-        except json.JSONDecodeError:
-            logger.error(f"Failed to parse JSON response for metadata: {metadata_response}")
-            return {"general_tags": []}
-        
-    except Exception as e:
-        logger.error(f"Error generating comprehensive metadata: {e}")
-        return {"general_tags": []}
+            except Exception as e:
+                last_error = e
+                retries += 1
+                logger.warning(f"Error generating metadata (attempt {retries}/{max_retries}): {e}")
+                
+                # If it's an API key issue, don't retry
+                if "API key" in str(e):
+                    logger.error("OpenAI API key is invalid or missing")
+                    return {"general_tags": [], "error": "API key invalid"}
+                    
+                # If we've reached max retries, return default metadata
+                if retries > max_retries:
+                    logger.error(f"Failed to generate metadata after {max_retries} attempts: {e}")
+                    return {
+                        "general_tags": [],
+                        "subject": "unknown",
+                        "chunk_summary": "Could not analyze document content",
+                        "error": str(e)
+                    }
+                    
+                # Wait with exponential backoff before retrying
+                wait_time = 2 ** (retries - 1)
+                logger.info(f"Waiting {wait_time}s before retrying metadata generation...")
+                time.sleep(wait_time)
 
 def generate_tags(text, max_tags=8, filename="", file_ext=""):
     """
