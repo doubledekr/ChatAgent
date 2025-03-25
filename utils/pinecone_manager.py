@@ -1,6 +1,8 @@
 import logging
 import time
-import pinecone
+import os
+from pinecone import Pinecone as PineconeClient
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +17,7 @@ class PineconeManager:
         
         Args:
             api_key (str): Pinecone API key
-            environment (str): Pinecone environment (not used in latest Pinecone version)
+            environment (str): Pinecone environment
             index_name (str): Name of the Pinecone index
             dimension (int): Dimension of the vector embeddings
         """
@@ -31,8 +33,8 @@ class PineconeManager:
             raise ValueError("Pinecone API key must be provided")
         
         try:
-            # Initialize Pinecone client
-            self.pinecone = pinecone.Pinecone(api_key=api_key)
+            # Initialize Pinecone client with the latest API format
+            self.pinecone = PineconeClient(api_key=api_key)
             
             # Get list of indexes
             indexes = self.pinecone.list_indexes()
@@ -44,7 +46,13 @@ class PineconeManager:
                 self.pinecone.create_index(
                     name=index_name,
                     dimension=dimension,
-                    metric="cosine"
+                    metric="cosine",
+                    spec={
+                        "serverless": {
+                            "cloud": "aws", 
+                            "region": environment
+                        }
+                    }
                 )
                 # Wait for index to be ready
                 time.sleep(1)
