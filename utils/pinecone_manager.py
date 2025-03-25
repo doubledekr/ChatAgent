@@ -155,3 +155,23 @@ class PineconeManager:
         except Exception as e:
             logger.error(f"Error deleting from Pinecone: {e}")
             return False
+            
+    def describe_index_stats(self):
+        """
+        Get statistics about the index
+        
+        Returns:
+            dict: Index statistics
+        """
+        if not self.index:
+            logger.error("Pinecone index not initialized")
+            return {"error": "Pinecone index not initialized"}
+        
+        try:
+            # Get statistics about the index
+            response = self.index.describe_index_stats()
+            return response.to_dict() if hasattr(response, 'to_dict') else response
+            
+        except Exception as e:
+            logger.error(f"Error getting index statistics: {e}")
+            return {"error": str(e)}

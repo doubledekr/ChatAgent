@@ -284,18 +284,34 @@ def chat():
         if not query:
             return jsonify({'error': 'No message provided'}), 400
         
-        # Generate embedding for the query
-        query_embedding = generate_embeddings(query)
+        # Generate embedding for the query with retry
+        try:
+            query_embedding = generate_embeddings(query, max_retries=2)
+        except Exception as embed_error:
+            logger.error(f"Error generating query embedding: {embed_error}")
+            return jsonify({
+                'answer': f"<p class='text-danger'>Error generating embedding: {str(embed_error)}</p>",
+                'keywords': [],
+                'follow_up_questions': []
+            }), 500
         
         # Query Pinecone for relevant chunks
-        results = pinecone_manager.query(
-            vector=query_embedding,
-            top_k=5,
-            include_metadata=True
-        )
+        try:
+            results = pinecone_manager.query(
+                vector=query_embedding,
+                top_k=5,
+                include_metadata=True
+            )
+        except Exception as query_error:
+            logger.error(f"Error querying Pinecone: {query_error}")
+            return jsonify({
+                'answer': f"<p class='text-danger'>Error retrieving relevant documents: {str(query_error)}</p>",
+                'keywords': [],
+                'follow_up_questions': []
+            }), 500
         
         # Generate response using OpenAI
-        response = generate_chat_response(query, results)
+        response = generate_chat_response(query, results, max_retries=2)
         
         return jsonify(response)
         
@@ -395,45 +411,74 @@ def upload_progress():
         chunks = chunk_text(extracted_text)
         total_chunks = len(chunks)
         
-        # Process each chunk with progress tracking
+        # Process in smaller batches to avoid timeouts
         processed_chunks = 0
-        for i, chunk in enumerate(chunks):
-            try:
-                # Generate embeddings
-                embedding = generate_embeddings(chunk)
+        batch_size = 3  # Smaller batches to avoid timeouts
+        
+        for i in range(0, total_chunks, batch_size):
+            batch = chunks[i:i+batch_size]
+            batch_embeddings = []
+            batch_metadata = []
+            batch_ids = []
+            
+            # Generate embeddings for the batch
+            for j, chunk in enumerate(batch):
+                chunk_index = i + j
+                try:
+                    # Generate embeddings with reduced retries for faster feedback
+                    embedding = generate_embeddings(chunk, max_retries=1)
+                    
+                    if embedding and len(embedding) > 0:
+                        # Create metadata
+                        metadata = {
+                            'text': chunk,
+                            'filename': orig_filename,
+                            'filetype': file_ext,
+                            'subject': file_metadata.get('subject', subject),  # Use AI-generated subject if available
+                            'tags': tags_list,
+                            'chunk_id': chunk_index,
+                            'source': 'user_upload',
+                            'user_id': session.get('user_id', 'anonymous')
+                        }
+                        
+                        # Add comprehensive AI-generated metadata if available
+                        if file_metadata:
+                            # Add all detailed metadata fields
+                            for key, value in file_metadata.items():
+                                if key != 'general_tags':  # Skip general tags as they're already in the tags field
+                                    metadata[key] = value
+                                    
+                        # Add to batch for upserting
+                        batch_embeddings.append(embedding)
+                        batch_metadata.append(metadata)
+                        batch_ids.append(f"{uuid.uuid4()}")
                 
-                # Store in Pinecone with comprehensive metadata
-                metadata = {
-                    'text': chunk,
-                    'filename': orig_filename,
-                    'filetype': file_ext,
-                    'subject': file_metadata.get('subject', subject),  # Use AI-generated subject if available
-                    'tags': tags_list,
-                    'chunk_id': i,
-                    'source': 'user_upload',
-                    'user_id': session.get('user_id', 'anonymous')
-                }
-                
-                # Add comprehensive AI-generated metadata if available
-                if file_metadata:
-                    # Add all detailed metadata fields
-                    for key, value in file_metadata.items():
-                        if key != 'general_tags':  # Skip general tags as they're already in the tags field
-                            metadata[key] = value
-                
-                pinecone_manager.upsert(
-                    id=f"{uuid.uuid4()}",
-                    vector=embedding,
-                    metadata=metadata
-                )
-                processed_chunks += 1
-                
-                # For long files, send progress updates every 5 chunks or at the end
-                if i == total_chunks - 1 or i % 5 == 0:
-                    progress = int((processed_chunks / total_chunks) * 100)
-            except Exception as e:
-                logger.error(f"Error processing chunk {i}: {e}")
-                # Continue with other chunks
+                except Exception as e:
+                    logger.error(f"Error processing chunk {chunk_index}: {e}")
+                    # Continue with other chunks
+            
+            # Upsert the batch to Pinecone
+            if batch_embeddings:
+                try:
+                    # Format for Pinecone batch upsert
+                    vectors = []
+                    for k in range(len(batch_embeddings)):
+                        vectors.append({
+                            "id": batch_ids[k],
+                            "values": batch_embeddings[k],
+                            "metadata": batch_metadata[k]
+                        })
+                    
+                    # Batch upsert to Pinecone
+                    if pinecone_manager.index:
+                        pinecone_manager.index.upsert(vectors=vectors, namespace="default")
+                        processed_chunks += len(vectors)
+                        
+                except Exception as batch_error:
+                    logger.error(f"Error upserting batch to Pinecone: {batch_error}")
+            
+            # Update progress
+            progress = int((processed_chunks / total_chunks) * 100) if total_chunks > 0 else 100
         
         # Clean up temp file
         os.remove(filepath)
@@ -466,18 +511,43 @@ def upload_progress():
 def check_pinecone():
     """Check if Pinecone is properly connected"""
     try:
-        # Get a count of vectors in the index
-        if pinecone_manager and pinecone_manager.index:
-            # Use stats method to check connection
-            stats = pinecone_manager.index.describe_index_stats()
-            vector_count = stats.get('total_vector_count', 0)
+        # Log pinecone manager status for debugging
+        logger.debug(f"Pinecone manager: {pinecone_manager}")
+        logger.debug(f"Pinecone manager index: {pinecone_manager.index if pinecone_manager else None}")
+        
+        # Check for Pinecone availability
+        if not pinecone_available or not pinecone_manager:
             return jsonify({
-                "status": "success", 
-                "message": f"Pinecone connected successfully. Index contains {vector_count} vectors.",
-                "stats": stats
-            })
+                "status": "error", 
+                "message": "Pinecone is not available. Please check your API key and environment.",
+                "api_key_set": PINECONE_API_KEY is not None,
+                "env_set": PINECONE_ENV != ""
+            }), 500
+        
+        # Get a count of vectors in the index
+        if pinecone_manager.index:
+            # Use stats method to check connection
+            try:
+                stats = pinecone_manager.describe_index_stats()
+                vector_count = stats.get('total_vector_count', 0)
+                return jsonify({
+                    "status": "success", 
+                    "message": f"Pinecone connected successfully. Index contains {vector_count} vectors.",
+                    "stats": stats
+                })
+            except Exception as inner_e:
+                logger.error(f"Error getting index stats: {inner_e}")
+                return jsonify({
+                    "status": "error", 
+                    "message": f"Error getting index stats: {str(inner_e)}",
+                    "pinecone_connected": pinecone_manager is not None
+                }), 500
         else:
-            return jsonify({"status": "error", "message": "Pinecone manager or index not initialized"}), 500
+            return jsonify({
+                "status": "error", 
+                "message": "Pinecone index not initialized",
+                "pinecone_connected": pinecone_manager is not None
+            }), 500
     except Exception as e:
         logger.error(f"Error checking Pinecone connection: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
