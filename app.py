@@ -166,42 +166,53 @@ def upload_file():
                 chunks = chunk_text(extracted_text)
                 logger.debug(f"Created {len(chunks)} chunks from {orig_filename}")
                 
-                # Process each chunk
+                # Process each chunk with improved timeout handling
                 chunk_count = 0
-                for i, chunk in enumerate(chunks):
-                    try:
-                        # Generate embeddings
-                        embedding = generate_embeddings(chunk)
-                        
-                        # Start with basic metadata
-                        metadata = {
-                            'text': chunk,
-                            'filename': orig_filename,
-                            'filetype': file_ext,
-                            'subject': file_metadata.get('subject', subject),  # Use AI-generated subject if available
-                            'tags': file_tags_list,
-                            'chunk_id': i,
-                            'source': 'user_upload',
-                            'user_id': session.get('user_id', 'anonymous')
-                        }
-                        
-                        # Add comprehensive AI-generated metadata if available
-                        if file_metadata:
-                            # Add all detailed metadata fields
-                            for key, value in file_metadata.items():
-                                if key != 'general_tags':  # Skip general tags as they're already in the tags field
-                                    metadata[key] = value
-                        
-                        pinecone_manager.upsert(
-                            id=f"{uuid.uuid4()}",
-                            vector=embedding,
-                            metadata=metadata
-                        )
-                        chunk_count += 1
-                    except Exception as chunk_error:
-                        logger.error(f"Error processing chunk {i} of {orig_filename}: {chunk_error}")
-                        # Continue with other chunks even if one fails
-                        continue
+                batch_size = 3  # Process chunks in smaller batches to avoid timeouts
+                
+                for i in range(0, len(chunks), batch_size):
+                    batch = chunks[i:i+batch_size]
+                    
+                    for j, chunk in enumerate(batch):
+                        chunk_index = i + j
+                        try:
+                            # Generate embeddings with shorter timeout
+                            embedding = generate_embeddings(chunk, max_retries=2)  # Reduced retries for faster feedback
+                            
+                            # Start with basic metadata
+                            metadata = {
+                                'text': chunk,
+                                'filename': orig_filename,
+                                'filetype': file_ext,
+                                'subject': file_metadata.get('subject', subject),  # Use AI-generated subject if available
+                                'tags': file_tags_list,
+                                'chunk_id': chunk_index,
+                                'source': 'user_upload',
+                                'user_id': session.get('user_id', 'anonymous')
+                            }
+                            
+                            # Add comprehensive AI-generated metadata if available
+                            if file_metadata:
+                                # Add all detailed metadata fields
+                                for key, value in file_metadata.items():
+                                    if key != 'general_tags':  # Skip general tags as they're already in the tags field
+                                        metadata[key] = value
+                            
+                            # Proceed only if we have valid embeddings
+                            if embedding and len(embedding) > 0:
+                                pinecone_manager.upsert(
+                                    id=f"{uuid.uuid4()}",
+                                    vector=embedding,
+                                    metadata=metadata
+                                )
+                                chunk_count += 1
+                            else:
+                                logger.warning(f"Empty embedding for chunk {chunk_index} of {orig_filename}")
+                                
+                        except Exception as chunk_error:
+                            # Log the error but continue with the next chunk
+                            logger.error(f"Error processing chunk {chunk_index} from {orig_filename}: {chunk_error}")
+                            # Consider if not counting failed chunks is appropriate for your UI
                 
                 # Clean up temp file
                 os.remove(filepath)
@@ -450,6 +461,26 @@ def upload_progress():
             'status': 'error',
             'message': f'Error processing file: {str(e)}'
         }), 500
+
+@app.route('/check-pinecone', methods=['GET'])
+def check_pinecone():
+    """Check if Pinecone is properly connected"""
+    try:
+        # Get a count of vectors in the index
+        if pinecone_manager and pinecone_manager.index:
+            # Use stats method to check connection
+            stats = pinecone_manager.index.describe_index_stats()
+            vector_count = stats.get('total_vector_count', 0)
+            return jsonify({
+                "status": "success", 
+                "message": f"Pinecone connected successfully. Index contains {vector_count} vectors.",
+                "stats": stats
+            })
+        else:
+            return jsonify({"status": "error", "message": "Pinecone manager or index not initialized"}), 500
+    except Exception as e:
+        logger.error(f"Error checking Pinecone connection: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.errorhandler(413)
 def too_large(e):
