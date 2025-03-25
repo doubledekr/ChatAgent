@@ -16,16 +16,18 @@ else:
     logger.warning("OPENAI_API_KEY not set in environment variables")
     # Client will be initialized later when the key is available
 
-def generate_tags(text, max_tags=8):
+def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8):
     """
-    Generate relevant tags for a text using OpenAI's GPT-4o model
+    Generate comprehensive metadata and tags for document chunks using OpenAI's GPT-4o model
     
     Args:
-        text (str): Text to generate tags for
-        max_tags (int): Maximum number of tags to generate
+        text (str): Text content to analyze
+        filename (str): Original filename
+        file_ext (str): File extension/type
+        max_tags (int): Maximum number of general tags to generate
         
     Returns:
-        list: List of tags
+        dict: Comprehensive metadata including various tag categories
     """
     global client, OPENAI_API_KEY
     
@@ -37,26 +39,41 @@ def generate_tags(text, max_tags=8):
             client = OpenAI(api_key=OPENAI_API_KEY)
         else:
             logger.error("OpenAI client not initialized - API key is missing")
-            return []
+            return {}
     
     try:
         # Truncate text if it's very long
-        if len(text) > 10000:
-            logger.warning(f"Text too long ({len(text)} chars), truncating to 10000 chars for tag generation")
-            text = text[:10000]
+        if len(text) > 15000:
+            logger.warning(f"Text too long ({len(text)} chars), truncating to 15000 chars for metadata generation")
+            text = text[:15000]
         
         system_message = f"""
-        You are a precise document tagging system.
-        Extract {max_tags} relevant and specific tags from the text.
-        Focus on key concepts, technologies, methodologies, and important named entities.
-        Respond with tags only in JSON format as an array of strings.
-        Keep tags short (1-3 words each) and specific.
+        You are an expert document analyzer and metadata tagger. Analyze the provided text and extract detailed, structured metadata.
+        Create appropriate tags for each of the following categories:
+        
+        1. subject - Core domain/topic (e.g., finance, investing, real estate, psychology)
+        2. subcategory - More specific topic (e.g., ETFs, technical analysis, habit formation)
+        3. skill_level - Learning level (e.g., beginner, intermediate, advanced)
+        4. chunk_summary - Short summary (1-2 sentences) of the content
+        5. key_points - List of 3-5 important ideas/facts in the content
+        6. chunk_type - Type of content (definition, how-to, case study, example, tip, principle)
+        7. concepts_covered - List of key concepts, terms, or formulas mentioned
+        8. prerequisites - Topics or knowledge needed to understand this content
+        9. next_steps - Logical follow-up topics or learning suggestions
+        10. learning_objective - What the user is expected to learn from this content
+        11. application_context - Where or how this knowledge is applied (e.g., investing, health, education)
+        12. education_use_case - Tag for learning tasks (e.g., quiz_candidate, lesson_topic, glossary)
+        13. question_tags - Potential quiz or flashcard prompts (1-3 questions)
+        14. general_tags - List of {max_tags} general tags/keywords that describe the content
+
+        Format your response as a JSON object with each category as a key. Use arrays for lists and keep the format clean and consistent.
+        If a category is not applicable, use an empty array or appropriate default.
         """
         
         # Prepare conversation for OpenAI
         messages = [
             {"role": "system", "content": system_message},
-            {"role": "user", "content": f"Text for tagging: {text}"}
+            {"role": "user", "content": f"Filename: {filename}\nFile type: {file_ext}\n\nContent for analysis: {text}"}
         ]
         
         # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
@@ -65,29 +82,63 @@ def generate_tags(text, max_tags=8):
             model="gpt-4o",
             messages=messages,
             temperature=0.3,
-            max_tokens=200,
+            max_tokens=1000,
             response_format={"type": "json_object"}
         )
         
-        tags_response = response.choices[0].message.content
+        metadata_response = response.choices[0].message.content
         
         # Parse JSON response
         try:
-            tags_data = json.loads(tags_response)
-            if isinstance(tags_data, dict) and "tags" in tags_data:
-                return tags_data["tags"]
-            elif isinstance(tags_data, list):
-                return tags_data
-            else:
-                logger.warning(f"Unexpected tags format from OpenAI: {tags_response}")
-                return []
+            metadata = json.loads(metadata_response)
+            # Add source filename if provided
+            if filename:
+                metadata["source_filename"] = filename
+            
+            # Convert lists to string for compatibility with existing code where needed
+            if isinstance(metadata.get("key_points"), list):
+                metadata["key_points"] = "\n".join([f"• {point}" for point in metadata["key_points"]])
+                
+            if isinstance(metadata.get("concepts_covered"), list):
+                metadata["concepts_covered"] = ", ".join(metadata["concepts_covered"])
+                
+            if isinstance(metadata.get("prerequisites"), list):
+                metadata["prerequisites"] = ", ".join(metadata["prerequisites"])
+                
+            logger.debug(f"Generated comprehensive metadata with {len(metadata)} categories")
+            return metadata
+            
         except json.JSONDecodeError:
-            logger.error(f"Failed to parse JSON response for tags: {tags_response}")
-            return []
+            logger.error(f"Failed to parse JSON response for metadata: {metadata_response}")
+            return {"general_tags": []}
         
     except Exception as e:
-        logger.error(f"Error generating tags: {e}")
-        return []
+        logger.error(f"Error generating comprehensive metadata: {e}")
+        return {"general_tags": []}
+
+def generate_tags(text, max_tags=8, filename="", file_ext=""):
+    """
+    Generate relevant tags for a text using OpenAI's GPT-4o model
+    
+    Args:
+        text (str): Text to generate tags for
+        max_tags (int): Maximum number of tags to generate
+        filename (str): Original filename, if available
+        file_ext (str): File extension/type, if available
+        
+    Returns:
+        list: List of tags
+    """
+    # For backward compatibility, use the comprehensive function but return just the tags
+    metadata = generate_comprehensive_metadata(
+        text=text,
+        filename=filename,
+        file_ext=file_ext,
+        max_tags=max_tags
+    )
+    
+    # Return general tags if available, otherwise empty list
+    return metadata.get("general_tags", [])
 
 def generate_chat_response(query, search_results):
     """

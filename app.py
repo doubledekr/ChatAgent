@@ -10,7 +10,7 @@ import json
 from utils.extract_text import extract_text_from_file, chunk_text
 from utils.embedding import generate_embeddings
 from utils.pinecone_manager import PineconeManager
-from utils.chat import generate_chat_response, generate_tags
+from utils.chat import generate_chat_response, generate_tags, generate_comprehensive_metadata
 import utils.embedding as embedding_module
 import utils.chat as chat_module
 
@@ -131,18 +131,30 @@ def upload_file():
                     os.remove(filepath)
                     continue
                 
-                # Generate AI tags if OpenAI is available
+                # Generate comprehensive metadata if OpenAI is available
                 file_ai_tags = []
+                file_metadata = {}
                 if openai_available:
                     try:
-                        # Use the first chunk or a portion of text for tag generation
-                        sample_text = extracted_text[:20000]  # Use first 20k chars for tag generation
-                        file_ai_tags = generate_tags(sample_text, max_tags=10)
+                        # Use the first chunk or a portion of text for metadata generation
+                        sample_text = extracted_text[:20000]  # Use first 20k chars for metadata generation
+                        file_metadata = generate_comprehensive_metadata(
+                            text=sample_text, 
+                            filename=orig_filename,
+                            file_ext=file_ext,
+                            max_tags=10
+                        )
+                        
+                        # Get the general tags for backward compatibility
+                        file_ai_tags = file_metadata.get("general_tags", [])
                         logger.debug(f"Generated {len(file_ai_tags)} AI tags for {orig_filename}: {file_ai_tags}")
                         all_ai_tags.update(file_ai_tags)  # Add to the set of all tags
+                        
+                        # Log summary of generated metadata
+                        logger.debug(f"Generated metadata for {orig_filename} with {len(file_metadata)} categories")
                     except Exception as tag_error:
-                        logger.error(f"Error generating AI tags for {orig_filename}: {tag_error}")
-                        # Continue even if AI tagging fails
+                        logger.error(f"Error generating metadata for {orig_filename}: {tag_error}")
+                        # Continue even if metadata generation fails
                 
                 # Combine manual and AI tags for this file, removing duplicates
                 file_tags_list = manual_tags_list.copy()
@@ -161,17 +173,24 @@ def upload_file():
                         # Generate embeddings
                         embedding = generate_embeddings(chunk)
                         
-                        # Store in Pinecone with metadata
+                        # Start with basic metadata
                         metadata = {
                             'text': chunk,
                             'filename': orig_filename,
                             'filetype': file_ext,
-                            'subject': subject,
+                            'subject': file_metadata.get('subject', subject),  # Use AI-generated subject if available
                             'tags': file_tags_list,
                             'chunk_id': i,
                             'source': 'user_upload',
                             'user_id': session.get('user_id', 'anonymous')
                         }
+                        
+                        # Add comprehensive AI-generated metadata if available
+                        if file_metadata:
+                            # Add all detailed metadata fields
+                            for key, value in file_metadata.items():
+                                if key != 'general_tags':  # Skip general tags as they're already in the tags field
+                                    metadata[key] = value
                         
                         pinecone_manager.upsert(
                             id=f"{uuid.uuid4()}",
@@ -332,15 +351,28 @@ def upload_progress():
                 'message': 'Unable to extract text from file'
             }), 400
         
-        # Generate AI tags
+        # Generate comprehensive metadata
         ai_tags = []
+        file_metadata = {}
         if openai_available:
             try:
-                sample_text = extracted_text[:20000]
-                ai_tags = generate_tags(sample_text, max_tags=10)
+                sample_text = extracted_text[:20000]  # Use first 20k chars for metadata generation
+                file_metadata = generate_comprehensive_metadata(
+                    text=sample_text,
+                    filename=orig_filename,
+                    file_ext=file_ext,
+                    max_tags=10
+                )
+                
+                # Get the general tags for backward compatibility
+                ai_tags = file_metadata.get("general_tags", [])
+                logger.debug(f"Generated {len(ai_tags)} AI tags for {orig_filename}: {ai_tags}")
+                
+                # Log summary of generated metadata
+                logger.debug(f"Generated metadata for {orig_filename} with {len(file_metadata)} categories")
             except Exception as e:
-                logger.error(f"Error generating AI tags: {e}")
-                # Continue even if AI tagging fails
+                logger.error(f"Error generating metadata: {e}")
+                # Continue even if metadata generation fails
         
         # Combine tags
         tags_list = manual_tags_list.copy()
