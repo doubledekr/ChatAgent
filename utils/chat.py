@@ -180,13 +180,14 @@ def generate_tags(text, max_tags=8, filename="", file_ext=""):
     # Return general tags if available, otherwise empty list
     return metadata.get("general_tags", [])
 
-def generate_chat_response(query, search_results):
+def generate_chat_response(query, search_results, max_retries=3):
     """
     Generate context-aware responses using OpenAI's GPT-4o model
     
     Args:
         query (str): User's question
         search_results (dict): Results from Pinecone query
+        max_retries (int): Maximum number of retry attempts for API calls
         
     Returns:
         dict: Response with answer and metadata
@@ -228,26 +229,62 @@ def generate_chat_response(query, search_results):
             {"role": "user", "content": f"Question: {query}\n\nContext from documents: {combined_context}"}
         ]
         
-        # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-        # do not change this unless explicitly requested by the user
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=messages,
-            temperature=0.7,
-            max_tokens=1200
-        )
+        import time
         
-        answer_html = response.choices[0].message.content
+        # Retry logic for API calls
+        retries = 0
+        last_error = None
         
-        # Extract keywords and follow-up questions using regex
-        keywords = re.findall(r'<button class="keyword">(.*?)</button>', answer_html)
-        follow_up_questions = re.findall(r'<button class="follow-up-question">(.*?)</button>', answer_html)
-        
-        return {
-            "answer": answer_html,
-            "keywords": keywords,
-            "follow_up_questions": follow_up_questions
-        }
+        while retries <= max_retries:
+            try:
+                # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+                # do not change this unless explicitly requested by the user
+                response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=messages,
+                    temperature=0.7,
+                    max_tokens=1200
+                )
+                
+                answer_html = response.choices[0].message.content
+                
+                # Extract keywords and follow-up questions using regex
+                keywords = re.findall(r'<button class="keyword">(.*?)</button>', answer_html)
+                follow_up_questions = re.findall(r'<button class="follow-up-question">(.*?)</button>', answer_html)
+                
+                return {
+                    "answer": answer_html,
+                    "keywords": keywords,
+                    "follow_up_questions": follow_up_questions
+                }
+                
+            except Exception as e:
+                last_error = e
+                retries += 1
+                logger.warning(f"Error generating chat response (attempt {retries}/{max_retries}): {e}")
+                
+                # If it's an API key issue, don't retry
+                if "API key" in str(e):
+                    logger.error("OpenAI API key is invalid or missing")
+                    return {
+                        "answer": "<p>I apologize, but the OpenAI API key is invalid or missing. Please check your configuration.</p>",
+                        "keywords": [],
+                        "follow_up_questions": []
+                    }
+                
+                # If we've reached max retries, return error response
+                if retries > max_retries:
+                    logger.error(f"Failed to generate chat response after {max_retries} attempts: {e}")
+                    return {
+                        "answer": f"<p>I apologize, but I encountered an error after multiple attempts: {str(e)}</p>",
+                        "keywords": [],
+                        "follow_up_questions": []
+                    }
+                
+                # Wait with exponential backoff before retrying
+                wait_time = 2 ** (retries - 1)
+                logger.info(f"Waiting {wait_time}s before retrying chat response generation...")
+                time.sleep(wait_time)
     
     except Exception as e:
         logger.error(f"Error generating chat response: {e}")
