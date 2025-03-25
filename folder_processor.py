@@ -342,14 +342,36 @@ def process_file(filename):
                     
                     # Batch upsert to Pinecone
                     if pinecone_manager and pinecone_manager.index:
-                        pinecone_manager.index.upsert(vectors=vectors, namespace="default")
+                        # Get vector count before upsert
+                        try:
+                            before_stats = pinecone_manager.describe_index_stats()
+                            before_count = before_stats.get('total_vector_count', 0)
+                        except Exception as stats_error:
+                            logger.warning(f"Could not get before stats: {stats_error}")
+                            before_count = 0
+                        
+                        # Perform the upsert
+                        upsert_response = pinecone_manager.index.upsert(vectors=vectors, namespace="default")
                         processed_chunks += len(vectors)
+                        
+                        # Get vector count after upsert
+                        try:
+                            after_stats = pinecone_manager.describe_index_stats()
+                            after_count = after_stats.get('total_vector_count', 0)
+                            # Log the difference in vector count
+                            vectors_added = int(after_count) - int(before_count)
+                        except Exception as stats_error:
+                            logger.warning(f"Could not get after stats: {stats_error}")
+                            after_count = processed_chunks
+                            vectors_added = len(vectors)
+                        logger.info(f"Added {vectors_added} vectors to Pinecone (upsert batch size: {len(vectors)})")
+                        logger.info(f"Pinecone now contains {after_count} total vectors")
                         
                         update_file_status(
                             filename, 
                             "processing", 
                             40 + int(((i + len(batch)) / total_chunks) * 50), 
-                            f"Stored batch {i//BATCH_SIZE + 1} in Pinecone, total processed: {processed_chunks}/{total_chunks}"
+                            f"Stored batch {i//BATCH_SIZE + 1} in Pinecone (added {vectors_added} vectors), total: {after_count}"
                         )
                     else:
                         raise Exception("Pinecone index not initialized")
