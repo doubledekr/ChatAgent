@@ -1,0 +1,136 @@
+[CRITICAL] WORKER TIMEOUT (pid:1073)
+[2025-03-28 22:07:25 +0000] [1073] [ERROR] Error handling request /api/pinecone-files
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/app.py", line 910, in api_pinecone_files
+    pinecone_files = list_complete_files_in_pinecone()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/app.py", line 620, in list_complete_files_in_pinecone
+    response = pinecone_manager.query(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/utils/pinecone_manager.py", line 112, in query
+    result = self.index.query(
+             ^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/utils/error_handling.py", line 10, in inner_func
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/data/index.py", line 385, in query
+    response = self._vector_api.query(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/api_client.py", line 771, in __call__
+    return self.callable(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/api/vector_operations_api.py", line 711, in __query
+    return self.call_with_http_info(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/api_client.py", line 833, in call_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/api_client.py", line 408, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/api_client.py", line 223, in __call_api
+    return_data = self.deserialize(
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/api_client.py", line 324, in deserialize
+    deserialized_data = validate_and_convert_types(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1538, in validate_and_convert_types
+    converted_instance = attempt_convert_item(
+                         ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1425, in attempt_convert_item
+    return deserialize_model(input_value, valid_class,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1345, in deserialize_model
+    return model_class._new_from_openapi_data(**kw_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 42, in wrapped_init
+    return fn(_self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 341, in _new_from_openapi_data
+    return cls._from_openapi_data(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 42, in wrapped_init
+    return fn(_self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model/query_response.py", line 191, in _from_openapi_data
+    setattr(self, var_name, var_value)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 181, in __setattr__
+    self[attr] = value
+    ~~~~^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 481, in __setitem__
+    self.set_attribute(name, value)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 153, in set_attribute
+    value = validate_and_convert_types(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1588, in validate_and_convert_types
+    input_value[index] = validate_and_convert_types(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1538, in validate_and_convert_types
+    converted_instance = attempt_convert_item(
+                         ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1425, in attempt_convert_item
+    return deserialize_model(input_value, valid_class,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1345, in deserialize_model
+    return model_class._new_from_openapi_data(**kw_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 42, in wrapped_init
+    return fn(_self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 341, in _new_from_openapi_data
+    return cls._from_openapi_data(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 42, in wrapped_init
+    return fn(_self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model/scored_vector.py", line 197, in _from_openapi_data
+    setattr(self, var_name, var_value)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 181, in __setattr__
+    self[attr] = value
+    ~~~~^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 481, in __setitem__
+    self.set_attribute(name, value)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 153, in set_attribute
+    value = validate_and_convert_types(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1606, in validate_and_convert_types
+    input_value[inner_key] = validate_and_convert_types(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1530, in validate_and_convert_types
+    results = get_required_type_classes(required_types_mixed, spec_property_naming)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1161, in get_required_type_classes
+    valid_classes.extend(get_possible_classes(required_type, spec_property_naming))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/pinecone/core/client/model_utils.py", line 1114, in get_possible_classes
+    def get_possible_classes(cls, from_server_context):
+    
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-03-28 22:07:25 +0000] [1073] [INFO] Worker exiting (pid: 1073)
+[2025-03-28 22:07:25 +0000] [1161] [INFO] Booting worker with pid: 1161
+2025-03-28 22:07:27,339 - utils.pinecone_manager - INFO - Connected to Pinecone index: docai
+2025-03-28 22:07:27,339 - folder_processor - INFO - Pinecone initialized successfully
+2025-03-28 22:07:27,355 - folder_processor - INFO - OpenAI clients initialized successfully
+2025-03-28 22:07:27,536 - utils.pinecone_manager - INFO - Connected to Pinecone index: docai
+2025-03-28 22:07:27,536 - app - INFO - Pinecone initialized successfully
+2025-03-28 22:07:27,553 - app - INFO - OpenAI clients initialized successfully
+[2025-03-28 22:07:28 +0000] [1062] [INFO] Handling signal: winch

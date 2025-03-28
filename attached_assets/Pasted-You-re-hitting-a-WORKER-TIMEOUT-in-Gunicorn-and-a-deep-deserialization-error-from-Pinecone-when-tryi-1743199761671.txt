@@ -1,0 +1,54 @@
+You're hitting a WORKER TIMEOUT in Gunicorn and a deep deserialization error from Pinecone when trying to run this function:
+
+pinecone_files = list_complete_files_in_pinecone()
+🔥 What’s going wrong?
+Your function list_complete_files_in_pinecone() is calling .query() on the Pinecone index — but this is a misuse of the query() method if you're trying to "list uploaded files."
+
+Pinecone’s .query() method is meant to search for similar vectors, not to browse or list metadata like file names or all vectors in the DB.
+
+✅ Fix: Use .fetch() or .describe_index_stats() instead
+
+If your filenames are stored in Pinecone as vector IDs or metadata fields, you can do one of the following:
+
+✅ 1. If you want a list of all items (filenames as IDs):
+# Will return IDs and metadata of ALL vectors in the index
+response = pinecone_index.describe_index_stats()
+ids = response['namespaces'][""]['vector_count']
+But describe_index_stats() just gives counts, not names.
+
+✅ 2. If you stored filenames as metadata:
+Then query like this (search by metadata):
+
+results = pinecone_index.query(
+    vector=[0.0]*1536,  # dummy vector
+    top_k=100,
+    include_metadata=True,
+    filter={"type": "file"}  # adjust based on your metadata schema
+)
+for match in results['matches']:
+    print(match['metadata'].get('filename'))
+⚠️ Note: This dummy vector strategy is not recommended at scale — it's just a hack to retrieve some items.
+✅ 3. If you want to list all vector IDs:
+There is no built-in way to list all vector IDs via Pinecone’s query API.
+
+However, if you stored the filenames as vector IDs, and you know them already (e.g., in a local JSON or DB), then you can call .fetch():
+
+pinecone_index.fetch(ids=["filename1.pdf", "filename2.txt", "another.epub"])
+🔄 What to Do in Your Code
+
+✅ Replace query() with one of the following:
+If you just want to check which filenames are in Pinecone:
+
+# Recommended: maintain your own list of uploaded filenames
+# and check which are present in Pinecone
+def list_complete_files_in_pinecone():
+    filenames = [...]  # Your list of filenames (or file IDs)
+    response = pinecone_index.fetch(ids=filenames)
+    return list(response['vectors'].keys())
+💡 How to Prevent This in the Future
+
+Don’t use .query() to list vectors — use .fetch() for known IDs or .describe_index_stats() for counts.
+Set a timeout for heavy endpoints in Gunicorn:
+gunicorn app:app --timeout 60
+Avoid doing heavy logic (like full .query() scans) in production routes.
+If you show me your list_complete_files_in_pinecone() function, I can rewrite it cleanly for your use case. Want to paste it here?

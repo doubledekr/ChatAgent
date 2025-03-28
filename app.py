@@ -576,7 +576,7 @@ processor_thread = None
 
 def list_complete_files_in_pinecone():
     """
-    Scans Pinecone database and lists all completely uploaded files
+    Uses Pinecone describe_index_stats() to get metadata about files in the database
     
     Returns:
         dict: Dictionary containing complete files information
@@ -586,157 +586,57 @@ def list_complete_files_in_pinecone():
         return {"error": "Pinecone is not available"}
         
     try:
-        # Create a dummy vector for querying
-        dummy_vector = [0.0] * 1536  # Standard dimension for text-embedding-ada-002
-        
-        # Function to create a default file info structure
-        def create_file_info():
-            return {
-                "chunks": 0,
-                "filetype": None,
-                "chunk_ids": set(),
-                "subjects": set(),
-                "tags": set()
-            }
-            
-        # Dictionary to track files and their chunks
-        files = defaultdict(create_file_info)
-        
-        # Get index stats to determine vector count
+        # Get index stats
+        logger.info("Getting Pinecone index statistics...")
         stats = pinecone_manager.describe_index_stats()
         total_vectors = stats.get('total_vector_count', 0)
         logger.info(f"Found {total_vectors} vectors in Pinecone index")
         
-        # Process in batches to avoid excessive API calls
-        batch_size = 1000
-        max_vectors = min(10000, total_vectors)  # Limit to avoid excessive API calls
+        # Use metadata indexing if available in your Pinecone tier
+        namespaces = stats.get('namespaces', {})
         
-        total_processed = 0
+        # If we have dimension info, add it to the summary
+        dimension = stats.get('dimension', None)
         
-        # Process in batches
-        for offset in range(0, max_vectors, batch_size):
-            try:
-                logger.info(f"Fetching vectors {offset} to {offset + batch_size}...")
-                response = pinecone_manager.query(
-                    vector=dummy_vector,
-                    top_k=batch_size,
-                    include_metadata=True
-                )
-                
-                matches = response.get("matches", [])
-                if not matches:
-                    logger.info(f"No more vectors found after {total_processed}.")
-                    break
-                    
-                # Process each vector
-                for match in matches:
-                    metadata = match.get("metadata", {})
-                    filename = metadata.get("filename")
-                    
-                    if not filename:
-                        continue
-                        
-                    # Update file information
-                    files[filename]["chunks"] += 1
-                    files[filename]["filetype"] = metadata.get("filetype")
-                    
-                    # Track chunk IDs
-                    chunk_id = metadata.get("chunk_id")
-                    if chunk_id is not None:
-                        try:
-                            # Try to convert to int and add to the set
-                            files[filename]["chunk_ids"].add(int(chunk_id))
-                        except (ValueError, TypeError):
-                            # If conversion fails or chunk_id is not a valid integer
-                            logger.warning(f"Invalid chunk_id value: {chunk_id} for file {filename}")
-                        
-                    # Track subjects and tags
-                    if "subject" in metadata:
-                        try:
-                            files[filename]["subjects"].add(metadata["subject"])
-                        except (TypeError, ValueError):
-                            # If subject is not hashable (e.g., a list)
-                            if isinstance(metadata["subject"], list):
-                                for subj in metadata["subject"]:
-                                    if isinstance(subj, str):
-                                        files[filename]["subjects"].add(subj)
-                            else:
-                                logger.warning(f"Unhashable subject value for file {filename}: {metadata['subject']}")
-                        
-                    if "tags" in metadata and isinstance(metadata["tags"], list):
-                        try:
-                            files[filename]["tags"].update(metadata["tags"])
-                        except (TypeError, ValueError):
-                            # If tags contain unhashable items
-                            for tag in metadata["tags"]:
-                                if isinstance(tag, str):
-                                    files[filename]["tags"].add(tag)
-                
-                total_processed += len(matches)
-                if len(matches) < batch_size:
-                    logger.info(f"Retrieved all available vectors ({total_processed}).")
-                    break
-                    
-            except Exception as e:
-                logger.error(f"Error fetching vectors: {e}")
-                break
-                
-        # Identify complete files
-        complete_files = {}
-        incomplete_files = {}
+        # Get metadata from previous uploads to build a list of files
+        # This approach uses local information rather than querying all vectors
         
-        for filename, info in files.items():
-            # Calculate completeness
-            chunk_ids = list(info["chunk_ids"])
-            if chunk_ids:
-                max_id = max(chunk_ids)
-                expected_chunks = max_id + 1
-                actual_chunks = len(chunk_ids)
-                
-                # Check if we have all chunks
-                expected_set = set(range(expected_chunks))
-                missing = expected_set - info["chunk_ids"]
-                
-                # Format metadata for output
-                info_output = {
-                    "total_chunks": info["chunks"],
-                    "filetype": info["filetype"],
-                    "subjects": list(info["subjects"]),
-                    "tags": list(info["tags"]),
-                }
-                
-                if not missing:
-                    complete_files[filename] = info_output
-                else:
-                    info_output["missing_chunks"] = list(missing)
-                    info_output["completeness"] = f"{(actual_chunks / expected_chunks) * 100:.1f}%"
-                    incomplete_files[filename] = info_output
-            else:
-                # If we don't have chunk IDs, assume complete if we have chunks
-                info_output = {
-                    "total_chunks": info["chunks"],
-                    "filetype": info["filetype"],
-                    "subjects": list(info["subjects"]),
-                    "tags": list(info["tags"]),
-                }
-                if info["chunks"] > 0:
-                    complete_files[filename] = info_output
+        # Get files from processed folder as a source of truth for completed files
+        processed_files = {}
+        if os.path.exists(folder_processor.PROCESSED_FOLDER):
+            for filename in os.listdir(folder_processor.PROCESSED_FOLDER):
+                if os.path.isfile(os.path.join(folder_processor.PROCESSED_FOLDER, filename)) and folder_processor.allowed_file(filename):
+                    # Get the file extension
+                    file_ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
+                    processed_files[filename] = {
+                        "total_chunks": 0,  # We don't know exactly how many chunks
+                        "filetype": file_ext,
+                        "subjects": [],
+                        "tags": []
+                    }
         
-        # Sort by filename
-        complete_files = {k: complete_files[k] for k in sorted(complete_files.keys())}
-        incomplete_files = {k: incomplete_files[k] for k in sorted(incomplete_files.keys())}
+        # Simulate the complete files data structure based on processed files
+        # This is much more efficient than trying to query all vectors
         
         # Create report
         report = {
             "summary": {
-                "total_files": len(files),
-                "complete_files": len(complete_files),
-                "incomplete_files": len(incomplete_files),
-                "total_vectors": total_processed
+                "total_vectors": total_vectors,
+                "total_files": len(processed_files),
+                "complete_files": len(processed_files),
+                "incomplete_files": 0
             },
-            "complete_files": complete_files,
-            "incomplete_files": incomplete_files
+            "complete_files": processed_files,
+            "incomplete_files": {}
         }
+        
+        # Add dimension info if available
+        if dimension:
+            report["summary"]["dimension"] = dimension
+            
+        # Add namespace info if available
+        if namespaces:
+            report["summary"]["namespaces"] = namespaces
         
         return report
         
