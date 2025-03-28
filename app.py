@@ -589,14 +589,18 @@ def list_complete_files_in_pinecone():
         # Create a dummy vector for querying
         dummy_vector = [0.0] * 1536  # Standard dimension for text-embedding-ada-002
         
+        # Function to create a default file info structure
+        def create_file_info():
+            return {
+                "chunks": 0,
+                "filetype": None,
+                "chunk_ids": set(),
+                "subjects": set(),
+                "tags": set()
+            }
+            
         # Dictionary to track files and their chunks
-        files = defaultdict(lambda: {
-            "chunks": 0,
-            "filetype": None,
-            "chunk_ids": set(),
-            "subjects": set(),
-            "tags": set()
-        })
+        files = defaultdict(create_file_info)
         
         # Get index stats to determine vector count
         stats = pinecone_manager.describe_index_stats()
@@ -639,14 +643,34 @@ def list_complete_files_in_pinecone():
                     # Track chunk IDs
                     chunk_id = metadata.get("chunk_id")
                     if chunk_id is not None:
-                        files[filename]["chunk_ids"].add(int(chunk_id))
+                        try:
+                            # Try to convert to int and add to the set
+                            files[filename]["chunk_ids"].add(int(chunk_id))
+                        except (ValueError, TypeError):
+                            # If conversion fails or chunk_id is not a valid integer
+                            logger.warning(f"Invalid chunk_id value: {chunk_id} for file {filename}")
                         
                     # Track subjects and tags
                     if "subject" in metadata:
-                        files[filename]["subjects"].add(metadata["subject"])
+                        try:
+                            files[filename]["subjects"].add(metadata["subject"])
+                        except (TypeError, ValueError):
+                            # If subject is not hashable (e.g., a list)
+                            if isinstance(metadata["subject"], list):
+                                for subj in metadata["subject"]:
+                                    if isinstance(subj, str):
+                                        files[filename]["subjects"].add(subj)
+                            else:
+                                logger.warning(f"Unhashable subject value for file {filename}: {metadata['subject']}")
                         
                     if "tags" in metadata and isinstance(metadata["tags"], list):
-                        files[filename]["tags"].update(metadata["tags"])
+                        try:
+                            files[filename]["tags"].update(metadata["tags"])
+                        except (TypeError, ValueError):
+                            # If tags contain unhashable items
+                            for tag in metadata["tags"]:
+                                if isinstance(tag, str):
+                                    files[filename]["tags"].add(tag)
                 
                 total_processed += len(matches)
                 if len(matches) < batch_size:
