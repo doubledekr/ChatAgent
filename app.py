@@ -20,6 +20,7 @@ import utils.chat as chat_module
 
 # Import folder processor
 import folder_processor
+from collections import defaultdict
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -573,6 +574,152 @@ def too_large(e):
 # Global variable to track the background processor thread
 processor_thread = None
 
+def list_complete_files_in_pinecone():
+    """
+    Scans Pinecone database and lists all completely uploaded files
+    
+    Returns:
+        dict: Dictionary containing complete files information
+    """
+    if not pinecone_available or not pinecone_manager:
+        logger.error("Pinecone is not available")
+        return {"error": "Pinecone is not available"}
+        
+    try:
+        # Create a dummy vector for querying
+        dummy_vector = [0.0] * 1536  # Standard dimension for text-embedding-ada-002
+        
+        # Dictionary to track files and their chunks
+        files = defaultdict(lambda: {
+            "chunks": 0,
+            "filetype": None,
+            "chunk_ids": set(),
+            "subjects": set(),
+            "tags": set()
+        })
+        
+        # Get index stats to determine vector count
+        stats = pinecone_manager.describe_index_stats()
+        total_vectors = stats.get('total_vector_count', 0)
+        logger.info(f"Found {total_vectors} vectors in Pinecone index")
+        
+        # Process in batches to avoid excessive API calls
+        batch_size = 1000
+        max_vectors = min(10000, total_vectors)  # Limit to avoid excessive API calls
+        
+        total_processed = 0
+        
+        # Process in batches
+        for offset in range(0, max_vectors, batch_size):
+            try:
+                logger.info(f"Fetching vectors {offset} to {offset + batch_size}...")
+                response = pinecone_manager.query(
+                    vector=dummy_vector,
+                    top_k=batch_size,
+                    include_metadata=True
+                )
+                
+                matches = response.get("matches", [])
+                if not matches:
+                    logger.info(f"No more vectors found after {total_processed}.")
+                    break
+                    
+                # Process each vector
+                for match in matches:
+                    metadata = match.get("metadata", {})
+                    filename = metadata.get("filename")
+                    
+                    if not filename:
+                        continue
+                        
+                    # Update file information
+                    files[filename]["chunks"] += 1
+                    files[filename]["filetype"] = metadata.get("filetype")
+                    
+                    # Track chunk IDs
+                    chunk_id = metadata.get("chunk_id")
+                    if chunk_id is not None:
+                        files[filename]["chunk_ids"].add(int(chunk_id))
+                        
+                    # Track subjects and tags
+                    if "subject" in metadata:
+                        files[filename]["subjects"].add(metadata["subject"])
+                        
+                    if "tags" in metadata and isinstance(metadata["tags"], list):
+                        files[filename]["tags"].update(metadata["tags"])
+                
+                total_processed += len(matches)
+                if len(matches) < batch_size:
+                    logger.info(f"Retrieved all available vectors ({total_processed}).")
+                    break
+                    
+            except Exception as e:
+                logger.error(f"Error fetching vectors: {e}")
+                break
+                
+        # Identify complete files
+        complete_files = {}
+        incomplete_files = {}
+        
+        for filename, info in files.items():
+            # Calculate completeness
+            chunk_ids = list(info["chunk_ids"])
+            if chunk_ids:
+                max_id = max(chunk_ids)
+                expected_chunks = max_id + 1
+                actual_chunks = len(chunk_ids)
+                
+                # Check if we have all chunks
+                expected_set = set(range(expected_chunks))
+                missing = expected_set - info["chunk_ids"]
+                
+                # Format metadata for output
+                info_output = {
+                    "total_chunks": info["chunks"],
+                    "filetype": info["filetype"],
+                    "subjects": list(info["subjects"]),
+                    "tags": list(info["tags"]),
+                }
+                
+                if not missing:
+                    complete_files[filename] = info_output
+                else:
+                    info_output["missing_chunks"] = list(missing)
+                    info_output["completeness"] = f"{(actual_chunks / expected_chunks) * 100:.1f}%"
+                    incomplete_files[filename] = info_output
+            else:
+                # If we don't have chunk IDs, assume complete if we have chunks
+                info_output = {
+                    "total_chunks": info["chunks"],
+                    "filetype": info["filetype"],
+                    "subjects": list(info["subjects"]),
+                    "tags": list(info["tags"]),
+                }
+                if info["chunks"] > 0:
+                    complete_files[filename] = info_output
+        
+        # Sort by filename
+        complete_files = {k: complete_files[k] for k in sorted(complete_files.keys())}
+        incomplete_files = {k: incomplete_files[k] for k in sorted(incomplete_files.keys())}
+        
+        # Create report
+        report = {
+            "summary": {
+                "total_files": len(files),
+                "complete_files": len(complete_files),
+                "incomplete_files": len(incomplete_files),
+                "total_vectors": total_processed
+            },
+            "complete_files": complete_files,
+            "incomplete_files": incomplete_files
+        }
+        
+        return report
+        
+    except Exception as e:
+        logger.error(f"Error analyzing files in Pinecone: {e}")
+        return {"error": str(e)}
+
 @app.route('/folder-monitor')
 def folder_monitor():
     """Render the folder monitoring interface"""
@@ -723,6 +870,96 @@ def process_single_file(filename):
 def process_all_files():
     """Process all files in the upload folder"""
     return start_processing()
+
+@app.route('/api/pinecone-files')
+def api_pinecone_files():
+    """Get the list of files that are completely processed in Pinecone"""
+    try:
+        # Check if Pinecone is available
+        if not pinecone_available or not pinecone_manager:
+            return jsonify({
+                'status': 'error',
+                'message': 'Pinecone is not available'
+            }), 400
+            
+        # Get the list of complete files
+        pinecone_files = list_complete_files_in_pinecone()
+        
+        return jsonify({
+            'status': 'success',
+            'data': pinecone_files
+        })
+    except Exception as e:
+        logger.error(f"Error getting Pinecone files: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Error getting Pinecone files: {str(e)}'
+        }), 500
+
+@app.route('/api/remove-complete-files', methods=['POST'])
+def remove_complete_files():
+    """Remove files from the upload folder that are already completely processed in Pinecone"""
+    try:
+        # Check if Pinecone is available
+        if not pinecone_available or not pinecone_manager:
+            return jsonify({
+                'status': 'error',
+                'message': 'Pinecone is not available'
+            }), 400
+            
+        # Get the list of complete files
+        pinecone_files = list_complete_files_in_pinecone()
+        if isinstance(pinecone_files, dict) and 'complete_files' in pinecone_files:
+            complete_filenames = pinecone_files['complete_files'].keys()
+        else:
+            complete_filenames = []
+        
+        # Get the list of files in the upload folder
+        pending_files = []
+        if os.path.exists(folder_processor.UPLOAD_FOLDER):
+            for filename in os.listdir(folder_processor.UPLOAD_FOLDER):
+                filepath = os.path.join(folder_processor.UPLOAD_FOLDER, filename)
+                if os.path.isfile(filepath) and folder_processor.allowed_file(filename):
+                    pending_files.append(filename)
+                    
+        # Find files that are both in the upload folder and complete in Pinecone
+        removable_files = set(pending_files).intersection(complete_filenames)
+        removed_files = []
+        
+        # Remove those files from the upload folder
+        for filename in removable_files:
+            try:
+                filepath = os.path.join(folder_processor.UPLOAD_FOLDER, filename)
+                # Remove the file
+                os.remove(filepath)
+                # Update the status
+                folder_processor.update_file_status(
+                    filename, 
+                    'complete', 
+                    100, 
+                    f"File already in Pinecone - removed from queue"
+                )
+                removed_files.append(filename)
+            except Exception as file_error:
+                logger.error(f"Error removing file {filename}: {file_error}")
+        
+        # Prepare response message
+        if removed_files:
+            message = f"Removed {len(removed_files)} files that are already in Pinecone: {', '.join(removed_files)}"
+        else:
+            message = "No files to remove. No overlap between pending files and complete files in Pinecone."
+            
+        return jsonify({
+            'status': 'success',
+            'message': message,
+            'removed_files': removed_files
+        })
+    except Exception as e:
+        logger.error(f"Error removing complete files: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Error removing complete files: {str(e)}'
+        }), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

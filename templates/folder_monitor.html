@@ -18,6 +18,7 @@
                 <div class="card-footer">
                     <button id="refresh-btn" class="btn btn-sm btn-outline-primary">Refresh</button>
                     <button id="process-btn" class="btn btn-sm btn-primary">Process Files</button>
+                    <button id="remove-complete-btn" class="btn btn-sm btn-warning" title="Remove files that are already in Pinecone">Remove Complete Files</button>
                 </div>
             </div>
         </div>
@@ -29,6 +30,22 @@
                 </div>
                 <div class="card-body">
                     <div id="processed-status">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Files in Pinecone Database</h5>
+                    <button id="check-pinecone-btn" class="btn btn-sm btn-light">Check Pinecone</button>
+                </div>
+                <div class="card-body">
+                    <div id="pinecone-status">
+                        <div class="alert alert-info">Click "Check Pinecone" to see which files are completely processed in the Pinecone database.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,6 +105,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 alert('An error occurred. Please check the console.');
             });
+    });
+    
+    // Set up check Pinecone button
+    document.getElementById('check-pinecone-btn').addEventListener('click', function() {
+        document.getElementById('pinecone-status').innerHTML = 
+            '<div class="alert alert-info">Checking Pinecone database... This may take a few moments.</div>';
+            
+        fetch('/api/pinecone-files')
+            .then(response => response.json())
+            .then(data => {
+                updatePineconeStatus(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('pinecone-status').innerHTML = 
+                    '<div class="alert alert-danger">Error checking Pinecone database. Please try again.</div>';
+            });
+    });
+    
+    // Set up remove complete files button
+    document.getElementById('remove-complete-btn').addEventListener('click', function() {
+        if (confirm('Are you sure you want to remove files from the queue that are already processed and stored in Pinecone?')) {
+            fetch('/api/remove-complete-files', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message);
+                    refreshStatus();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please check the console.');
+            });
+        }
     });
     
     // Auto-refresh every 5 seconds
@@ -229,6 +288,124 @@ function updateProcessingStatus(data) {
     }
     
     document.getElementById('processing-status').innerHTML = html;
+}
+
+function updatePineconeStatus(data) {
+    let html = '';
+    
+    if (data.status !== 'success' || !data.data) {
+        html = '<div class="alert alert-danger">Error retrieving data from Pinecone: ' + 
+               (data.message || 'Unknown error') + '</div>';
+        document.getElementById('pinecone-status').innerHTML = html;
+        return;
+    }
+    
+    const pineconeData = data.data;
+    const summary = pineconeData.summary || {};
+    const completeFiles = pineconeData.complete_files || {};
+    const incompleteFiles = pineconeData.incomplete_files || {};
+    
+    // Summary section
+    html += '<div class="card mb-4">';
+    html += '<div class="card-header bg-info text-white">';
+    html += '<h6 class="mb-0">Pinecone Database Summary</h6>';
+    html += '</div>';
+    html += '<div class="card-body">';
+    html += '<p>Total Files: <strong>' + (summary.total_files || 0) + '</strong></p>';
+    html += '<p>Complete Files: <strong>' + (summary.complete_files || 0) + '</strong></p>';
+    html += '<p>Incomplete Files: <strong>' + (summary.incomplete_files || 0) + '</strong></p>';
+    html += '<p>Total Vectors: <strong>' + (summary.total_vectors || 0) + '</strong></p>';
+    html += '</div>';
+    html += '</div>';
+    
+    // Complete files section
+    html += '<div class="card mb-4">';
+    html += '<div class="card-header bg-success text-white">';
+    html += '<h6 class="mb-0">Complete Files in Pinecone (' + Object.keys(completeFiles).length + ')</h6>';
+    html += '</div>';
+    
+    if (Object.keys(completeFiles).length > 0) {
+        html += '<div class="list-group list-group-flush">';
+        Object.entries(completeFiles).forEach(([filename, info]) => {
+            html += '<div class="list-group-item">';
+            html += '<div class="d-flex justify-content-between align-items-center mb-2">';
+            html += '<h6 class="mb-0">' + filename + '</h6>';
+            html += '<span class="badge bg-success rounded-pill">' + info.total_chunks + ' chunks</span>';
+            html += '</div>';
+            
+            // File type and subjects
+            html += '<div class="mb-2">';
+            html += '<small class="text-muted">Type: ' + info.filetype + '</small>';
+            if (info.subjects && info.subjects.length > 0) {
+                html += ' | <small class="text-muted">Subject: ';
+                html += info.subjects.join(', ');
+                html += '</small>';
+            }
+            html += '</div>';
+            
+            // Tags (if available)
+            if (info.tags && info.tags.length > 0) {
+                html += '<div class="mb-2">';
+                info.tags.slice(0, 8).forEach(tag => {
+                    html += '<span class="badge bg-secondary me-1">' + tag + '</span>';
+                });
+                if (info.tags.length > 8) {
+                    html += '<span class="badge bg-secondary">+' + (info.tags.length - 8) + ' more</span>';
+                }
+                html += '</div>';
+            }
+            
+            html += '</div>';
+        });
+        html += '</div>';
+    } else {
+        html += '<div class="card-body">';
+        html += '<div class="alert alert-info mb-0">No complete files found in Pinecone</div>';
+        html += '</div>';
+    }
+    html += '</div>';
+    
+    // Incomplete files section
+    if (Object.keys(incompleteFiles).length > 0) {
+        html += '<div class="card mb-4">';
+        html += '<div class="card-header bg-warning text-dark">';
+        html += '<h6 class="mb-0">Incomplete Files in Pinecone (' + Object.keys(incompleteFiles).length + ')</h6>';
+        html += '</div>';
+        
+        html += '<div class="list-group list-group-flush">';
+        Object.entries(incompleteFiles).forEach(([filename, info]) => {
+            html += '<div class="list-group-item">';
+            html += '<div class="d-flex justify-content-between align-items-center mb-2">';
+            html += '<h6 class="mb-0">' + filename + '</h6>';
+            html += '<span class="badge bg-warning text-dark rounded-pill">Incomplete - ' + info.completeness + '</span>';
+            html += '</div>';
+            
+            // File info
+            html += '<div class="mb-2">';
+            html += '<small class="text-muted">Type: ' + info.filetype + ' | ';
+            html += 'Chunks: ' + info.total_chunks + '</small>';
+            html += '</div>';
+            
+            // Missing chunks
+            if (info.missing_chunks && info.missing_chunks.length > 0) {
+                html += '<div class="mb-2">';
+                html += '<small class="text-danger">Missing chunks: ';
+                if (info.missing_chunks.length <= 10) {
+                    html += info.missing_chunks.join(', ');
+                } else {
+                    html += info.missing_chunks.slice(0, 10).join(', ') + ' and ' + (info.missing_chunks.length - 10) + ' more';
+                }
+                html += '</small>';
+                html += '</div>';
+            }
+            
+            html += '</div>';
+        });
+        html += '</div>';
+        html += '</div>';
+    }
+    
+    document.getElementById('pinecone-status').innerHTML = html;
 }
 </script>
 {% endblock %}
