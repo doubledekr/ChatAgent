@@ -596,7 +596,7 @@ def get_chunk_count_for_file(filename):
             vector=dummy_vector,
             top_k=100,  # Reasonable limit to avoid timeouts
             include_metadata=True,
-            filter={"filename": filename}  # Use metadata filter to get only vectors for this file
+            filter_dict={"filename": filename}  # Use metadata filter to get only vectors for this file
         )
         
         # Return the count of matched vectors

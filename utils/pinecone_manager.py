@@ -92,7 +92,7 @@ class PineconeManager:
             logger.error(f"Error upserting to Pinecone: {e}")
             return False
     
-    def query(self, vector, top_k=5, include_metadata=True):
+    def query(self, vector, top_k=5, include_metadata=True, filter_dict=None):
         """
         Query Pinecone for similar vectors
         
@@ -100,6 +100,7 @@ class PineconeManager:
             vector (list): Query vector
             top_k (int): Number of results to return
             include_metadata (bool): Whether to include metadata in results
+            filter_dict (dict): Optional filter conditions
         
         Returns:
             dict: Query results
@@ -109,13 +110,21 @@ class PineconeManager:
             return {"matches": []}
         
         try:
-            result = self.index.query(
-                namespace="default",
-                vector=vector,
-                top_k=top_k,
-                include_values=True,
-                include_metadata=include_metadata
-            )
+            # Build query parameters
+            query_params = {
+                "namespace": "default",
+                "vector": vector,
+                "top_k": top_k,
+                "include_values": True,
+                "include_metadata": include_metadata
+            }
+            
+            # Add filter if provided
+            if filter_dict:
+                query_params["filter"] = filter_dict
+                
+            # Execute the query
+            result = self.index.query(**query_params)
             
             return result
         
