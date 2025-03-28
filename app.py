@@ -820,6 +820,122 @@ def api_pinecone_files():
             'message': f'Error getting Pinecone files: {str(e)}'
         }), 500
 
+@app.route('/api/download-file-list/<list_type>')
+def download_file_list(list_type):
+    """Generate and download a CSV of complete or incomplete files"""
+    try:
+        # Check if Pinecone is available
+        if not pinecone_available or not pinecone_manager:
+            return jsonify({
+                'status': 'error',
+                'message': 'Pinecone is not available'
+            }), 400
+            
+        # Get the list of complete files
+        pinecone_files = list_complete_files_in_pinecone()
+        
+        # Prepare CSV data
+        import io
+        import csv
+        from datetime import datetime
+        
+        # Create a string buffer for the CSV data
+        output = io.StringIO()
+        writer = csv.writer(output)
+        
+        # Generate timestamp for filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        if list_type == 'complete':
+            # Write header
+            writer.writerow(['Filename', 'Filetype', 'Total Chunks', 'Subjects', 'Tags'])
+            
+            # Write data for complete files
+            for filename, info in pinecone_files.get('complete_files', {}).items():
+                writer.writerow([
+                    filename,
+                    info.get('filetype', ''),
+                    info.get('total_chunks', 0),
+                    ', '.join(info.get('subjects', [])),
+                    ', '.join(info.get('tags', []))
+                ])
+                
+            # Prepare response
+            filename = f"complete_files_{timestamp}.csv"
+            
+        elif list_type == 'incomplete':
+            # Write header
+            writer.writerow(['Filename', 'Filetype', 'Total Chunks', 'Completeness', 'Missing Chunks', 'Subjects', 'Tags'])
+            
+            # Write data for incomplete files
+            for filename, info in pinecone_files.get('incomplete_files', {}).items():
+                writer.writerow([
+                    filename,
+                    info.get('filetype', ''),
+                    info.get('total_chunks', 0),
+                    info.get('completeness', '0%'),
+                    ', '.join(map(str, info.get('missing_chunks', []))),
+                    ', '.join(info.get('subjects', [])),
+                    ', '.join(info.get('tags', []))
+                ])
+                
+            # Prepare response
+            filename = f"incomplete_files_{timestamp}.csv"
+            
+        elif list_type == 'all':
+            # Write header
+            writer.writerow(['Filename', 'Status', 'Filetype', 'Total Chunks', 'Subjects', 'Tags'])
+            
+            # Write data for complete files
+            for filename, info in pinecone_files.get('complete_files', {}).items():
+                writer.writerow([
+                    filename,
+                    'Complete',
+                    info.get('filetype', ''),
+                    info.get('total_chunks', 0),
+                    ', '.join(info.get('subjects', [])),
+                    ', '.join(info.get('tags', []))
+                ])
+                
+            # Write data for incomplete files
+            for filename, info in pinecone_files.get('incomplete_files', {}).items():
+                writer.writerow([
+                    filename,
+                    f"Incomplete ({info.get('completeness', '0%')})",
+                    info.get('filetype', ''),
+                    info.get('total_chunks', 0),
+                    ', '.join(info.get('subjects', [])),
+                    ', '.join(info.get('tags', []))
+                ])
+                
+            # Prepare response
+            filename = f"all_files_{timestamp}.csv"
+            
+        else:
+            return jsonify({
+                'status': 'error',
+                'message': f'Invalid list type: {list_type}'
+            }), 400
+            
+        # Prepare response
+        output.seek(0)
+        
+        # Create response
+        response = app.response_class(
+            response=output.getvalue(),
+            mimetype='text/csv',
+            headers={'Content-Disposition': f'attachment; filename={filename}'}
+        )
+        
+        return response
+        
+    except Exception as e:
+        logger.error(f"Error generating CSV: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Error generating CSV: {str(e)}'
+        }), 500
+
 @app.route('/api/remove-complete-files', methods=['POST'])
 def remove_complete_files():
     """Remove files from the upload folder that are already completely processed in Pinecone"""

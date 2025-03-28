@@ -311,10 +311,22 @@ function updatePineconeStatus(data) {
     html += '<h6 class="mb-0">Pinecone Database Summary</h6>';
     html += '</div>';
     html += '<div class="card-body">';
+    html += '<div class="row">';
+    html += '<div class="col-md-6">';
     html += '<p>Total Files: <strong>' + (summary.total_files || 0) + '</strong></p>';
     html += '<p>Complete Files: <strong>' + (summary.complete_files || 0) + '</strong></p>';
     html += '<p>Incomplete Files: <strong>' + (summary.incomplete_files || 0) + '</strong></p>';
     html += '<p>Total Vectors: <strong>' + (summary.total_vectors || 0) + '</strong></p>';
+    html += '</div>';
+    html += '<div class="col-md-6">';
+    html += '<h6 class="mb-3">Download File Lists</h6>';
+    html += '<div class="d-grid gap-2">';
+    html += '<a href="/api/download-file-list/complete" class="btn btn-sm btn-outline-success" target="_blank">Download Complete Files CSV</a>';
+    html += '<a href="/api/download-file-list/incomplete" class="btn btn-sm btn-outline-warning" target="_blank">Download Incomplete Files CSV</a>';
+    html += '<a href="/api/download-file-list/all" class="btn btn-sm btn-outline-primary" target="_blank">Download All Files CSV</a>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
     html += '</div>';
     html += '</div>';
     
