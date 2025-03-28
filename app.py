@@ -805,7 +805,8 @@ def start_processing():
             })
         
         # Start the processor in a background thread
-        processor_thread = threading.Thread(target=folder_processor.run_processor, args=(False,))
+        # Use continuous=True to keep processing files until all are done
+        processor_thread = threading.Thread(target=folder_processor.run_processor, args=(True,))
         processor_thread.daemon = True
         processor_thread.start()
         

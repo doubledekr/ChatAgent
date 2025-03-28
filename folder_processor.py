@@ -148,11 +148,31 @@ def get_pending_files():
     # Load status to check which files are already processed
     status = load_status()
     
-    # Filter out files that are already processed or in progress
+    # Filter out files that are already processed
+    # Include files with errors or that have been processing for too long (stuck)
     pending_files = []
     for filename in files:
-        if filename not in status or status[filename]["status"] in ["error", "pending"]:
+        if filename not in status:
+            # New file with no status yet
             pending_files.append(filename)
+        elif status[filename]["status"] in ["error", "pending"]:
+            # Files with errors or pending status
+            pending_files.append(filename)
+        elif status[filename]["status"] == "processing":
+            # Check if processing is stuck (no progress for a long time)
+            last_updated = status[filename].get("last_updated")
+            if last_updated:
+                try:
+                    # Parse ISO format timestamp
+                    last_update_time = datetime.fromisoformat(last_updated)
+                    # If last update was more than 30 minutes ago, consider it stuck
+                    if (datetime.now() - last_update_time).total_seconds() > 1800:  # 30 minutes
+                        logger.warning(f"File {filename} seems stuck in processing (last update: {last_updated})")
+                        pending_files.append(filename)
+                except Exception as e:
+                    logger.error(f"Error parsing timestamp for {filename}: {e}")
+                    # Include the file to be safe
+                    pending_files.append(filename)
     
     return pending_files
 
