@@ -574,6 +574,37 @@ def too_large(e):
 # Global variable to track the background processor thread
 processor_thread = None
 
+def get_chunk_count_for_file(filename):
+    """
+    Query Pinecone to get the number of chunks for a specific file
+    
+    Args:
+        filename (str): The filename to check
+        
+    Returns:
+        int: Number of chunks found for this file
+    """
+    try:
+        if not pinecone_available or not pinecone_manager:
+            return 0
+            
+        # Use a dummy vector to query with filename filter
+        dummy_vector = [0.0] * 1536
+        
+        # Set a relatively low limit to avoid timeouts (100 max chunks is reasonable)
+        response = pinecone_manager.query(
+            vector=dummy_vector,
+            top_k=100,  # Reasonable limit to avoid timeouts
+            include_metadata=True,
+            filter={"filename": filename}  # Use metadata filter to get only vectors for this file
+        )
+        
+        # Return the count of matched vectors
+        return len(response.get("matches", []))
+    except Exception as e:
+        logger.error(f"Error getting chunk count for {filename}: {e}")
+        return 0
+
 def list_complete_files_in_pinecone():
     """
     Uses Pinecone describe_index_stats() and cross-references with upload folder
@@ -606,8 +637,12 @@ def list_complete_files_in_pinecone():
                 if os.path.isfile(os.path.join(folder_processor.PROCESSED_FOLDER, filename)) and folder_processor.allowed_file(filename):
                     # Get the file extension
                     file_ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
+                    
+                    # Get chunk count from Pinecone (safe, limited query)
+                    chunk_count = get_chunk_count_for_file(filename)
+                    
                     processed_files[filename] = {
-                        "total_chunks": 0,  # We don't know exactly how many chunks
+                        "total_chunks": chunk_count,
                         "filetype": file_ext,
                         "subjects": [],
                         "tags": [],
@@ -681,10 +716,14 @@ def list_complete_files_in_pinecone():
         # Create summary counts
         ready_for_removal_count = len(upload_files)
         
+        # Calculate total chunks across all complete files
+        total_chunks = sum(info.get("total_chunks", 0) for info in processed_files.values())
+        
         # Create report
         report = {
             "summary": {
                 "total_vectors": total_vectors,
+                "total_chunks": total_chunks,
                 "total_files": len(processed_files),
                 "complete_files": len(processed_files),
                 "incomplete_files": len(incomplete_files),

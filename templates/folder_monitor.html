@@ -317,7 +317,8 @@ function updatePineconeStatus(data) {
     html += '<p>Complete Files: <strong>' + (summary.complete_files || 0) + '</strong></p>';
     html += '<p>Incomplete Files: <strong>' + (summary.incomplete_files || 0) + '</strong></p>';
     html += '<p>Files Ready for Removal: <strong>' + (summary.ready_for_removal || 0) + '</strong></p>';
-    html += '<p>Total Vectors: <strong>' + (summary.total_vectors || 0) + '</strong></p>';
+    html += '<p>Total Chunks in Documents: <strong>' + (summary.total_chunks || 0) + '</strong></p>';
+    html += '<p>Total Vectors in Database: <strong>' + (summary.total_vectors || 0) + '</strong></p>';
     html += '</div>';
     html += '<div class="col-md-6">';
     html += '<h6 class="mb-3">Download File Lists</h6>';
@@ -344,7 +345,12 @@ function updatePineconeStatus(data) {
             html += '<div class="list-group-item">';
             html += '<div class="d-flex justify-content-between align-items-center mb-2">';
             html += '<h6 class="mb-0">' + filename + '</h6>';
-            html += '<span class="badge bg-success rounded-pill">' + info.total_chunks + ' chunks</span>';
+            let chunkBadgeClass = 'bg-success';
+            // If total_chunks is 0, it might mean we couldn't get the count
+            if (info.total_chunks === 0) {
+                chunkBadgeClass = 'bg-warning text-dark';
+            }
+            html += '<span class="badge ' + chunkBadgeClass + ' rounded-pill">' + info.total_chunks + ' chunks</span>';
             html += '</div>';
             
             // File type and subjects
@@ -448,7 +454,10 @@ function updatePineconeStatus(data) {
             html += '<div class="list-group-item">';
             html += '<div class="d-flex justify-content-between align-items-center mb-2">';
             html += '<h6 class="mb-0">' + filename + '</h6>';
+            html += '<div>';
+            html += '<span class="badge bg-success me-1">' + info.total_chunks + ' chunks</span>';
             html += '<span class="badge bg-info rounded-pill">Ready for Removal</span>';
+            html += '</div>';
             html += '</div>';
             
             // File info
