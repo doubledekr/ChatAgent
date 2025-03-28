@@ -576,10 +576,11 @@ processor_thread = None
 
 def list_complete_files_in_pinecone():
     """
-    Uses Pinecone describe_index_stats() to get metadata about files in the database
+    Uses Pinecone describe_index_stats() and cross-references with upload folder
+    to provide accurate file processing status information
     
     Returns:
-        dict: Dictionary containing complete files information
+        dict: Dictionary containing complete and incomplete files information
     """
     if not pinecone_available or not pinecone_manager:
         logger.error("Pinecone is not available")
@@ -598,9 +599,6 @@ def list_complete_files_in_pinecone():
         # If we have dimension info, add it to the summary
         dimension = stats.get('dimension', None)
         
-        # Get metadata from previous uploads to build a list of files
-        # This approach uses local information rather than querying all vectors
-        
         # Get files from processed folder as a source of truth for completed files
         processed_files = {}
         if os.path.exists(folder_processor.PROCESSED_FOLDER):
@@ -612,11 +610,76 @@ def list_complete_files_in_pinecone():
                         "total_chunks": 0,  # We don't know exactly how many chunks
                         "filetype": file_ext,
                         "subjects": [],
-                        "tags": []
+                        "tags": [],
+                        "status": "Complete"
                     }
         
-        # Simulate the complete files data structure based on processed files
-        # This is much more efficient than trying to query all vectors
+        # Get files from upload folder to detect incomplete files
+        upload_files = {}
+        incomplete_files = {}
+        if os.path.exists(folder_processor.UPLOAD_FOLDER):
+            for filename in os.listdir(folder_processor.UPLOAD_FOLDER):
+                filepath = os.path.join(folder_processor.UPLOAD_FOLDER, filename)
+                if os.path.isfile(filepath) and folder_processor.allowed_file(filename):
+                    # Only add to incomplete files if not already in processed files
+                    if filename not in processed_files:
+                        file_ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
+                        file_size = os.path.getsize(filepath)
+                        
+                        # Get processing status if available
+                        status_data = folder_processor.load_status()
+                        file_status = status_data.get(filename, {})
+                        current_status = file_status.get('status', 'pending')
+                        progress = file_status.get('progress', 0)
+                        
+                        # Format file size
+                        size_str = ""
+                        if file_size < 1024:
+                            size_str = f"{file_size} bytes"
+                        elif file_size < 1024 * 1024:
+                            size_str = f"{file_size / 1024:.1f} KB"
+                        else:
+                            size_str = f"{file_size / (1024 * 1024):.1f} MB"
+                        
+                        incomplete_files[filename] = {
+                            "filetype": file_ext,
+                            "status": "Pending Processing" if current_status == 'pending' else 
+                                     "Processing" if current_status == 'processing' else
+                                     "Error" if current_status == 'error' else "Incomplete",
+                            "progress": progress,
+                            "size": size_str,
+                            "completeness": f"{progress}%",
+                            "file_path": "upload_folder"
+                        }
+                    else:
+                        # File is already processed but still in upload folder
+                        upload_files[filename] = processed_files[filename]
+                        upload_files[filename]["status"] = "Ready for Removal"
+                        upload_files[filename]["note"] = "File is already processed but still in upload folder"
+        
+        # Process the incomplete files based on status data
+        # This enhances the information with progress data
+        status_data = folder_processor.load_status()
+        for filename, status in status_data.items():
+            # Only add status info for files that are detected as incomplete
+            if filename in incomplete_files:
+                if 'progress' in status:
+                    incomplete_files[filename]['progress'] = status['progress']
+                    incomplete_files[filename]['completeness'] = f"{status['progress']}%"
+                
+                if 'status' in status:
+                    incomplete_files[filename]['processing_status'] = status['status']
+                
+                if 'messages' in status and status['messages']:
+                    latest_msg = status['messages'][-1]['message']
+                    incomplete_files[filename]['latest_message'] = latest_msg
+                
+                if 'errors' in status and status['errors']:
+                    latest_error = status['errors'][-1]['error']
+                    incomplete_files[filename]['latest_error'] = latest_error
+        
+        # Create summary counts
+        ready_for_removal_count = len(upload_files)
         
         # Create report
         report = {
@@ -624,10 +687,12 @@ def list_complete_files_in_pinecone():
                 "total_vectors": total_vectors,
                 "total_files": len(processed_files),
                 "complete_files": len(processed_files),
-                "incomplete_files": 0
+                "incomplete_files": len(incomplete_files),
+                "ready_for_removal": ready_for_removal_count
             },
             "complete_files": processed_files,
-            "incomplete_files": {}
+            "incomplete_files": incomplete_files,
+            "ready_for_removal": upload_files
         }
         
         # Add dimension info if available
@@ -848,13 +913,14 @@ def download_file_list(list_type):
         
         if list_type == 'complete':
             # Write header
-            writer.writerow(['Filename', 'Filetype', 'Total Chunks', 'Subjects', 'Tags'])
+            writer.writerow(['Filename', 'Filetype', 'Status', 'Total Chunks', 'Subjects', 'Tags'])
             
             # Write data for complete files
             for filename, info in pinecone_files.get('complete_files', {}).items():
                 writer.writerow([
                     filename,
                     info.get('filetype', ''),
+                    info.get('status', 'Complete'),
                     info.get('total_chunks', 0),
                     ', '.join(info.get('subjects', [])),
                     ', '.join(info.get('tags', []))
@@ -865,26 +931,46 @@ def download_file_list(list_type):
             
         elif list_type == 'incomplete':
             # Write header
-            writer.writerow(['Filename', 'Filetype', 'Total Chunks', 'Completeness', 'Missing Chunks', 'Subjects', 'Tags'])
+            writer.writerow(['Filename', 'Filetype', 'Status', 'Progress', 'Size', 'Latest Message', 'Error'])
             
             # Write data for incomplete files
             for filename, info in pinecone_files.get('incomplete_files', {}).items():
                 writer.writerow([
                     filename,
                     info.get('filetype', ''),
-                    info.get('total_chunks', 0),
+                    info.get('status', 'Incomplete'),
                     info.get('completeness', '0%'),
-                    ', '.join(map(str, info.get('missing_chunks', []))),
-                    ', '.join(info.get('subjects', [])),
-                    ', '.join(info.get('tags', []))
+                    info.get('size', 'Unknown'),
+                    info.get('latest_message', ''),
+                    info.get('latest_error', '')
                 ])
                 
             # Prepare response
             filename = f"incomplete_files_{timestamp}.csv"
             
+        elif list_type == 'removal':
+            # Write header
+            writer.writerow(['Filename', 'Filetype', 'Status', 'Note', 'Location', 'Subjects', 'Tags'])
+            
+            # Write data for files ready for removal
+            ready_for_removal = pinecone_files.get('ready_for_removal', {})
+            for filename, info in ready_for_removal.items():
+                writer.writerow([
+                    filename,
+                    info.get('filetype', ''),
+                    info.get('status', 'Ready for Removal'),
+                    info.get('note', 'File already processed'),
+                    'upload_folder',
+                    ', '.join(info.get('subjects', [])),
+                    ', '.join(info.get('tags', []))
+                ])
+                
+            # Prepare response
+            filename = f"files_for_removal_{timestamp}.csv"
+            
         elif list_type == 'all':
             # Write header
-            writer.writerow(['Filename', 'Status', 'Filetype', 'Total Chunks', 'Subjects', 'Tags'])
+            writer.writerow(['Filename', 'Status', 'Filetype', 'Location', 'Progress/Chunks', 'Subjects', 'Tags', 'Notes'])
             
             # Write data for complete files
             for filename, info in pinecone_files.get('complete_files', {}).items():
@@ -892,20 +978,37 @@ def download_file_list(list_type):
                     filename,
                     'Complete',
                     info.get('filetype', ''),
+                    'processed_folder',
                     info.get('total_chunks', 0),
                     ', '.join(info.get('subjects', [])),
-                    ', '.join(info.get('tags', []))
+                    ', '.join(info.get('tags', [])),
+                    ''
                 ])
                 
             # Write data for incomplete files
             for filename, info in pinecone_files.get('incomplete_files', {}).items():
                 writer.writerow([
                     filename,
-                    f"Incomplete ({info.get('completeness', '0%')})",
+                    info.get('status', 'Incomplete'),
                     info.get('filetype', ''),
+                    'upload_folder',
+                    info.get('completeness', '0%'),
+                    '',  # No subjects for incomplete files
+                    '',  # No tags for incomplete files
+                    info.get('latest_message', '')
+                ])
+                
+            # Write data for files ready for removal
+            for filename, info in pinecone_files.get('ready_for_removal', {}).items():
+                writer.writerow([
+                    filename,
+                    info.get('status', 'Ready for Removal'),
+                    info.get('filetype', ''),
+                    'upload_folder (duplicate)',
                     info.get('total_chunks', 0),
                     ', '.join(info.get('subjects', [])),
-                    ', '.join(info.get('tags', []))
+                    ', '.join(info.get('tags', [])),
+                    info.get('note', 'File already processed')
                 ])
                 
             # Prepare response

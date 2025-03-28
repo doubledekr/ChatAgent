@@ -316,6 +316,7 @@ function updatePineconeStatus(data) {
     html += '<p>Total Files: <strong>' + (summary.total_files || 0) + '</strong></p>';
     html += '<p>Complete Files: <strong>' + (summary.complete_files || 0) + '</strong></p>';
     html += '<p>Incomplete Files: <strong>' + (summary.incomplete_files || 0) + '</strong></p>';
+    html += '<p>Files Ready for Removal: <strong>' + (summary.ready_for_removal || 0) + '</strong></p>';
     html += '<p>Total Vectors: <strong>' + (summary.total_vectors || 0) + '</strong></p>';
     html += '</div>';
     html += '<div class="col-md-6">';
@@ -323,6 +324,7 @@ function updatePineconeStatus(data) {
     html += '<div class="d-grid gap-2">';
     html += '<a href="/api/download-file-list/complete" class="btn btn-sm btn-outline-success" target="_blank">Download Complete Files CSV</a>';
     html += '<a href="/api/download-file-list/incomplete" class="btn btn-sm btn-outline-warning" target="_blank">Download Incomplete Files CSV</a>';
+    html += '<a href="/api/download-file-list/removal" class="btn btn-sm btn-outline-info" target="_blank">Download Files Ready For Removal CSV</a>';
     html += '<a href="/api/download-file-list/all" class="btn btn-sm btn-outline-primary" target="_blank">Download All Files CSV</a>';
     html += '</div>';
     html += '</div>';
@@ -381,7 +383,7 @@ function updatePineconeStatus(data) {
     if (Object.keys(incompleteFiles).length > 0) {
         html += '<div class="card mb-4">';
         html += '<div class="card-header bg-warning text-dark">';
-        html += '<h6 class="mb-0">Incomplete Files in Pinecone (' + Object.keys(incompleteFiles).length + ')</h6>';
+        html += '<h6 class="mb-0">Incomplete Files in Upload Folder (' + Object.keys(incompleteFiles).length + ')</h6>';
         html += '</div>';
         
         html += '<div class="list-group list-group-flush">';
@@ -389,25 +391,76 @@ function updatePineconeStatus(data) {
             html += '<div class="list-group-item">';
             html += '<div class="d-flex justify-content-between align-items-center mb-2">';
             html += '<h6 class="mb-0">' + filename + '</h6>';
-            html += '<span class="badge bg-warning text-dark rounded-pill">Incomplete - ' + info.completeness + '</span>';
+            
+            // Status badge with appropriate color
+            let badgeClass = 'bg-warning text-dark';
+            let statusText = 'Incomplete - ' + info.completeness;
+            
+            if (info.status === 'Processing') {
+                badgeClass = 'bg-primary';
+                statusText = 'Processing - ' + info.completeness;
+            } else if (info.status === 'Error') {
+                badgeClass = 'bg-danger';
+                statusText = 'Error - ' + info.completeness;
+            } else if (info.status === 'Pending Processing') {
+                badgeClass = 'bg-secondary';
+                statusText = 'Pending';
+            }
+            
+            html += '<span class="badge ' + badgeClass + ' rounded-pill">' + statusText + '</span>';
             html += '</div>';
             
             // File info
             html += '<div class="mb-2">';
             html += '<small class="text-muted">Type: ' + info.filetype + ' | ';
-            html += 'Chunks: ' + info.total_chunks + '</small>';
+            html += 'Size: ' + (info.size || 'Unknown') + '</small>';
             html += '</div>';
             
-            // Missing chunks
-            if (info.missing_chunks && info.missing_chunks.length > 0) {
+            // Latest status message or error
+            if (info.latest_message) {
                 html += '<div class="mb-2">';
-                html += '<small class="text-danger">Missing chunks: ';
-                if (info.missing_chunks.length <= 10) {
-                    html += info.missing_chunks.join(', ');
-                } else {
-                    html += info.missing_chunks.slice(0, 10).join(', ') + ' and ' + (info.missing_chunks.length - 10) + ' more';
-                }
-                html += '</small>';
+                html += '<small class="text-info">' + info.latest_message + '</small>';
+                html += '</div>';
+            }
+            
+            if (info.latest_error) {
+                html += '<div class="mb-2">';
+                html += '<small class="text-danger">' + info.latest_error + '</small>';
+                html += '</div>';
+            }
+            
+            html += '</div>';
+        });
+        html += '</div>';
+        html += '</div>';
+    }
+    
+    // Files ready for removal section
+    const readyForRemoval = pineconeData.ready_for_removal || {};
+    if (Object.keys(readyForRemoval).length > 0) {
+        html += '<div class="card mb-4">';
+        html += '<div class="card-header bg-info text-white">';
+        html += '<h6 class="mb-0">Files Ready for Removal (' + Object.keys(readyForRemoval).length + ')</h6>';
+        html += '</div>';
+        
+        html += '<div class="list-group list-group-flush">';
+        Object.entries(readyForRemoval).forEach(([filename, info]) => {
+            html += '<div class="list-group-item">';
+            html += '<div class="d-flex justify-content-between align-items-center mb-2">';
+            html += '<h6 class="mb-0">' + filename + '</h6>';
+            html += '<span class="badge bg-info rounded-pill">Ready for Removal</span>';
+            html += '</div>';
+            
+            // File info
+            html += '<div class="mb-2">';
+            html += '<small class="text-muted">Type: ' + info.filetype + ' | ';
+            html += 'Status: <span class="text-success">Already processed</span></small>';
+            html += '</div>';
+            
+            // Note
+            if (info.note) {
+                html += '<div class="mb-2">';
+                html += '<small class="text-info">' + info.note + '</small>';
                 html += '</div>';
             }
             
