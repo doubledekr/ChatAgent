@@ -536,11 +536,27 @@ def check_pinecone():
         if pinecone_manager.index:
             # Use stats method to check connection
             try:
+                # Get index stats with proper error handling
                 stats = pinecone_manager.describe_index_stats()
+                
+                # Convert to regular dict if it's not already
+                if not isinstance(stats, dict):
+                    stats = dict(stats) if hasattr(stats, '__dict__') else {'error': 'Could not convert stats to dictionary'}
+                
+                # Get vector count safely
                 vector_count = stats.get('total_vector_count', 0)
+                if vector_count == 0 and 'namespaces' in stats:
+                    # Try to sum up vectors from each namespace
+                    namespaces = stats.get('namespaces', {})
+                    if isinstance(namespaces, dict):
+                        for ns_name, ns_data in namespaces.items():
+                            if isinstance(ns_data, dict):
+                                vector_count += ns_data.get('vector_count', 0)
+                
                 return jsonify({
                     "status": "success", 
                     "message": f"Pinecone connected successfully. Index contains {vector_count} vectors.",
+                    "vector_count": vector_count,
                     "stats": stats
                 })
             except Exception as inner_e:

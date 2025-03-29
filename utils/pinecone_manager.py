@@ -179,7 +179,24 @@ class PineconeManager:
         try:
             # Get statistics about the index
             response = self.index.describe_index_stats()
-            return response.to_dict() if hasattr(response, 'to_dict') else response
+            
+            # Handle the response based on its type
+            if hasattr(response, 'to_dict'):
+                # Some versions of Pinecone return an object with to_dict method
+                return response.to_dict()
+            elif hasattr(response, '__dict__'):
+                # Convert object to dictionary
+                result = dict(response.__dict__)
+                # Remove any private attributes
+                result = {k: v for k, v in result.items() if not k.startswith('_')}
+                return result
+            elif isinstance(response, dict):
+                # Already a dictionary
+                return response
+            else:
+                # Try to convert to a string representation as a fallback
+                logger.warning(f"Unexpected response type from Pinecone: {type(response)}")
+                return {"raw_response": str(response)}
             
         except Exception as e:
             logger.error(f"Error getting index statistics: {e}")
