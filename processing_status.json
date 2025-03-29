@@ -1966,8 +1966,8 @@
   },
   "Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3": {
     "start_time": "2025-03-26T02:00:14.222101",
-    "status": "error",
-    "progress": 95,
+    "status": "processing",
+    "progress": 70,
     "messages": [
       {
         "time": "2025-03-26T02:00:14.222107",
@@ -2288,6 +2288,66 @@
       {
         "time": "2025-03-28T22:20:06.573443",
         "message": "No chunks were successfully processed"
+      },
+      {
+        "time": "2025-03-29T00:17:26.426817",
+        "message": "Started processing Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T00:17:26.517789",
+        "message": "Extracting text from Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T00:17:27.513581",
+        "message": "Extracted 4545 characters from Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T00:17:27.566965",
+        "message": "Generating comprehensive metadata for Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T00:17:27.646550",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T00:17:27.714918",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T00:17:28.710772",
+        "message": "Chunked text into 5 segments for processing"
+      },
+      {
+        "time": "2025-03-29T00:17:28.778644",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T00:17:28.854541",
+        "message": "Generating embedding for chunk 1/5"
+      },
+      {
+        "time": "2025-03-29T00:17:30.866087",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T00:17:30.914544",
+        "message": "Generating embedding for chunk 2/5"
+      },
+      {
+        "time": "2025-03-29T00:17:31.373282",
+        "message": "Warning: Failed to process chunk 1"
+      },
+      {
+        "time": "2025-03-29T00:17:31.425407",
+        "message": "Generating embedding for chunk 3/5"
+      },
+      {
+        "time": "2025-03-29T00:17:33.016411",
+        "message": "Warning: Failed to process chunk 2"
+      },
+      {
+        "time": "2025-03-29T00:17:33.085914",
+        "message": "Generating embedding for chunk 4/5"
       }
     ],
     "errors": [
@@ -2402,9 +2462,25 @@
       {
         "time": "2025-03-28T22:20:06.573446",
         "error": "All chunks failed processing"
+      },
+      {
+        "time": "2025-03-29T00:17:27.646553",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T00:17:30.866090",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T00:17:31.373284",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T00:17:33.016414",
+        "error": "'NoneType' object has no attribute 'get'"
       }
     ],
-    "last_updated": "2025-03-28T22:20:06.573431"
+    "last_updated": "2025-03-29T00:17:33.085898"
   },
   "dk.publishing.-.idiots.guides.beginning.investing.2016.retail.epub.ebook-distribution.epub": {
     "start_time": "2025-03-26T02:00:16.591257",
