@@ -1,0 +1,2906 @@
+{
+  "lc-wiley.stock.investing.for.dummies.2020.epub": {
+    "start_time": "2025-03-29T18:18:07.964581",
+    "status": "completed",
+    "progress": 100,
+    "messages": [
+      {
+        "time": "2025-03-29T18:18:07.964595",
+        "message": "Chunked text into 360 segments for processing"
+      },
+      {
+        "time": "2025-03-29T18:18:07.965038",
+        "message": "Processing batch 1 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:07.965383",
+        "message": "Generating embedding for chunk 1/360"
+      },
+      {
+        "time": "2025-03-29T18:18:08.248625",
+        "message": "Generating embedding for chunk 2/360"
+      },
+      {
+        "time": "2025-03-29T18:18:08.588764",
+        "message": "Generating embedding for chunk 3/360"
+      },
+      {
+        "time": "2025-03-29T18:18:08.791388",
+        "message": "Generating embedding for chunk 4/360"
+      },
+      {
+        "time": "2025-03-29T18:18:09.004294",
+        "message": "Generating embedding for chunk 5/360"
+      },
+      {
+        "time": "2025-03-29T18:18:09.218658",
+        "message": "Storing batch 1 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:09.675238",
+        "message": "Stored batch 1 in Pinecone (added 5 vectors), total: 49309"
+      },
+      {
+        "time": "2025-03-29T18:18:10.175727",
+        "message": "Processing batch 2 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:10.176019",
+        "message": "Generating embedding for chunk 6/360"
+      },
+      {
+        "time": "2025-03-29T18:18:10.393469",
+        "message": "Generating embedding for chunk 7/360"
+      },
+      {
+        "time": "2025-03-29T18:18:10.600983",
+        "message": "Generating embedding for chunk 8/360"
+      },
+      {
+        "time": "2025-03-29T18:18:10.867588",
+        "message": "Generating embedding for chunk 9/360"
+      },
+      {
+        "time": "2025-03-29T18:18:11.108629",
+        "message": "Generating embedding for chunk 10/360"
+      },
+      {
+        "time": "2025-03-29T18:18:11.365476",
+        "message": "Storing batch 2 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:11.809026",
+        "message": "Stored batch 2 in Pinecone (added 5 vectors), total: 49314"
+      },
+      {
+        "time": "2025-03-29T18:18:12.309735",
+        "message": "Processing batch 3 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:12.310139",
+        "message": "Generating embedding for chunk 11/360"
+      },
+      {
+        "time": "2025-03-29T18:18:12.516568",
+        "message": "Generating embedding for chunk 12/360"
+      },
+      {
+        "time": "2025-03-29T18:18:12.740431",
+        "message": "Generating embedding for chunk 13/360"
+      },
+      {
+        "time": "2025-03-29T18:18:13.178990",
+        "message": "Generating embedding for chunk 14/360"
+      },
+      {
+        "time": "2025-03-29T18:18:13.446867",
+        "message": "Generating embedding for chunk 15/360"
+      },
+      {
+        "time": "2025-03-29T18:18:13.691832",
+        "message": "Storing batch 3 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:14.167477",
+        "message": "Stored batch 3 in Pinecone (added 5 vectors), total: 49319"
+      },
+      {
+        "time": "2025-03-29T18:18:14.668094",
+        "message": "Processing batch 4 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:14.668599",
+        "message": "Generating embedding for chunk 16/360"
+      },
+      {
+        "time": "2025-03-29T18:18:14.971084",
+        "message": "Generating embedding for chunk 17/360"
+      },
+      {
+        "time": "2025-03-29T18:18:15.127849",
+        "message": "Generating embedding for chunk 18/360"
+      },
+      {
+        "time": "2025-03-29T18:18:15.301016",
+        "message": "Generating embedding for chunk 19/360"
+      },
+      {
+        "time": "2025-03-29T18:18:15.476411",
+        "message": "Generating embedding for chunk 20/360"
+      },
+      {
+        "time": "2025-03-29T18:18:15.741353",
+        "message": "Storing batch 4 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:16.202479",
+        "message": "Stored batch 4 in Pinecone (added 0 vectors), total: 49319"
+      },
+      {
+        "time": "2025-03-29T18:18:16.703230",
+        "message": "Processing batch 5 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:16.703877",
+        "message": "Generating embedding for chunk 21/360"
+      },
+      {
+        "time": "2025-03-29T18:18:16.925300",
+        "message": "Generating embedding for chunk 22/360"
+      },
+      {
+        "time": "2025-03-29T18:18:17.115557",
+        "message": "Generating embedding for chunk 23/360"
+      },
+      {
+        "time": "2025-03-29T18:18:17.392921",
+        "message": "Generating embedding for chunk 24/360"
+      },
+      {
+        "time": "2025-03-29T18:18:17.607694",
+        "message": "Generating embedding for chunk 25/360"
+      },
+      {
+        "time": "2025-03-29T18:18:17.829626",
+        "message": "Storing batch 5 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:18.294314",
+        "message": "Stored batch 5 in Pinecone (added 5 vectors), total: 49329"
+      },
+      {
+        "time": "2025-03-29T18:18:18.795031",
+        "message": "Processing batch 6 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:18.795637",
+        "message": "Generating embedding for chunk 26/360"
+      },
+      {
+        "time": "2025-03-29T18:18:18.993886",
+        "message": "Generating embedding for chunk 27/360"
+      },
+      {
+        "time": "2025-03-29T18:18:19.268151",
+        "message": "Generating embedding for chunk 28/360"
+      },
+      {
+        "time": "2025-03-29T18:18:19.555307",
+        "message": "Generating embedding for chunk 29/360"
+      },
+      {
+        "time": "2025-03-29T18:18:19.736832",
+        "message": "Generating embedding for chunk 30/360"
+      },
+      {
+        "time": "2025-03-29T18:18:19.966814",
+        "message": "Storing batch 6 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:20.467468",
+        "message": "Stored batch 6 in Pinecone (added 5 vectors), total: 49334"
+      },
+      {
+        "time": "2025-03-29T18:18:20.968215",
+        "message": "Processing batch 7 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:20.968906",
+        "message": "Generating embedding for chunk 31/360"
+      },
+      {
+        "time": "2025-03-29T18:18:21.197788",
+        "message": "Generating embedding for chunk 32/360"
+      },
+      {
+        "time": "2025-03-29T18:18:21.517014",
+        "message": "Generating embedding for chunk 33/360"
+      },
+      {
+        "time": "2025-03-29T18:18:21.741026",
+        "message": "Generating embedding for chunk 34/360"
+      },
+      {
+        "time": "2025-03-29T18:18:21.938314",
+        "message": "Generating embedding for chunk 35/360"
+      },
+      {
+        "time": "2025-03-29T18:18:22.189968",
+        "message": "Storing batch 7 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:22.667066",
+        "message": "Stored batch 7 in Pinecone (added 5 vectors), total: 49339"
+      },
+      {
+        "time": "2025-03-29T18:18:23.167812",
+        "message": "Processing batch 8 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:23.168539",
+        "message": "Generating embedding for chunk 36/360"
+      },
+      {
+        "time": "2025-03-29T18:18:23.973765",
+        "message": "Generating embedding for chunk 37/360"
+      },
+      {
+        "time": "2025-03-29T18:18:24.152671",
+        "message": "Generating embedding for chunk 38/360"
+      },
+      {
+        "time": "2025-03-29T18:18:24.331290",
+        "message": "Generating embedding for chunk 39/360"
+      },
+      {
+        "time": "2025-03-29T18:18:24.480613",
+        "message": "Generating embedding for chunk 40/360"
+      },
+      {
+        "time": "2025-03-29T18:18:24.746835",
+        "message": "Storing batch 8 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:25.191477",
+        "message": "Stored batch 8 in Pinecone (added 5 vectors), total: 49344"
+      },
+      {
+        "time": "2025-03-29T18:18:25.692354",
+        "message": "Processing batch 9 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:25.693318",
+        "message": "Generating embedding for chunk 41/360"
+      },
+      {
+        "time": "2025-03-29T18:18:25.892620",
+        "message": "Generating embedding for chunk 42/360"
+      },
+      {
+        "time": "2025-03-29T18:18:26.146610",
+        "message": "Generating embedding for chunk 43/360"
+      },
+      {
+        "time": "2025-03-29T18:18:26.414467",
+        "message": "Generating embedding for chunk 44/360"
+      },
+      {
+        "time": "2025-03-29T18:18:26.625287",
+        "message": "Generating embedding for chunk 45/360"
+      },
+      {
+        "time": "2025-03-29T18:18:26.914009",
+        "message": "Storing batch 9 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:27.396411",
+        "message": "Stored batch 9 in Pinecone (added 5 vectors), total: 49349"
+      },
+      {
+        "time": "2025-03-29T18:18:27.897271",
+        "message": "Processing batch 10 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:27.897893",
+        "message": "Generating embedding for chunk 46/360"
+      },
+      {
+        "time": "2025-03-29T18:18:28.200840",
+        "message": "Generating embedding for chunk 47/360"
+      },
+      {
+        "time": "2025-03-29T18:18:28.521906",
+        "message": "Generating embedding for chunk 48/360"
+      },
+      {
+        "time": "2025-03-29T18:18:28.725698",
+        "message": "Generating embedding for chunk 49/360"
+      },
+      {
+        "time": "2025-03-29T18:18:28.986947",
+        "message": "Generating embedding for chunk 50/360"
+      },
+      {
+        "time": "2025-03-29T18:18:29.214688",
+        "message": "Storing batch 10 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:29.690696",
+        "message": "Stored batch 10 in Pinecone (added 5 vectors), total: 49354"
+      },
+      {
+        "time": "2025-03-29T18:18:30.191850",
+        "message": "Processing batch 11 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:30.192595",
+        "message": "Generating embedding for chunk 51/360"
+      },
+      {
+        "time": "2025-03-29T18:18:30.552928",
+        "message": "Generating embedding for chunk 52/360"
+      },
+      {
+        "time": "2025-03-29T18:18:30.775690",
+        "message": "Generating embedding for chunk 53/360"
+      },
+      {
+        "time": "2025-03-29T18:18:30.974185",
+        "message": "Generating embedding for chunk 54/360"
+      },
+      {
+        "time": "2025-03-29T18:18:31.249283",
+        "message": "Generating embedding for chunk 55/360"
+      },
+      {
+        "time": "2025-03-29T18:18:31.474923",
+        "message": "Storing batch 11 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:31.934524",
+        "message": "Stored batch 11 in Pinecone (added 5 vectors), total: 49359"
+      },
+      {
+        "time": "2025-03-29T18:18:32.435513",
+        "message": "Processing batch 12 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:32.436555",
+        "message": "Generating embedding for chunk 56/360"
+      },
+      {
+        "time": "2025-03-29T18:18:32.657232",
+        "message": "Generating embedding for chunk 57/360"
+      },
+      {
+        "time": "2025-03-29T18:18:32.925096",
+        "message": "Generating embedding for chunk 58/360"
+      },
+      {
+        "time": "2025-03-29T18:18:33.167645",
+        "message": "Generating embedding for chunk 59/360"
+      },
+      {
+        "time": "2025-03-29T18:18:33.437788",
+        "message": "Generating embedding for chunk 60/360"
+      },
+      {
+        "time": "2025-03-29T18:18:33.639977",
+        "message": "Storing batch 12 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:34.139498",
+        "message": "Stored batch 12 in Pinecone (added 5 vectors), total: 49364"
+      },
+      {
+        "time": "2025-03-29T18:18:34.640795",
+        "message": "Processing batch 13 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:34.642272",
+        "message": "Generating embedding for chunk 61/360"
+      },
+      {
+        "time": "2025-03-29T18:18:34.881715",
+        "message": "Generating embedding for chunk 62/360"
+      },
+      {
+        "time": "2025-03-29T18:18:35.062904",
+        "message": "Generating embedding for chunk 63/360"
+      },
+      {
+        "time": "2025-03-29T18:18:35.257223",
+        "message": "Generating embedding for chunk 64/360"
+      },
+      {
+        "time": "2025-03-29T18:18:35.477489",
+        "message": "Generating embedding for chunk 65/360"
+      },
+      {
+        "time": "2025-03-29T18:18:35.661747",
+        "message": "Storing batch 13 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:36.139194",
+        "message": "Stored batch 13 in Pinecone (added 0 vectors), total: 49364"
+      },
+      {
+        "time": "2025-03-29T18:18:36.640327",
+        "message": "Processing batch 14 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:36.641389",
+        "message": "Generating embedding for chunk 66/360"
+      },
+      {
+        "time": "2025-03-29T18:18:36.981881",
+        "message": "Generating embedding for chunk 67/360"
+      },
+      {
+        "time": "2025-03-29T18:18:37.186449",
+        "message": "Generating embedding for chunk 68/360"
+      },
+      {
+        "time": "2025-03-29T18:18:37.475159",
+        "message": "Generating embedding for chunk 69/360"
+      },
+      {
+        "time": "2025-03-29T18:18:37.732772",
+        "message": "Generating embedding for chunk 70/360"
+      },
+      {
+        "time": "2025-03-29T18:18:37.887007",
+        "message": "Storing batch 14 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:38.361318",
+        "message": "Stored batch 14 in Pinecone (added 5 vectors), total: 49374"
+      },
+      {
+        "time": "2025-03-29T18:18:38.862783",
+        "message": "Processing batch 15 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:38.863685",
+        "message": "Generating embedding for chunk 71/360"
+      },
+      {
+        "time": "2025-03-29T18:18:39.074836",
+        "message": "Generating embedding for chunk 72/360"
+      },
+      {
+        "time": "2025-03-29T18:18:39.274222",
+        "message": "Generating embedding for chunk 73/360"
+      },
+      {
+        "time": "2025-03-29T18:18:39.571285",
+        "message": "Generating embedding for chunk 74/360"
+      },
+      {
+        "time": "2025-03-29T18:18:39.762537",
+        "message": "Generating embedding for chunk 75/360"
+      },
+      {
+        "time": "2025-03-29T18:18:44.097710",
+        "message": "Storing batch 15 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:44.596547",
+        "message": "Stored batch 15 in Pinecone (added 5 vectors), total: 49379"
+      },
+      {
+        "time": "2025-03-29T18:18:45.097574",
+        "message": "Processing batch 16 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:45.098666",
+        "message": "Generating embedding for chunk 76/360"
+      },
+      {
+        "time": "2025-03-29T18:18:48.794398",
+        "message": "Generating embedding for chunk 77/360"
+      },
+      {
+        "time": "2025-03-29T18:18:48.983763",
+        "message": "Generating embedding for chunk 78/360"
+      },
+      {
+        "time": "2025-03-29T18:18:49.190909",
+        "message": "Generating embedding for chunk 79/360"
+      },
+      {
+        "time": "2025-03-29T18:18:49.440335",
+        "message": "Generating embedding for chunk 80/360"
+      },
+      {
+        "time": "2025-03-29T18:18:49.593047",
+        "message": "Storing batch 16 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:50.289462",
+        "message": "Stored batch 16 in Pinecone (added 5 vectors), total: 49384"
+      },
+      {
+        "time": "2025-03-29T18:18:50.790705",
+        "message": "Processing batch 17 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:50.791684",
+        "message": "Generating embedding for chunk 81/360"
+      },
+      {
+        "time": "2025-03-29T18:18:51.032763",
+        "message": "Generating embedding for chunk 82/360"
+      },
+      {
+        "time": "2025-03-29T18:18:51.287784",
+        "message": "Generating embedding for chunk 83/360"
+      },
+      {
+        "time": "2025-03-29T18:18:51.536653",
+        "message": "Generating embedding for chunk 84/360"
+      },
+      {
+        "time": "2025-03-29T18:18:51.747044",
+        "message": "Generating embedding for chunk 85/360"
+      },
+      {
+        "time": "2025-03-29T18:18:52.035861",
+        "message": "Storing batch 17 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:52.565342",
+        "message": "Stored batch 17 in Pinecone (added 5 vectors), total: 49389"
+      },
+      {
+        "time": "2025-03-29T18:18:53.066692",
+        "message": "Processing batch 18 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:53.067943",
+        "message": "Generating embedding for chunk 86/360"
+      },
+      {
+        "time": "2025-03-29T18:18:53.318008",
+        "message": "Generating embedding for chunk 87/360"
+      },
+      {
+        "time": "2025-03-29T18:18:53.532328",
+        "message": "Generating embedding for chunk 88/360"
+      },
+      {
+        "time": "2025-03-29T18:18:53.780997",
+        "message": "Generating embedding for chunk 89/360"
+      },
+      {
+        "time": "2025-03-29T18:18:54.040312",
+        "message": "Generating embedding for chunk 90/360"
+      },
+      {
+        "time": "2025-03-29T18:18:54.225154",
+        "message": "Storing batch 18 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:54.696736",
+        "message": "Stored batch 18 in Pinecone (added 0 vectors), total: 49389"
+      },
+      {
+        "time": "2025-03-29T18:18:55.197974",
+        "message": "Processing batch 19 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:55.199076",
+        "message": "Generating embedding for chunk 91/360"
+      },
+      {
+        "time": "2025-03-29T18:18:55.407245",
+        "message": "Generating embedding for chunk 92/360"
+      },
+      {
+        "time": "2025-03-29T18:18:55.643269",
+        "message": "Generating embedding for chunk 93/360"
+      },
+      {
+        "time": "2025-03-29T18:18:55.886908",
+        "message": "Generating embedding for chunk 94/360"
+      },
+      {
+        "time": "2025-03-29T18:18:56.050925",
+        "message": "Generating embedding for chunk 95/360"
+      },
+      {
+        "time": "2025-03-29T18:18:56.243602",
+        "message": "Storing batch 19 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:56.739196",
+        "message": "Stored batch 19 in Pinecone (added 5 vectors), total: 49399"
+      },
+      {
+        "time": "2025-03-29T18:18:57.240916",
+        "message": "Processing batch 20 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:57.242516",
+        "message": "Generating embedding for chunk 96/360"
+      },
+      {
+        "time": "2025-03-29T18:18:57.438165",
+        "message": "Generating embedding for chunk 97/360"
+      },
+      {
+        "time": "2025-03-29T18:18:57.663586",
+        "message": "Generating embedding for chunk 98/360"
+      },
+      {
+        "time": "2025-03-29T18:18:57.863908",
+        "message": "Generating embedding for chunk 99/360"
+      },
+      {
+        "time": "2025-03-29T18:18:58.180603",
+        "message": "Generating embedding for chunk 100/360"
+      },
+      {
+        "time": "2025-03-29T18:18:58.397062",
+        "message": "Storing batch 20 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:18:58.853005",
+        "message": "Stored batch 20 in Pinecone (added 5 vectors), total: 49404"
+      },
+      {
+        "time": "2025-03-29T18:18:59.354525",
+        "message": "Processing batch 21 of 72"
+      },
+      {
+        "time": "2025-03-29T18:18:59.355751",
+        "message": "Generating embedding for chunk 101/360"
+      },
+      {
+        "time": "2025-03-29T18:18:59.647090",
+        "message": "Generating embedding for chunk 102/360"
+      },
+      {
+        "time": "2025-03-29T18:18:59.867959",
+        "message": "Generating embedding for chunk 103/360"
+      },
+      {
+        "time": "2025-03-29T18:19:00.184979",
+        "message": "Generating embedding for chunk 104/360"
+      },
+      {
+        "time": "2025-03-29T18:19:00.389669",
+        "message": "Generating embedding for chunk 105/360"
+      },
+      {
+        "time": "2025-03-29T18:19:00.568370",
+        "message": "Storing batch 21 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:01.020628",
+        "message": "Stored batch 21 in Pinecone (added 5 vectors), total: 49409"
+      },
+      {
+        "time": "2025-03-29T18:19:01.521920",
+        "message": "Processing batch 22 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:01.523040",
+        "message": "Generating embedding for chunk 106/360"
+      },
+      {
+        "time": "2025-03-29T18:19:01.735454",
+        "message": "Generating embedding for chunk 107/360"
+      },
+      {
+        "time": "2025-03-29T18:19:01.893042",
+        "message": "Generating embedding for chunk 108/360"
+      },
+      {
+        "time": "2025-03-29T18:19:02.102367",
+        "message": "Generating embedding for chunk 109/360"
+      },
+      {
+        "time": "2025-03-29T18:19:02.311202",
+        "message": "Generating embedding for chunk 110/360"
+      },
+      {
+        "time": "2025-03-29T18:19:02.475049",
+        "message": "Storing batch 22 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:02.945077",
+        "message": "Stored batch 22 in Pinecone (added 5 vectors), total: 49414"
+      },
+      {
+        "time": "2025-03-29T18:19:03.446413",
+        "message": "Processing batch 23 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:03.447732",
+        "message": "Generating embedding for chunk 111/360"
+      },
+      {
+        "time": "2025-03-29T18:19:03.646468",
+        "message": "Generating embedding for chunk 112/360"
+      },
+      {
+        "time": "2025-03-29T18:19:03.859907",
+        "message": "Generating embedding for chunk 113/360"
+      },
+      {
+        "time": "2025-03-29T18:19:04.050248",
+        "message": "Generating embedding for chunk 114/360"
+      },
+      {
+        "time": "2025-03-29T18:19:04.260928",
+        "message": "Generating embedding for chunk 115/360"
+      },
+      {
+        "time": "2025-03-29T18:19:04.468704",
+        "message": "Storing batch 23 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:04.961641",
+        "message": "Stored batch 23 in Pinecone (added 5 vectors), total: 49419"
+      },
+      {
+        "time": "2025-03-29T18:19:05.463087",
+        "message": "Processing batch 24 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:05.464307",
+        "message": "Generating embedding for chunk 116/360"
+      },
+      {
+        "time": "2025-03-29T18:19:05.778439",
+        "message": "Generating embedding for chunk 117/360"
+      },
+      {
+        "time": "2025-03-29T18:19:06.066447",
+        "message": "Generating embedding for chunk 118/360"
+      },
+      {
+        "time": "2025-03-29T18:19:06.295677",
+        "message": "Generating embedding for chunk 119/360"
+      },
+      {
+        "time": "2025-03-29T18:19:06.626977",
+        "message": "Generating embedding for chunk 120/360"
+      },
+      {
+        "time": "2025-03-29T18:19:06.895210",
+        "message": "Storing batch 24 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:07.493915",
+        "message": "Stored batch 24 in Pinecone (added 5 vectors), total: 49424"
+      },
+      {
+        "time": "2025-03-29T18:19:07.996445",
+        "message": "Processing batch 25 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:07.998882",
+        "message": "Generating embedding for chunk 121/360"
+      },
+      {
+        "time": "2025-03-29T18:19:08.211212",
+        "message": "Generating embedding for chunk 122/360"
+      },
+      {
+        "time": "2025-03-29T18:19:08.356899",
+        "message": "Generating embedding for chunk 123/360"
+      },
+      {
+        "time": "2025-03-29T18:19:08.533580",
+        "message": "Generating embedding for chunk 124/360"
+      },
+      {
+        "time": "2025-03-29T18:19:08.881620",
+        "message": "Generating embedding for chunk 125/360"
+      },
+      {
+        "time": "2025-03-29T18:19:09.070959",
+        "message": "Storing batch 25 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:09.549835",
+        "message": "Stored batch 25 in Pinecone (added 5 vectors), total: 49429"
+      },
+      {
+        "time": "2025-03-29T18:19:10.051586",
+        "message": "Processing batch 26 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:10.052886",
+        "message": "Generating embedding for chunk 126/360"
+      },
+      {
+        "time": "2025-03-29T18:19:10.215611",
+        "message": "Generating embedding for chunk 127/360"
+      },
+      {
+        "time": "2025-03-29T18:19:10.479033",
+        "message": "Generating embedding for chunk 128/360"
+      },
+      {
+        "time": "2025-03-29T18:19:10.699177",
+        "message": "Generating embedding for chunk 129/360"
+      },
+      {
+        "time": "2025-03-29T18:19:10.956705",
+        "message": "Generating embedding for chunk 130/360"
+      },
+      {
+        "time": "2025-03-29T18:19:11.180559",
+        "message": "Storing batch 26 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:11.671025",
+        "message": "Stored batch 26 in Pinecone (added 5 vectors), total: 49434"
+      },
+      {
+        "time": "2025-03-29T18:19:12.172778",
+        "message": "Processing batch 27 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:12.174352",
+        "message": "Generating embedding for chunk 131/360"
+      },
+      {
+        "time": "2025-03-29T18:19:12.283190",
+        "message": "Generating embedding for chunk 132/360"
+      },
+      {
+        "time": "2025-03-29T18:19:12.531786",
+        "message": "Generating embedding for chunk 133/360"
+      },
+      {
+        "time": "2025-03-29T18:19:12.768142",
+        "message": "Generating embedding for chunk 134/360"
+      },
+      {
+        "time": "2025-03-29T18:19:12.937361",
+        "message": "Generating embedding for chunk 135/360"
+      },
+      {
+        "time": "2025-03-29T18:19:13.120316",
+        "message": "Storing batch 27 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:13.829885",
+        "message": "Stored batch 27 in Pinecone (added 0 vectors), total: 49434"
+      },
+      {
+        "time": "2025-03-29T18:19:14.332210",
+        "message": "Processing batch 28 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:14.333688",
+        "message": "Generating embedding for chunk 136/360"
+      },
+      {
+        "time": "2025-03-29T18:19:14.590933",
+        "message": "Generating embedding for chunk 137/360"
+      },
+      {
+        "time": "2025-03-29T18:19:14.824820",
+        "message": "Generating embedding for chunk 138/360"
+      },
+      {
+        "time": "2025-03-29T18:19:15.027703",
+        "message": "Generating embedding for chunk 139/360"
+      },
+      {
+        "time": "2025-03-29T18:19:15.229609",
+        "message": "Generating embedding for chunk 140/360"
+      },
+      {
+        "time": "2025-03-29T18:19:15.475137",
+        "message": "Storing batch 28 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:15.993775",
+        "message": "Stored batch 28 in Pinecone (added 5 vectors), total: 49444"
+      },
+      {
+        "time": "2025-03-29T18:19:16.496095",
+        "message": "Processing batch 29 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:16.497809",
+        "message": "Generating embedding for chunk 141/360"
+      },
+      {
+        "time": "2025-03-29T18:19:16.729858",
+        "message": "Generating embedding for chunk 142/360"
+      },
+      {
+        "time": "2025-03-29T18:19:16.960907",
+        "message": "Generating embedding for chunk 143/360"
+      },
+      {
+        "time": "2025-03-29T18:19:17.194826",
+        "message": "Generating embedding for chunk 144/360"
+      },
+      {
+        "time": "2025-03-29T18:19:17.407519",
+        "message": "Generating embedding for chunk 145/360"
+      },
+      {
+        "time": "2025-03-29T18:19:17.600948",
+        "message": "Storing batch 29 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:18.075052",
+        "message": "Stored batch 29 in Pinecone (added 5 vectors), total: 49449"
+      },
+      {
+        "time": "2025-03-29T18:19:18.578043",
+        "message": "Processing batch 30 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:18.580591",
+        "message": "Generating embedding for chunk 146/360"
+      },
+      {
+        "time": "2025-03-29T18:19:18.821727",
+        "message": "Generating embedding for chunk 147/360"
+      },
+      {
+        "time": "2025-03-29T18:19:19.095784",
+        "message": "Generating embedding for chunk 148/360"
+      },
+      {
+        "time": "2025-03-29T18:19:19.341867",
+        "message": "Generating embedding for chunk 149/360"
+      },
+      {
+        "time": "2025-03-29T18:19:19.551332",
+        "message": "Generating embedding for chunk 150/360"
+      },
+      {
+        "time": "2025-03-29T18:19:19.742991",
+        "message": "Storing batch 30 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:20.265417",
+        "message": "Stored batch 30 in Pinecone (added 5 vectors), total: 49454"
+      },
+      {
+        "time": "2025-03-29T18:19:20.767871",
+        "message": "Processing batch 31 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:20.770565",
+        "message": "Generating embedding for chunk 151/360"
+      },
+      {
+        "time": "2025-03-29T18:19:20.939503",
+        "message": "Generating embedding for chunk 152/360"
+      },
+      {
+        "time": "2025-03-29T18:19:21.152210",
+        "message": "Generating embedding for chunk 153/360"
+      },
+      {
+        "time": "2025-03-29T18:19:21.386090",
+        "message": "Generating embedding for chunk 154/360"
+      },
+      {
+        "time": "2025-03-29T18:19:21.690781",
+        "message": "Generating embedding for chunk 155/360"
+      },
+      {
+        "time": "2025-03-29T18:19:21.894871",
+        "message": "Storing batch 31 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:22.332405",
+        "message": "Stored batch 31 in Pinecone (added 5 vectors), total: 49459"
+      },
+      {
+        "time": "2025-03-29T18:19:22.834199",
+        "message": "Processing batch 32 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:22.835765",
+        "message": "Generating embedding for chunk 156/360"
+      },
+      {
+        "time": "2025-03-29T18:19:23.075228",
+        "message": "Generating embedding for chunk 157/360"
+      },
+      {
+        "time": "2025-03-29T18:19:23.260779",
+        "message": "Generating embedding for chunk 158/360"
+      },
+      {
+        "time": "2025-03-29T18:19:23.522427",
+        "message": "Generating embedding for chunk 159/360"
+      },
+      {
+        "time": "2025-03-29T18:19:23.778258",
+        "message": "Generating embedding for chunk 160/360"
+      },
+      {
+        "time": "2025-03-29T18:19:24.008777",
+        "message": "Storing batch 32 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:24.555620",
+        "message": "Stored batch 32 in Pinecone (added 5 vectors), total: 49464"
+      },
+      {
+        "time": "2025-03-29T18:19:25.057611",
+        "message": "Processing batch 33 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:25.059592",
+        "message": "Generating embedding for chunk 161/360"
+      },
+      {
+        "time": "2025-03-29T18:19:25.308316",
+        "message": "Generating embedding for chunk 162/360"
+      },
+      {
+        "time": "2025-03-29T18:19:25.531081",
+        "message": "Generating embedding for chunk 163/360"
+      },
+      {
+        "time": "2025-03-29T18:19:25.719520",
+        "message": "Generating embedding for chunk 164/360"
+      },
+      {
+        "time": "2025-03-29T18:19:25.916026",
+        "message": "Generating embedding for chunk 165/360"
+      },
+      {
+        "time": "2025-03-29T18:19:26.154330",
+        "message": "Storing batch 33 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:26.615219",
+        "message": "Stored batch 33 in Pinecone (added 5 vectors), total: 49469"
+      },
+      {
+        "time": "2025-03-29T18:19:27.117160",
+        "message": "Processing batch 34 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:27.119392",
+        "message": "Generating embedding for chunk 166/360"
+      },
+      {
+        "time": "2025-03-29T18:19:27.363141",
+        "message": "Generating embedding for chunk 167/360"
+      },
+      {
+        "time": "2025-03-29T18:19:27.620870",
+        "message": "Generating embedding for chunk 168/360"
+      },
+      {
+        "time": "2025-03-29T18:19:27.855295",
+        "message": "Generating embedding for chunk 169/360"
+      },
+      {
+        "time": "2025-03-29T18:19:28.063362",
+        "message": "Generating embedding for chunk 170/360"
+      },
+      {
+        "time": "2025-03-29T18:19:28.245109",
+        "message": "Storing batch 34 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:28.731833",
+        "message": "Stored batch 34 in Pinecone (added 5 vectors), total: 49474"
+      },
+      {
+        "time": "2025-03-29T18:19:29.235094",
+        "message": "Processing batch 35 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:29.237344",
+        "message": "Generating embedding for chunk 171/360"
+      },
+      {
+        "time": "2025-03-29T18:19:29.399213",
+        "message": "Generating embedding for chunk 172/360"
+      },
+      {
+        "time": "2025-03-29T18:19:29.647363",
+        "message": "Generating embedding for chunk 173/360"
+      },
+      {
+        "time": "2025-03-29T18:19:29.908985",
+        "message": "Generating embedding for chunk 174/360"
+      },
+      {
+        "time": "2025-03-29T18:19:30.134877",
+        "message": "Generating embedding for chunk 175/360"
+      },
+      {
+        "time": "2025-03-29T18:19:30.328719",
+        "message": "Storing batch 35 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:30.773352",
+        "message": "Stored batch 35 in Pinecone (added 5 vectors), total: 49479"
+      },
+      {
+        "time": "2025-03-29T18:19:31.275779",
+        "message": "Processing batch 36 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:31.278823",
+        "message": "Generating embedding for chunk 176/360"
+      },
+      {
+        "time": "2025-03-29T18:19:31.554075",
+        "message": "Generating embedding for chunk 177/360"
+      },
+      {
+        "time": "2025-03-29T18:19:31.752007",
+        "message": "Generating embedding for chunk 178/360"
+      },
+      {
+        "time": "2025-03-29T18:19:31.934861",
+        "message": "Generating embedding for chunk 179/360"
+      },
+      {
+        "time": "2025-03-29T18:19:32.343457",
+        "message": "Generating embedding for chunk 180/360"
+      },
+      {
+        "time": "2025-03-29T18:19:32.640883",
+        "message": "Storing batch 36 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:33.109002",
+        "message": "Stored batch 36 in Pinecone (added 0 vectors), total: 49479"
+      },
+      {
+        "time": "2025-03-29T18:19:33.610937",
+        "message": "Processing batch 37 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:33.612689",
+        "message": "Generating embedding for chunk 181/360"
+      },
+      {
+        "time": "2025-03-29T18:19:33.828759",
+        "message": "Generating embedding for chunk 182/360"
+      },
+      {
+        "time": "2025-03-29T18:19:34.025563",
+        "message": "Generating embedding for chunk 183/360"
+      },
+      {
+        "time": "2025-03-29T18:19:34.242600",
+        "message": "Generating embedding for chunk 184/360"
+      },
+      {
+        "time": "2025-03-29T18:19:34.503690",
+        "message": "Generating embedding for chunk 185/360"
+      },
+      {
+        "time": "2025-03-29T18:19:34.763005",
+        "message": "Storing batch 37 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:35.230467",
+        "message": "Stored batch 37 in Pinecone (added 5 vectors), total: 49489"
+      },
+      {
+        "time": "2025-03-29T18:19:35.733471",
+        "message": "Processing batch 38 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:35.735798",
+        "message": "Generating embedding for chunk 186/360"
+      },
+      {
+        "time": "2025-03-29T18:19:35.922751",
+        "message": "Generating embedding for chunk 187/360"
+      },
+      {
+        "time": "2025-03-29T18:19:36.100282",
+        "message": "Generating embedding for chunk 188/360"
+      },
+      {
+        "time": "2025-03-29T18:19:36.376880",
+        "message": "Generating embedding for chunk 189/360"
+      },
+      {
+        "time": "2025-03-29T18:19:36.641988",
+        "message": "Generating embedding for chunk 190/360"
+      },
+      {
+        "time": "2025-03-29T18:19:36.869598",
+        "message": "Storing batch 38 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:37.328228",
+        "message": "Stored batch 38 in Pinecone (added 5 vectors), total: 49494"
+      },
+      {
+        "time": "2025-03-29T18:19:37.830712",
+        "message": "Processing batch 39 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:37.832613",
+        "message": "Generating embedding for chunk 191/360"
+      },
+      {
+        "time": "2025-03-29T18:19:37.984495",
+        "message": "Generating embedding for chunk 192/360"
+      },
+      {
+        "time": "2025-03-29T18:19:38.132347",
+        "message": "Generating embedding for chunk 193/360"
+      },
+      {
+        "time": "2025-03-29T18:19:38.423545",
+        "message": "Generating embedding for chunk 194/360"
+      },
+      {
+        "time": "2025-03-29T18:19:38.681639",
+        "message": "Generating embedding for chunk 195/360"
+      },
+      {
+        "time": "2025-03-29T18:19:38.912904",
+        "message": "Storing batch 39 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:39.388652",
+        "message": "Stored batch 39 in Pinecone (added 5 vectors), total: 49499"
+      },
+      {
+        "time": "2025-03-29T18:19:39.891970",
+        "message": "Processing batch 40 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:39.894164",
+        "message": "Generating embedding for chunk 196/360"
+      },
+      {
+        "time": "2025-03-29T18:19:40.125792",
+        "message": "Generating embedding for chunk 197/360"
+      },
+      {
+        "time": "2025-03-29T18:19:40.369981",
+        "message": "Generating embedding for chunk 198/360"
+      },
+      {
+        "time": "2025-03-29T18:19:40.626225",
+        "message": "Generating embedding for chunk 199/360"
+      },
+      {
+        "time": "2025-03-29T18:19:40.864050",
+        "message": "Generating embedding for chunk 200/360"
+      },
+      {
+        "time": "2025-03-29T18:19:41.050198",
+        "message": "Storing batch 40 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:41.498052",
+        "message": "Stored batch 40 in Pinecone (added 0 vectors), total: 49499"
+      },
+      {
+        "time": "2025-03-29T18:19:42.000060",
+        "message": "Processing batch 41 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:42.002036",
+        "message": "Generating embedding for chunk 201/360"
+      },
+      {
+        "time": "2025-03-29T18:19:42.268208",
+        "message": "Generating embedding for chunk 202/360"
+      },
+      {
+        "time": "2025-03-29T18:19:42.442437",
+        "message": "Generating embedding for chunk 203/360"
+      },
+      {
+        "time": "2025-03-29T18:19:42.646651",
+        "message": "Generating embedding for chunk 204/360"
+      },
+      {
+        "time": "2025-03-29T18:19:42.868941",
+        "message": "Generating embedding for chunk 205/360"
+      },
+      {
+        "time": "2025-03-29T18:19:43.057108",
+        "message": "Storing batch 41 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:43.533436",
+        "message": "Stored batch 41 in Pinecone (added 5 vectors), total: 49509"
+      },
+      {
+        "time": "2025-03-29T18:19:44.036053",
+        "message": "Processing batch 42 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:44.038435",
+        "message": "Generating embedding for chunk 206/360"
+      },
+      {
+        "time": "2025-03-29T18:19:44.256450",
+        "message": "Generating embedding for chunk 207/360"
+      },
+      {
+        "time": "2025-03-29T18:19:44.497896",
+        "message": "Generating embedding for chunk 208/360"
+      },
+      {
+        "time": "2025-03-29T18:19:44.681973",
+        "message": "Generating embedding for chunk 209/360"
+      },
+      {
+        "time": "2025-03-29T18:19:45.008348",
+        "message": "Generating embedding for chunk 210/360"
+      },
+      {
+        "time": "2025-03-29T18:19:45.244666",
+        "message": "Storing batch 42 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:45.716625",
+        "message": "Stored batch 42 in Pinecone (added 0 vectors), total: 49509"
+      },
+      {
+        "time": "2025-03-29T18:19:46.219422",
+        "message": "Processing batch 43 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:46.221766",
+        "message": "Generating embedding for chunk 211/360"
+      },
+      {
+        "time": "2025-03-29T18:19:46.419536",
+        "message": "Generating embedding for chunk 212/360"
+      },
+      {
+        "time": "2025-03-29T18:19:46.690949",
+        "message": "Generating embedding for chunk 213/360"
+      },
+      {
+        "time": "2025-03-29T18:19:46.982564",
+        "message": "Generating embedding for chunk 214/360"
+      },
+      {
+        "time": "2025-03-29T18:19:47.144069",
+        "message": "Generating embedding for chunk 215/360"
+      },
+      {
+        "time": "2025-03-29T18:19:47.415501",
+        "message": "Storing batch 43 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:47.900703",
+        "message": "Stored batch 43 in Pinecone (added 0 vectors), total: 49514"
+      },
+      {
+        "time": "2025-03-29T18:19:48.402771",
+        "message": "Processing batch 44 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:48.404907",
+        "message": "Generating embedding for chunk 216/360"
+      },
+      {
+        "time": "2025-03-29T18:19:48.673468",
+        "message": "Generating embedding for chunk 217/360"
+      },
+      {
+        "time": "2025-03-29T18:19:48.856882",
+        "message": "Generating embedding for chunk 218/360"
+      },
+      {
+        "time": "2025-03-29T18:19:49.102130",
+        "message": "Generating embedding for chunk 219/360"
+      },
+      {
+        "time": "2025-03-29T18:19:49.322342",
+        "message": "Generating embedding for chunk 220/360"
+      },
+      {
+        "time": "2025-03-29T18:19:49.626015",
+        "message": "Storing batch 44 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:50.101347",
+        "message": "Stored batch 44 in Pinecone (added 0 vectors), total: 49519"
+      },
+      {
+        "time": "2025-03-29T18:19:50.603761",
+        "message": "Processing batch 45 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:50.607146",
+        "message": "Generating embedding for chunk 221/360"
+      },
+      {
+        "time": "2025-03-29T18:19:50.794346",
+        "message": "Generating embedding for chunk 222/360"
+      },
+      {
+        "time": "2025-03-29T18:19:51.051190",
+        "message": "Generating embedding for chunk 223/360"
+      },
+      {
+        "time": "2025-03-29T18:19:56.106805",
+        "message": "Generating embedding for chunk 224/360"
+      },
+      {
+        "time": "2025-03-29T18:19:56.298865",
+        "message": "Generating embedding for chunk 225/360"
+      },
+      {
+        "time": "2025-03-29T18:19:56.589882",
+        "message": "Storing batch 45 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:19:57.065447",
+        "message": "Stored batch 45 in Pinecone (added 5 vectors), total: 49529"
+      },
+      {
+        "time": "2025-03-29T18:19:57.568032",
+        "message": "Processing batch 46 of 72"
+      },
+      {
+        "time": "2025-03-29T18:19:57.570505",
+        "message": "Generating embedding for chunk 226/360"
+      },
+      {
+        "time": "2025-03-29T18:19:57.751171",
+        "message": "Generating embedding for chunk 227/360"
+      },
+      {
+        "time": "2025-03-29T18:19:59.604899",
+        "message": "Generating embedding for chunk 228/360"
+      },
+      {
+        "time": "2025-03-29T18:19:59.825426",
+        "message": "Generating embedding for chunk 229/360"
+      },
+      {
+        "time": "2025-03-29T18:20:00.025522",
+        "message": "Generating embedding for chunk 230/360"
+      },
+      {
+        "time": "2025-03-29T18:20:00.203419",
+        "message": "Storing batch 46 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:00.824260",
+        "message": "Stored batch 46 in Pinecone (added 0 vectors), total: 49529"
+      },
+      {
+        "time": "2025-03-29T18:20:01.326920",
+        "message": "Processing batch 47 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:01.329031",
+        "message": "Generating embedding for chunk 231/360"
+      },
+      {
+        "time": "2025-03-29T18:20:01.510674",
+        "message": "Generating embedding for chunk 232/360"
+      },
+      {
+        "time": "2025-03-29T18:20:01.789439",
+        "message": "Generating embedding for chunk 233/360"
+      },
+      {
+        "time": "2025-03-29T18:20:02.064129",
+        "message": "Generating embedding for chunk 234/360"
+      },
+      {
+        "time": "2025-03-29T18:20:02.311023",
+        "message": "Generating embedding for chunk 235/360"
+      },
+      {
+        "time": "2025-03-29T18:20:02.517993",
+        "message": "Storing batch 47 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:02.996788",
+        "message": "Stored batch 47 in Pinecone (added 0 vectors), total: 49534"
+      },
+      {
+        "time": "2025-03-29T18:20:03.499269",
+        "message": "Processing batch 48 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:03.501497",
+        "message": "Generating embedding for chunk 236/360"
+      },
+      {
+        "time": "2025-03-29T18:20:03.730657",
+        "message": "Generating embedding for chunk 237/360"
+      },
+      {
+        "time": "2025-03-29T18:20:03.900373",
+        "message": "Generating embedding for chunk 238/360"
+      },
+      {
+        "time": "2025-03-29T18:20:04.139411",
+        "message": "Generating embedding for chunk 239/360"
+      },
+      {
+        "time": "2025-03-29T18:20:04.388340",
+        "message": "Generating embedding for chunk 240/360"
+      },
+      {
+        "time": "2025-03-29T18:20:04.568975",
+        "message": "Storing batch 48 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:05.052989",
+        "message": "Stored batch 48 in Pinecone (added 0 vectors), total: 49539"
+      },
+      {
+        "time": "2025-03-29T18:20:05.555416",
+        "message": "Processing batch 49 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:05.557756",
+        "message": "Generating embedding for chunk 241/360"
+      },
+      {
+        "time": "2025-03-29T18:20:05.864962",
+        "message": "Generating embedding for chunk 242/360"
+      },
+      {
+        "time": "2025-03-29T18:20:06.109596",
+        "message": "Generating embedding for chunk 243/360"
+      },
+      {
+        "time": "2025-03-29T18:20:06.377387",
+        "message": "Generating embedding for chunk 244/360"
+      },
+      {
+        "time": "2025-03-29T18:20:06.590843",
+        "message": "Generating embedding for chunk 245/360"
+      },
+      {
+        "time": "2025-03-29T18:20:06.829046",
+        "message": "Storing batch 49 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:07.427369",
+        "message": "Stored batch 49 in Pinecone (added 5 vectors), total: 49549"
+      },
+      {
+        "time": "2025-03-29T18:20:07.930030",
+        "message": "Processing batch 50 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:07.932354",
+        "message": "Generating embedding for chunk 246/360"
+      },
+      {
+        "time": "2025-03-29T18:20:08.124283",
+        "message": "Generating embedding for chunk 247/360"
+      },
+      {
+        "time": "2025-03-29T18:20:08.410766",
+        "message": "Generating embedding for chunk 248/360"
+      },
+      {
+        "time": "2025-03-29T18:20:08.707971",
+        "message": "Generating embedding for chunk 249/360"
+      },
+      {
+        "time": "2025-03-29T18:20:08.939394",
+        "message": "Generating embedding for chunk 250/360"
+      },
+      {
+        "time": "2025-03-29T18:20:09.159109",
+        "message": "Storing batch 50 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:09.618940",
+        "message": "Stored batch 50 in Pinecone (added 5 vectors), total: 49554"
+      },
+      {
+        "time": "2025-03-29T18:20:10.121642",
+        "message": "Processing batch 51 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:10.124167",
+        "message": "Generating embedding for chunk 251/360"
+      },
+      {
+        "time": "2025-03-29T18:20:10.307987",
+        "message": "Generating embedding for chunk 252/360"
+      },
+      {
+        "time": "2025-03-29T18:20:10.574721",
+        "message": "Generating embedding for chunk 253/360"
+      },
+      {
+        "time": "2025-03-29T18:20:10.789581",
+        "message": "Generating embedding for chunk 254/360"
+      },
+      {
+        "time": "2025-03-29T18:20:11.322161",
+        "message": "Generating embedding for chunk 255/360"
+      },
+      {
+        "time": "2025-03-29T18:20:11.523081",
+        "message": "Storing batch 51 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:11.982600",
+        "message": "Stored batch 51 in Pinecone (added 5 vectors), total: 49559"
+      },
+      {
+        "time": "2025-03-29T18:20:12.485331",
+        "message": "Processing batch 52 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:12.487782",
+        "message": "Generating embedding for chunk 256/360"
+      },
+      {
+        "time": "2025-03-29T18:20:12.729204",
+        "message": "Generating embedding for chunk 257/360"
+      },
+      {
+        "time": "2025-03-29T18:20:12.987312",
+        "message": "Generating embedding for chunk 258/360"
+      },
+      {
+        "time": "2025-03-29T18:20:13.252784",
+        "message": "Generating embedding for chunk 259/360"
+      },
+      {
+        "time": "2025-03-29T18:20:13.464456",
+        "message": "Generating embedding for chunk 260/360"
+      },
+      {
+        "time": "2025-03-29T18:20:13.670696",
+        "message": "Storing batch 52 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:14.133817",
+        "message": "Stored batch 52 in Pinecone (added 5 vectors), total: 49564"
+      },
+      {
+        "time": "2025-03-29T18:20:14.636500",
+        "message": "Processing batch 53 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:14.639617",
+        "message": "Generating embedding for chunk 261/360"
+      },
+      {
+        "time": "2025-03-29T18:20:14.846302",
+        "message": "Generating embedding for chunk 262/360"
+      },
+      {
+        "time": "2025-03-29T18:20:15.093794",
+        "message": "Generating embedding for chunk 263/360"
+      },
+      {
+        "time": "2025-03-29T18:20:15.311444",
+        "message": "Generating embedding for chunk 264/360"
+      },
+      {
+        "time": "2025-03-29T18:20:15.530553",
+        "message": "Generating embedding for chunk 265/360"
+      },
+      {
+        "time": "2025-03-29T18:20:15.712974",
+        "message": "Storing batch 53 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:16.190771",
+        "message": "Stored batch 53 in Pinecone (added 5 vectors), total: 49569"
+      },
+      {
+        "time": "2025-03-29T18:20:16.693501",
+        "message": "Processing batch 54 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:16.696021",
+        "message": "Generating embedding for chunk 266/360"
+      },
+      {
+        "time": "2025-03-29T18:20:16.923661",
+        "message": "Generating embedding for chunk 267/360"
+      },
+      {
+        "time": "2025-03-29T18:20:17.162908",
+        "message": "Generating embedding for chunk 268/360"
+      },
+      {
+        "time": "2025-03-29T18:20:17.456246",
+        "message": "Generating embedding for chunk 269/360"
+      },
+      {
+        "time": "2025-03-29T18:20:17.803162",
+        "message": "Generating embedding for chunk 270/360"
+      },
+      {
+        "time": "2025-03-29T18:20:17.949615",
+        "message": "Storing batch 54 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:18.437712",
+        "message": "Stored batch 54 in Pinecone (added 5 vectors), total: 49574"
+      },
+      {
+        "time": "2025-03-29T18:20:18.940538",
+        "message": "Processing batch 55 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:18.943249",
+        "message": "Generating embedding for chunk 271/360"
+      },
+      {
+        "time": "2025-03-29T18:20:19.246375",
+        "message": "Generating embedding for chunk 272/360"
+      },
+      {
+        "time": "2025-03-29T18:20:19.440058",
+        "message": "Generating embedding for chunk 273/360"
+      },
+      {
+        "time": "2025-03-29T18:20:19.712733",
+        "message": "Generating embedding for chunk 274/360"
+      },
+      {
+        "time": "2025-03-29T18:20:19.904162",
+        "message": "Generating embedding for chunk 275/360"
+      },
+      {
+        "time": "2025-03-29T18:20:20.139720",
+        "message": "Storing batch 55 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:20.619391",
+        "message": "Stored batch 55 in Pinecone (added 5 vectors), total: 49579"
+      },
+      {
+        "time": "2025-03-29T18:20:21.122551",
+        "message": "Processing batch 56 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:21.125389",
+        "message": "Generating embedding for chunk 276/360"
+      },
+      {
+        "time": "2025-03-29T18:20:21.384173",
+        "message": "Generating embedding for chunk 277/360"
+      },
+      {
+        "time": "2025-03-29T18:20:21.619324",
+        "message": "Generating embedding for chunk 278/360"
+      },
+      {
+        "time": "2025-03-29T18:20:21.848962",
+        "message": "Generating embedding for chunk 279/360"
+      },
+      {
+        "time": "2025-03-29T18:20:22.070588",
+        "message": "Generating embedding for chunk 280/360"
+      },
+      {
+        "time": "2025-03-29T18:20:22.336568",
+        "message": "Storing batch 56 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:22.822814",
+        "message": "Stored batch 56 in Pinecone (added 5 vectors), total: 49584"
+      },
+      {
+        "time": "2025-03-29T18:20:23.325607",
+        "message": "Processing batch 57 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:23.328500",
+        "message": "Generating embedding for chunk 281/360"
+      },
+      {
+        "time": "2025-03-29T18:20:23.488830",
+        "message": "Generating embedding for chunk 282/360"
+      },
+      {
+        "time": "2025-03-29T18:20:23.682455",
+        "message": "Generating embedding for chunk 283/360"
+      },
+      {
+        "time": "2025-03-29T18:20:23.855268",
+        "message": "Generating embedding for chunk 284/360"
+      },
+      {
+        "time": "2025-03-29T18:20:24.083819",
+        "message": "Generating embedding for chunk 285/360"
+      },
+      {
+        "time": "2025-03-29T18:20:24.381255",
+        "message": "Storing batch 57 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:24.880158",
+        "message": "Stored batch 57 in Pinecone (added 0 vectors), total: 49584"
+      },
+      {
+        "time": "2025-03-29T18:20:25.383219",
+        "message": "Processing batch 58 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:25.385849",
+        "message": "Generating embedding for chunk 286/360"
+      },
+      {
+        "time": "2025-03-29T18:20:25.563205",
+        "message": "Generating embedding for chunk 287/360"
+      },
+      {
+        "time": "2025-03-29T18:20:25.813564",
+        "message": "Generating embedding for chunk 288/360"
+      },
+      {
+        "time": "2025-03-29T18:20:26.083853",
+        "message": "Generating embedding for chunk 289/360"
+      },
+      {
+        "time": "2025-03-29T18:20:26.238616",
+        "message": "Generating embedding for chunk 290/360"
+      },
+      {
+        "time": "2025-03-29T18:20:26.414781",
+        "message": "Storing batch 58 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:27.062555",
+        "message": "Stored batch 58 in Pinecone (added 5 vectors), total: 49594"
+      },
+      {
+        "time": "2025-03-29T18:20:27.574750",
+        "message": "Processing batch 59 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:27.578018",
+        "message": "Generating embedding for chunk 291/360"
+      },
+      {
+        "time": "2025-03-29T18:20:27.831039",
+        "message": "Generating embedding for chunk 292/360"
+      },
+      {
+        "time": "2025-03-29T18:20:28.028562",
+        "message": "Generating embedding for chunk 293/360"
+      },
+      {
+        "time": "2025-03-29T18:20:28.248919",
+        "message": "Generating embedding for chunk 294/360"
+      },
+      {
+        "time": "2025-03-29T18:20:28.519513",
+        "message": "Generating embedding for chunk 295/360"
+      },
+      {
+        "time": "2025-03-29T18:20:32.150351",
+        "message": "Storing batch 59 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:32.645413",
+        "message": "Stored batch 59 in Pinecone (added 5 vectors), total: 49599"
+      },
+      {
+        "time": "2025-03-29T18:20:33.148290",
+        "message": "Processing batch 60 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:33.150974",
+        "message": "Generating embedding for chunk 296/360"
+      },
+      {
+        "time": "2025-03-29T18:20:33.781950",
+        "message": "Generating embedding for chunk 297/360"
+      },
+      {
+        "time": "2025-03-29T18:20:34.041756",
+        "message": "Generating embedding for chunk 298/360"
+      },
+      {
+        "time": "2025-03-29T18:20:34.292502",
+        "message": "Generating embedding for chunk 299/360"
+      },
+      {
+        "time": "2025-03-29T18:20:34.577003",
+        "message": "Generating embedding for chunk 300/360"
+      },
+      {
+        "time": "2025-03-29T18:20:34.825430",
+        "message": "Storing batch 60 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:35.318529",
+        "message": "Stored batch 60 in Pinecone (added 5 vectors), total: 49604"
+      },
+      {
+        "time": "2025-03-29T18:20:35.821243",
+        "message": "Processing batch 61 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:35.824093",
+        "message": "Generating embedding for chunk 301/360"
+      },
+      {
+        "time": "2025-03-29T18:20:36.001837",
+        "message": "Generating embedding for chunk 302/360"
+      },
+      {
+        "time": "2025-03-29T18:20:36.323011",
+        "message": "Generating embedding for chunk 303/360"
+      },
+      {
+        "time": "2025-03-29T18:20:36.532243",
+        "message": "Generating embedding for chunk 304/360"
+      },
+      {
+        "time": "2025-03-29T18:20:36.732909",
+        "message": "Generating embedding for chunk 305/360"
+      },
+      {
+        "time": "2025-03-29T18:20:36.986320",
+        "message": "Storing batch 61 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:37.438932",
+        "message": "Stored batch 61 in Pinecone (added 5 vectors), total: 49609"
+      },
+      {
+        "time": "2025-03-29T18:20:37.942614",
+        "message": "Processing batch 62 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:37.945443",
+        "message": "Generating embedding for chunk 306/360"
+      },
+      {
+        "time": "2025-03-29T18:20:38.101665",
+        "message": "Generating embedding for chunk 307/360"
+      },
+      {
+        "time": "2025-03-29T18:20:38.287248",
+        "message": "Generating embedding for chunk 308/360"
+      },
+      {
+        "time": "2025-03-29T18:20:38.552796",
+        "message": "Generating embedding for chunk 309/360"
+      },
+      {
+        "time": "2025-03-29T18:20:38.784419",
+        "message": "Generating embedding for chunk 310/360"
+      },
+      {
+        "time": "2025-03-29T18:20:39.059722",
+        "message": "Storing batch 62 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:39.518489",
+        "message": "Stored batch 62 in Pinecone (added 5 vectors), total: 49614"
+      },
+      {
+        "time": "2025-03-29T18:20:40.022102",
+        "message": "Processing batch 63 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:40.025176",
+        "message": "Generating embedding for chunk 311/360"
+      },
+      {
+        "time": "2025-03-29T18:20:40.401163",
+        "message": "Generating embedding for chunk 312/360"
+      },
+      {
+        "time": "2025-03-29T18:20:40.569167",
+        "message": "Generating embedding for chunk 313/360"
+      },
+      {
+        "time": "2025-03-29T18:20:40.798890",
+        "message": "Generating embedding for chunk 314/360"
+      },
+      {
+        "time": "2025-03-29T18:20:41.020242",
+        "message": "Generating embedding for chunk 315/360"
+      },
+      {
+        "time": "2025-03-29T18:20:41.178526",
+        "message": "Storing batch 63 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:41.669521",
+        "message": "Stored batch 63 in Pinecone (added 5 vectors), total: 49619"
+      },
+      {
+        "time": "2025-03-29T18:20:42.172933",
+        "message": "Processing batch 64 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:42.175857",
+        "message": "Generating embedding for chunk 316/360"
+      },
+      {
+        "time": "2025-03-29T18:20:42.417935",
+        "message": "Generating embedding for chunk 317/360"
+      },
+      {
+        "time": "2025-03-29T18:20:42.666062",
+        "message": "Generating embedding for chunk 318/360"
+      },
+      {
+        "time": "2025-03-29T18:20:42.978096",
+        "message": "Generating embedding for chunk 319/360"
+      },
+      {
+        "time": "2025-03-29T18:20:43.186457",
+        "message": "Generating embedding for chunk 320/360"
+      },
+      {
+        "time": "2025-03-29T18:20:43.963482",
+        "message": "Storing batch 64 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:44.475871",
+        "message": "Stored batch 64 in Pinecone (added 5 vectors), total: 49624"
+      },
+      {
+        "time": "2025-03-29T18:20:44.978921",
+        "message": "Processing batch 65 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:44.982164",
+        "message": "Generating embedding for chunk 321/360"
+      },
+      {
+        "time": "2025-03-29T18:20:45.262952",
+        "message": "Generating embedding for chunk 322/360"
+      },
+      {
+        "time": "2025-03-29T18:20:45.551026",
+        "message": "Generating embedding for chunk 323/360"
+      },
+      {
+        "time": "2025-03-29T18:20:45.785428",
+        "message": "Generating embedding for chunk 324/360"
+      },
+      {
+        "time": "2025-03-29T18:20:46.006109",
+        "message": "Generating embedding for chunk 325/360"
+      },
+      {
+        "time": "2025-03-29T18:20:46.193346",
+        "message": "Storing batch 65 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:46.645428",
+        "message": "Stored batch 65 in Pinecone (added 5 vectors), total: 49629"
+      },
+      {
+        "time": "2025-03-29T18:20:47.148359",
+        "message": "Processing batch 66 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:47.150973",
+        "message": "Generating embedding for chunk 326/360"
+      },
+      {
+        "time": "2025-03-29T18:20:47.411421",
+        "message": "Generating embedding for chunk 327/360"
+      },
+      {
+        "time": "2025-03-29T18:20:47.613894",
+        "message": "Generating embedding for chunk 328/360"
+      },
+      {
+        "time": "2025-03-29T18:20:47.883069",
+        "message": "Generating embedding for chunk 329/360"
+      },
+      {
+        "time": "2025-03-29T18:20:48.120294",
+        "message": "Generating embedding for chunk 330/360"
+      },
+      {
+        "time": "2025-03-29T18:20:48.346204",
+        "message": "Storing batch 66 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:49.071257",
+        "message": "Stored batch 66 in Pinecone (added 0 vectors), total: 49629"
+      },
+      {
+        "time": "2025-03-29T18:20:49.575207",
+        "message": "Processing batch 67 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:49.578466",
+        "message": "Generating embedding for chunk 331/360"
+      },
+      {
+        "time": "2025-03-29T18:20:49.805647",
+        "message": "Generating embedding for chunk 332/360"
+      },
+      {
+        "time": "2025-03-29T18:20:50.079812",
+        "message": "Generating embedding for chunk 333/360"
+      },
+      {
+        "time": "2025-03-29T18:20:50.327599",
+        "message": "Generating embedding for chunk 334/360"
+      },
+      {
+        "time": "2025-03-29T18:20:50.482367",
+        "message": "Generating embedding for chunk 335/360"
+      },
+      {
+        "time": "2025-03-29T18:20:50.796368",
+        "message": "Storing batch 67 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:51.331290",
+        "message": "Stored batch 67 in Pinecone (added 5 vectors), total: 49639"
+      },
+      {
+        "time": "2025-03-29T18:20:51.834459",
+        "message": "Processing batch 68 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:51.837547",
+        "message": "Generating embedding for chunk 336/360"
+      },
+      {
+        "time": "2025-03-29T18:20:52.189387",
+        "message": "Generating embedding for chunk 337/360"
+      },
+      {
+        "time": "2025-03-29T18:20:52.458191",
+        "message": "Generating embedding for chunk 338/360"
+      },
+      {
+        "time": "2025-03-29T18:20:52.683305",
+        "message": "Generating embedding for chunk 339/360"
+      },
+      {
+        "time": "2025-03-29T18:20:52.865756",
+        "message": "Generating embedding for chunk 340/360"
+      },
+      {
+        "time": "2025-03-29T18:20:53.117862",
+        "message": "Storing batch 68 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:53.582845",
+        "message": "Stored batch 68 in Pinecone (added 0 vectors), total: 49639"
+      },
+      {
+        "time": "2025-03-29T18:20:54.086294",
+        "message": "Processing batch 69 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:54.089247",
+        "message": "Generating embedding for chunk 341/360"
+      },
+      {
+        "time": "2025-03-29T18:20:54.342925",
+        "message": "Generating embedding for chunk 342/360"
+      },
+      {
+        "time": "2025-03-29T18:20:54.601463",
+        "message": "Generating embedding for chunk 343/360"
+      },
+      {
+        "time": "2025-03-29T18:20:54.853926",
+        "message": "Generating embedding for chunk 344/360"
+      },
+      {
+        "time": "2025-03-29T18:20:55.025042",
+        "message": "Generating embedding for chunk 345/360"
+      },
+      {
+        "time": "2025-03-29T18:20:55.233614",
+        "message": "Storing batch 69 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:55.740054",
+        "message": "Stored batch 69 in Pinecone (added 0 vectors), total: 49644"
+      },
+      {
+        "time": "2025-03-29T18:20:56.243360",
+        "message": "Processing batch 70 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:56.246361",
+        "message": "Generating embedding for chunk 346/360"
+      },
+      {
+        "time": "2025-03-29T18:20:56.445440",
+        "message": "Generating embedding for chunk 347/360"
+      },
+      {
+        "time": "2025-03-29T18:20:56.636857",
+        "message": "Generating embedding for chunk 348/360"
+      },
+      {
+        "time": "2025-03-29T18:20:56.856143",
+        "message": "Generating embedding for chunk 349/360"
+      },
+      {
+        "time": "2025-03-29T18:20:57.052813",
+        "message": "Generating embedding for chunk 350/360"
+      },
+      {
+        "time": "2025-03-29T18:20:57.260214",
+        "message": "Storing batch 70 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:57.743956",
+        "message": "Stored batch 70 in Pinecone (added 5 vectors), total: 49654"
+      },
+      {
+        "time": "2025-03-29T18:20:58.247385",
+        "message": "Processing batch 71 of 72"
+      },
+      {
+        "time": "2025-03-29T18:20:58.250411",
+        "message": "Generating embedding for chunk 351/360"
+      },
+      {
+        "time": "2025-03-29T18:20:58.433808",
+        "message": "Generating embedding for chunk 352/360"
+      },
+      {
+        "time": "2025-03-29T18:20:58.642573",
+        "message": "Generating embedding for chunk 353/360"
+      },
+      {
+        "time": "2025-03-29T18:20:58.884964",
+        "message": "Generating embedding for chunk 354/360"
+      },
+      {
+        "time": "2025-03-29T18:20:59.110220",
+        "message": "Generating embedding for chunk 355/360"
+      },
+      {
+        "time": "2025-03-29T18:20:59.311985",
+        "message": "Storing batch 71 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:20:59.791766",
+        "message": "Stored batch 71 in Pinecone (added 5 vectors), total: 49659"
+      },
+      {
+        "time": "2025-03-29T18:21:00.294998",
+        "message": "Processing batch 72 of 72"
+      },
+      {
+        "time": "2025-03-29T18:21:00.298318",
+        "message": "Generating embedding for chunk 356/360"
+      },
+      {
+        "time": "2025-03-29T18:21:00.555337",
+        "message": "Generating embedding for chunk 357/360"
+      },
+      {
+        "time": "2025-03-29T18:21:00.823528",
+        "message": "Generating embedding for chunk 358/360"
+      },
+      {
+        "time": "2025-03-29T18:21:01.099397",
+        "message": "Generating embedding for chunk 359/360"
+      },
+      {
+        "time": "2025-03-29T18:21:01.392250",
+        "message": "Generating embedding for chunk 360/360"
+      },
+      {
+        "time": "2025-03-29T18:21:01.579544",
+        "message": "Storing batch 72 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:02.055521",
+        "message": "Stored batch 72 in Pinecone (added 5 vectors), total: 49664"
+      },
+      {
+        "time": "2025-03-29T18:21:02.559412",
+        "message": "Verifying document processing"
+      },
+      {
+        "time": "2025-03-29T18:21:02.631203",
+        "message": "Verified storage in Pinecone. Total vectors in index: 49664"
+      },
+      {
+        "time": "2025-03-29T18:21:02.634640",
+        "message": "Successfully processed lc-wiley.stock.investing.for.dummies.2020.epub (360/360 chunks). File moved to processed folder."
+      }
+    ],
+    "errors": [],
+    "last_updated": "2025-03-29T18:21:02.634633"
+  },
+  "lc-wiley.technical.analysis.for.dummies.2020.epub": {
+    "start_time": "2025-03-29T18:21:02.637970",
+    "status": "processing",
+    "progress": 77,
+    "messages": [
+      {
+        "time": "2025-03-29T18:21:02.637977",
+        "message": "Started processing lc-wiley.technical.analysis.for.dummies.2020.epub"
+      },
+      {
+        "time": "2025-03-29T18:21:02.642277",
+        "message": "Extracting text from lc-wiley.technical.analysis.for.dummies.2020.epub"
+      },
+      {
+        "time": "2025-03-29T18:21:02.814731",
+        "message": "Extracted 783694 characters from lc-wiley.technical.analysis.for.dummies.2020.epub"
+      },
+      {
+        "time": "2025-03-29T18:21:02.818506",
+        "message": "Generating comprehensive metadata for lc-wiley.technical.analysis.for.dummies.2020.epub"
+      },
+      {
+        "time": "2025-03-29T18:21:09.079324",
+        "message": "Generated metadata with 15 categories and 10 tags"
+      },
+      {
+        "time": "2025-03-29T18:21:09.082489",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T18:21:09.236642",
+        "message": "Chunked text into 363 segments for processing"
+      },
+      {
+        "time": "2025-03-29T18:21:09.239896",
+        "message": "Processing batch 1 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:09.243413",
+        "message": "Generating embedding for chunk 1/363"
+      },
+      {
+        "time": "2025-03-29T18:21:09.483218",
+        "message": "Generating embedding for chunk 2/363"
+      },
+      {
+        "time": "2025-03-29T18:21:09.696340",
+        "message": "Generating embedding for chunk 3/363"
+      },
+      {
+        "time": "2025-03-29T18:21:09.914068",
+        "message": "Generating embedding for chunk 4/363"
+      },
+      {
+        "time": "2025-03-29T18:21:10.109781",
+        "message": "Generating embedding for chunk 5/363"
+      },
+      {
+        "time": "2025-03-29T18:21:10.299551",
+        "message": "Storing batch 1 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:10.861397",
+        "message": "Stored batch 1 in Pinecone (added 5 vectors), total: 49669"
+      },
+      {
+        "time": "2025-03-29T18:21:11.365062",
+        "message": "Processing batch 2 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:11.370334",
+        "message": "Generating embedding for chunk 6/363"
+      },
+      {
+        "time": "2025-03-29T18:21:11.589653",
+        "message": "Generating embedding for chunk 7/363"
+      },
+      {
+        "time": "2025-03-29T18:21:11.737030",
+        "message": "Generating embedding for chunk 8/363"
+      },
+      {
+        "time": "2025-03-29T18:21:11.963598",
+        "message": "Generating embedding for chunk 9/363"
+      },
+      {
+        "time": "2025-03-29T18:21:12.068959",
+        "message": "Generating embedding for chunk 10/363"
+      },
+      {
+        "time": "2025-03-29T18:21:12.231890",
+        "message": "Storing batch 2 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:12.838345",
+        "message": "Stored batch 2 in Pinecone (added 0 vectors), total: 49669"
+      },
+      {
+        "time": "2025-03-29T18:21:13.342105",
+        "message": "Processing batch 3 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:13.345358",
+        "message": "Generating embedding for chunk 11/363"
+      },
+      {
+        "time": "2025-03-29T18:21:13.576037",
+        "message": "Generating embedding for chunk 12/363"
+      },
+      {
+        "time": "2025-03-29T18:21:13.767483",
+        "message": "Generating embedding for chunk 13/363"
+      },
+      {
+        "time": "2025-03-29T18:21:13.934941",
+        "message": "Generating embedding for chunk 14/363"
+      },
+      {
+        "time": "2025-03-29T18:21:14.174679",
+        "message": "Generating embedding for chunk 15/363"
+      },
+      {
+        "time": "2025-03-29T18:21:14.398806",
+        "message": "Storing batch 3 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:14.859275",
+        "message": "Stored batch 3 in Pinecone (added 5 vectors), total: 49679"
+      },
+      {
+        "time": "2025-03-29T18:21:15.362865",
+        "message": "Processing batch 4 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:15.366274",
+        "message": "Generating embedding for chunk 16/363"
+      },
+      {
+        "time": "2025-03-29T18:21:15.606304",
+        "message": "Generating embedding for chunk 17/363"
+      },
+      {
+        "time": "2025-03-29T18:21:15.806448",
+        "message": "Generating embedding for chunk 18/363"
+      },
+      {
+        "time": "2025-03-29T18:21:16.053493",
+        "message": "Generating embedding for chunk 19/363"
+      },
+      {
+        "time": "2025-03-29T18:21:16.296971",
+        "message": "Generating embedding for chunk 20/363"
+      },
+      {
+        "time": "2025-03-29T18:21:16.519948",
+        "message": "Storing batch 4 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:16.988425",
+        "message": "Stored batch 4 in Pinecone (added 5 vectors), total: 49684"
+      },
+      {
+        "time": "2025-03-29T18:21:17.491995",
+        "message": "Processing batch 5 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:17.495537",
+        "message": "Generating embedding for chunk 21/363"
+      },
+      {
+        "time": "2025-03-29T18:21:17.735082",
+        "message": "Generating embedding for chunk 22/363"
+      },
+      {
+        "time": "2025-03-29T18:21:17.924936",
+        "message": "Generating embedding for chunk 23/363"
+      },
+      {
+        "time": "2025-03-29T18:21:18.140585",
+        "message": "Generating embedding for chunk 24/363"
+      },
+      {
+        "time": "2025-03-29T18:21:18.544709",
+        "message": "Generating embedding for chunk 25/363"
+      },
+      {
+        "time": "2025-03-29T18:21:18.726910",
+        "message": "Storing batch 5 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:19.225841",
+        "message": "Stored batch 5 in Pinecone (added 0 vectors), total: 49684"
+      },
+      {
+        "time": "2025-03-29T18:21:19.730765",
+        "message": "Processing batch 6 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:19.734736",
+        "message": "Generating embedding for chunk 26/363"
+      },
+      {
+        "time": "2025-03-29T18:21:19.955393",
+        "message": "Generating embedding for chunk 27/363"
+      },
+      {
+        "time": "2025-03-29T18:21:20.250422",
+        "message": "Generating embedding for chunk 28/363"
+      },
+      {
+        "time": "2025-03-29T18:21:20.470602",
+        "message": "Generating embedding for chunk 29/363"
+      },
+      {
+        "time": "2025-03-29T18:21:20.675999",
+        "message": "Generating embedding for chunk 30/363"
+      },
+      {
+        "time": "2025-03-29T18:21:20.873490",
+        "message": "Storing batch 6 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:21.353414",
+        "message": "Stored batch 6 in Pinecone (added 5 vectors), total: 49694"
+      },
+      {
+        "time": "2025-03-29T18:21:21.858532",
+        "message": "Processing batch 7 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:21.864319",
+        "message": "Generating embedding for chunk 31/363"
+      },
+      {
+        "time": "2025-03-29T18:21:22.117178",
+        "message": "Generating embedding for chunk 32/363"
+      },
+      {
+        "time": "2025-03-29T18:21:22.473688",
+        "message": "Generating embedding for chunk 33/363"
+      },
+      {
+        "time": "2025-03-29T18:21:22.648683",
+        "message": "Generating embedding for chunk 34/363"
+      },
+      {
+        "time": "2025-03-29T18:21:22.880284",
+        "message": "Generating embedding for chunk 35/363"
+      },
+      {
+        "time": "2025-03-29T18:21:23.063200",
+        "message": "Storing batch 7 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:23.525015",
+        "message": "Stored batch 7 in Pinecone (added 5 vectors), total: 49699"
+      },
+      {
+        "time": "2025-03-29T18:21:24.029209",
+        "message": "Processing batch 8 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:24.032693",
+        "message": "Generating embedding for chunk 36/363"
+      },
+      {
+        "time": "2025-03-29T18:21:24.263390",
+        "message": "Generating embedding for chunk 37/363"
+      },
+      {
+        "time": "2025-03-29T18:21:24.452393",
+        "message": "Generating embedding for chunk 38/363"
+      },
+      {
+        "time": "2025-03-29T18:21:24.727307",
+        "message": "Generating embedding for chunk 39/363"
+      },
+      {
+        "time": "2025-03-29T18:21:24.988735",
+        "message": "Generating embedding for chunk 40/363"
+      },
+      {
+        "time": "2025-03-29T18:21:25.174683",
+        "message": "Storing batch 8 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:25.621416",
+        "message": "Stored batch 8 in Pinecone (added 5 vectors), total: 49704"
+      },
+      {
+        "time": "2025-03-29T18:21:26.125258",
+        "message": "Processing batch 9 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:26.129443",
+        "message": "Generating embedding for chunk 41/363"
+      },
+      {
+        "time": "2025-03-29T18:21:26.389775",
+        "message": "Generating embedding for chunk 42/363"
+      },
+      {
+        "time": "2025-03-29T18:21:26.649997",
+        "message": "Generating embedding for chunk 43/363"
+      },
+      {
+        "time": "2025-03-29T18:21:26.865652",
+        "message": "Generating embedding for chunk 44/363"
+      },
+      {
+        "time": "2025-03-29T18:21:27.091015",
+        "message": "Generating embedding for chunk 45/363"
+      },
+      {
+        "time": "2025-03-29T18:21:27.339940",
+        "message": "Storing batch 9 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:27.781946",
+        "message": "Stored batch 9 in Pinecone (added 0 vectors), total: 49704"
+      },
+      {
+        "time": "2025-03-29T18:21:28.286027",
+        "message": "Processing batch 10 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:28.289693",
+        "message": "Generating embedding for chunk 46/363"
+      },
+      {
+        "time": "2025-03-29T18:21:28.529993",
+        "message": "Generating embedding for chunk 47/363"
+      },
+      {
+        "time": "2025-03-29T18:21:29.695833",
+        "message": "Generating embedding for chunk 48/363"
+      },
+      {
+        "time": "2025-03-29T18:21:29.894157",
+        "message": "Generating embedding for chunk 49/363"
+      },
+      {
+        "time": "2025-03-29T18:21:30.086245",
+        "message": "Generating embedding for chunk 50/363"
+      },
+      {
+        "time": "2025-03-29T18:21:30.324774",
+        "message": "Storing batch 10 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:30.808902",
+        "message": "Stored batch 10 in Pinecone (added 5 vectors), total: 49714"
+      },
+      {
+        "time": "2025-03-29T18:21:31.316577",
+        "message": "Processing batch 11 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:31.329425",
+        "message": "Generating embedding for chunk 51/363"
+      },
+      {
+        "time": "2025-03-29T18:21:31.582805",
+        "message": "Generating embedding for chunk 52/363"
+      },
+      {
+        "time": "2025-03-29T18:21:31.749982",
+        "message": "Generating embedding for chunk 53/363"
+      },
+      {
+        "time": "2025-03-29T18:21:32.038010",
+        "message": "Generating embedding for chunk 54/363"
+      },
+      {
+        "time": "2025-03-29T18:21:32.234885",
+        "message": "Generating embedding for chunk 55/363"
+      },
+      {
+        "time": "2025-03-29T18:21:32.475572",
+        "message": "Storing batch 11 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:32.972173",
+        "message": "Stored batch 11 in Pinecone (added 5 vectors), total: 49719"
+      },
+      {
+        "time": "2025-03-29T18:21:33.477716",
+        "message": "Processing batch 12 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:33.482031",
+        "message": "Generating embedding for chunk 56/363"
+      },
+      {
+        "time": "2025-03-29T18:21:33.723092",
+        "message": "Generating embedding for chunk 57/363"
+      },
+      {
+        "time": "2025-03-29T18:21:37.109916",
+        "message": "Generating embedding for chunk 58/363"
+      },
+      {
+        "time": "2025-03-29T18:21:37.317700",
+        "message": "Generating embedding for chunk 59/363"
+      },
+      {
+        "time": "2025-03-29T18:21:37.476272",
+        "message": "Generating embedding for chunk 60/363"
+      },
+      {
+        "time": "2025-03-29T18:21:37.698875",
+        "message": "Storing batch 12 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:38.235567",
+        "message": "Stored batch 12 in Pinecone (added 5 vectors), total: 49724"
+      },
+      {
+        "time": "2025-03-29T18:21:38.739708",
+        "message": "Processing batch 13 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:38.743861",
+        "message": "Generating embedding for chunk 61/363"
+      },
+      {
+        "time": "2025-03-29T18:21:38.976312",
+        "message": "Generating embedding for chunk 62/363"
+      },
+      {
+        "time": "2025-03-29T18:21:39.225370",
+        "message": "Generating embedding for chunk 63/363"
+      },
+      {
+        "time": "2025-03-29T18:21:39.414628",
+        "message": "Generating embedding for chunk 64/363"
+      },
+      {
+        "time": "2025-03-29T18:21:39.649307",
+        "message": "Generating embedding for chunk 65/363"
+      },
+      {
+        "time": "2025-03-29T18:21:39.886746",
+        "message": "Storing batch 13 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:40.356333",
+        "message": "Stored batch 13 in Pinecone (added 5 vectors), total: 49729"
+      },
+      {
+        "time": "2025-03-29T18:21:40.861773",
+        "message": "Processing batch 14 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:40.866222",
+        "message": "Generating embedding for chunk 66/363"
+      },
+      {
+        "time": "2025-03-29T18:21:41.150594",
+        "message": "Generating embedding for chunk 67/363"
+      },
+      {
+        "time": "2025-03-29T18:21:41.447975",
+        "message": "Generating embedding for chunk 68/363"
+      },
+      {
+        "time": "2025-03-29T18:21:41.727275",
+        "message": "Generating embedding for chunk 69/363"
+      },
+      {
+        "time": "2025-03-29T18:21:41.933863",
+        "message": "Generating embedding for chunk 70/363"
+      },
+      {
+        "time": "2025-03-29T18:21:42.219446",
+        "message": "Storing batch 14 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:42.668075",
+        "message": "Stored batch 14 in Pinecone (added 5 vectors), total: 49734"
+      },
+      {
+        "time": "2025-03-29T18:21:43.172673",
+        "message": "Processing batch 15 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:43.177596",
+        "message": "Generating embedding for chunk 71/363"
+      },
+      {
+        "time": "2025-03-29T18:21:43.444586",
+        "message": "Generating embedding for chunk 72/363"
+      },
+      {
+        "time": "2025-03-29T18:21:43.832396",
+        "message": "Generating embedding for chunk 73/363"
+      },
+      {
+        "time": "2025-03-29T18:21:44.069797",
+        "message": "Generating embedding for chunk 74/363"
+      },
+      {
+        "time": "2025-03-29T18:21:44.333742",
+        "message": "Generating embedding for chunk 75/363"
+      },
+      {
+        "time": "2025-03-29T18:21:44.515668",
+        "message": "Storing batch 15 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:45.058194",
+        "message": "Stored batch 15 in Pinecone (added 5 vectors), total: 49739"
+      },
+      {
+        "time": "2025-03-29T18:21:45.563230",
+        "message": "Processing batch 16 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:45.567466",
+        "message": "Generating embedding for chunk 76/363"
+      },
+      {
+        "time": "2025-03-29T18:21:46.570026",
+        "message": "Generating embedding for chunk 77/363"
+      },
+      {
+        "time": "2025-03-29T18:21:46.755996",
+        "message": "Generating embedding for chunk 78/363"
+      },
+      {
+        "time": "2025-03-29T18:21:46.916227",
+        "message": "Generating embedding for chunk 79/363"
+      },
+      {
+        "time": "2025-03-29T18:21:47.153048",
+        "message": "Generating embedding for chunk 80/363"
+      },
+      {
+        "time": "2025-03-29T18:21:47.397981",
+        "message": "Storing batch 16 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:47.873054",
+        "message": "Stored batch 16 in Pinecone (added 5 vectors), total: 49744"
+      },
+      {
+        "time": "2025-03-29T18:21:48.377330",
+        "message": "Processing batch 17 of 73"
+      },
+      {
+        "time": "2025-03-29T18:21:48.381573",
+        "message": "Generating embedding for chunk 81/363"
+      },
+      {
+        "time": "2025-03-29T18:21:48.597759",
+        "message": "Generating embedding for chunk 82/363"
+      },
+      {
+        "time": "2025-03-29T18:21:48.833754",
+        "message": "Generating embedding for chunk 83/363"
+      },
+      {
+        "time": "2025-03-29T18:21:49.037374",
+        "message": "Generating embedding for chunk 84/363"
+      },
+      {
+        "time": "2025-03-29T18:21:49.239048",
+        "message": "Generating embedding for chunk 85/363"
+      },
+      {
+        "time": "2025-03-29T18:21:49.446211",
+        "message": "Storing batch 17 (5 vectors) in Pinecone"
+      },
+      {
+        "time": "2025-03-29T18:21:49.941721",
+        "message": "Stored batch 17 in Pinecone (added 5 vectors), total: 49749"

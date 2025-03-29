@@ -118,36 +118,77 @@ def save_status(status):
 
 
 def update_file_status(filename, current_status, progress=0, message="", error=None):
-    """Update status for a specific file"""
-    status = load_status()
-    
-    if filename not in status:
-        status[filename] = {
-            "start_time": datetime.now().isoformat(),
-            "status": current_status,
-            "progress": progress,
-            "messages": [],
-            "errors": []
-        }
-    else:
-        status[filename]["status"] = current_status
-        status[filename]["progress"] = progress
-        status[filename]["last_updated"] = datetime.now().isoformat()
-    
-    if message:
-        status[filename]["messages"].append({
-            "time": datetime.now().isoformat(),
-            "message": message
-        })
-    
-    if error:
-        status[filename]["errors"].append({
-            "time": datetime.now().isoformat(),
-            "error": str(error)
-        })
-    
-    save_status(status)
-    return status
+    """Update status for a specific file with robust error handling"""
+    try:
+        # Load current status with a safety check
+        status = load_status()
+        if status is None:
+            logger.warning("Status file returned None, creating new empty status dictionary")
+            status = {}
+        
+        # Ensure we have a valid dictionary
+        if not isinstance(status, dict):
+            logger.warning(f"Status file contained invalid data (type: {type(status)}), creating new status dictionary")
+            status = {}
+        
+        # Initialize status entry if it doesn't exist
+        if filename not in status or not isinstance(status[filename], dict):
+            status[filename] = {
+                "start_time": datetime.now().isoformat(),
+                "status": current_status,
+                "progress": progress,
+                "messages": [],
+                "errors": [],
+                "chunks": 0  # Track processed chunks
+            }
+        else:
+            # Update existing status
+            status[filename]["status"] = current_status
+            status[filename]["progress"] = progress
+            status[filename]["last_updated"] = datetime.now().isoformat()
+        
+        # Ensure required arrays exist
+        if "messages" not in status[filename] or not isinstance(status[filename]["messages"], list):
+            status[filename]["messages"] = []
+            
+        if "errors" not in status[filename] or not isinstance(status[filename]["errors"], list):
+            status[filename]["errors"] = []
+        
+        # Add message if provided
+        if message:
+            status[filename]["messages"].append({
+                "time": datetime.now().isoformat(),
+                "message": message
+            })
+        
+        # Add error if provided
+        if error:
+            status[filename]["errors"].append({
+                "time": datetime.now().isoformat(),
+                "error": str(error)
+            })
+        
+        # Save updated status
+        save_status(status)
+        return status
+        
+    except Exception as e:
+        logger.error(f"Error updating file status for {filename}: {e}")
+        # Try to recover by creating a minimal status entry
+        try:
+            minimal_status = {
+                filename: {
+                    "status": current_status,
+                    "progress": progress,
+                    "messages": [],
+                    "errors": [{"time": datetime.now().isoformat(), "error": f"Status update failed: {str(e)}"}]
+                }
+            }
+            save_status(minimal_status)
+            return minimal_status
+        except Exception as recovery_error:
+            logger.critical(f"Failed to recover from status update error: {recovery_error}")
+            return {}
 
 
 def get_pending_files():
@@ -247,32 +288,62 @@ def process_file(filename):
         if openai_available:
             try:
                 sample_text = extracted_text[:20000]  # Use first 20k chars for metadata generation
-                file_metadata = generate_comprehensive_metadata(
+                metadata_result = generate_comprehensive_metadata(
                     text=sample_text,
                     filename=filename,
                     file_ext=file_ext,
                     max_tags=10
                 )
                 
-                # Get the general tags for compatibility
-                ai_tags = file_metadata.get("general_tags", [])
-                logger.info(f"Generated {len(ai_tags)} AI tags for {filename}: {ai_tags}")
-                
-                # Log summary of generated metadata
-                logger.info(f"Generated metadata for {filename} with {len(file_metadata)} categories")
-                update_file_status(
-                    filename, 
-                    "processing", 
-                    30, 
-                    f"Generated metadata with {len(file_metadata)} categories and {len(ai_tags)} tags"
-                )
+                # Safety check - ensure we have a valid dictionary
+                if metadata_result and isinstance(metadata_result, dict):
+                    file_metadata = metadata_result
+                    
+                    # Get the general tags for compatibility
+                    if "general_tags" in file_metadata and isinstance(file_metadata["general_tags"], list):
+                        ai_tags = file_metadata["general_tags"]
+                    else:
+                        ai_tags = []  # Use empty list as fallback
+                        
+                    logger.info(f"Generated {len(ai_tags)} AI tags for {filename}: {ai_tags}")
+                    
+                    # Log summary of generated metadata
+                    logger.info(f"Generated metadata for {filename} with {len(file_metadata)} categories")
+                    update_file_status(
+                        filename, 
+                        "processing", 
+                        30, 
+                        f"Generated metadata with {len(file_metadata)} categories and {len(ai_tags)} tags"
+                    )
+                else:
+                    # Set safe defaults
+                    logger.warning(f"Metadata generation returned invalid result for {filename}")
+                    file_metadata = {
+                        "subject": "general",
+                        "general_tags": [],
+                        "chunk_summary": "Auto-generated summary"
+                    }
+                    ai_tags = []
+                    update_file_status(
+                        filename, 
+                        "processing", 
+                        30, 
+                        f"Warning: Using default metadata, continuing with processing"
+                    )
             except Exception as e:
                 logger.error(f"Error generating metadata: {e}")
+                # Set safe defaults in case of error
+                file_metadata = {
+                    "subject": "general",
+                    "general_tags": [],
+                    "chunk_summary": "Auto-generated summary"
+                }
+                ai_tags = []
                 update_file_status(
                     filename, 
                     "processing", 
                     30, 
-                    f"Warning: Metadata generation failed, proceeding without metadata", 
+                    f"Warning: Metadata generation failed, proceeding with default metadata", 
                     str(e)
                 )
                 # Continue even if metadata generation fails
@@ -321,19 +392,23 @@ def process_file(filename):
                     embedding = generate_embeddings(chunk, max_retries=2)
                     
                     if embedding and len(embedding) > 0:
-                        # Create metadata
+                        # Create metadata with defaults for safety
                         metadata = {
                             'text': chunk,
                             'filename': filename,
                             'filetype': file_ext,
-                            'subject': file_metadata.get('subject', 'general'),
-                            'tags': ai_tags,
+                            'subject': 'general',  # Default subject
+                            'tags': ai_tags if ai_tags else [],  # Ensure tags is a list
                             'chunk_id': chunk_index,
                             'source': 'folder_upload',
                         }
                         
-                        # Add comprehensive AI-generated metadata if available
-                        if file_metadata:
+                        # Add subject from metadata if available
+                        if file_metadata and isinstance(file_metadata, dict):
+                            if 'subject' in file_metadata:
+                                metadata['subject'] = file_metadata['subject']
+                            
+                            # Add comprehensive AI-generated metadata if available
                             for key, value in file_metadata.items():
                                 if key != 'general_tags':  # Skip general tags as they're already in the tags field
                                     metadata[key] = value
@@ -389,6 +464,12 @@ def process_file(filename):
                         upsert_response = pinecone_manager.index.upsert(vectors=vectors, namespace="default")
                         processed_chunks += len(vectors)
                         
+                        # Update chunk count in status file
+                        status = load_status()
+                        if status and filename in status and isinstance(status[filename], dict):
+                            status[filename]["chunks"] = processed_chunks
+                            save_status(status)
+                        
                         # Get vector count after upsert
                         try:
                             after_stats = pinecone_manager.describe_index_stats()
@@ -433,12 +514,24 @@ def process_file(filename):
                 if pinecone_manager:
                     stats = pinecone_manager.describe_index_stats()
                     vector_count = stats.get('total_vector_count', 0)
+                    # Update status to include the final chunk count and vector summary
+                    # First retrieve the current status to ensure we preserve the chunks field
+                    current_status = load_status().get(filename, {})
+                    
+                    # Now update with the complete information
                     update_file_status(
                         filename, 
                         "verified", 
                         98, 
                         f"Verified storage in Pinecone. Total vectors in index: {vector_count}"
                     )
+                    
+                    # Make sure chunks count is stored in the status
+                    status = load_status()
+                    if status and filename in status:
+                        if "chunks" not in status[filename] or not status[filename]["chunks"]:
+                            status[filename]["chunks"] = processed_chunks
+                            save_status(status)
             except Exception as e:
                 logger.error(f"Error verifying Pinecone status: {e}")
                 update_file_status(

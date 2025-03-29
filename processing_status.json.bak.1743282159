@@ -1,0 +1,421 @@
+{}  "Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub": {
+    "start_time": "2025-03-29T21:02:24.872268",
+    "status": "processing",
+    "progress": 5,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:24.872276",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:39.951020",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:39.952334",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:24.872280",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.952328"
+  },
+  "William J Bernstein - The Four Pillars of Investing.epub": {
+    "start_time": "2025-03-29T21:02:24.872615",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:24.872623",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:24.872897",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:24.882458",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:24.882463",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:24.882431"
+  },
+  "Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3": {
+    "start_time": "2025-03-29T21:02:29.883298",
+    "status": "error",
+    "progress": 95,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:29.883310",
+        "message": "Started processing Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T21:02:29.883664",
+        "message": "Extracting text from Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T21:02:29.991041",
+        "message": "Extracted 4545 characters from Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T21:02:29.991887",
+        "message": "Generating comprehensive metadata for Bates, Larry - Beat The Bank_ Canadian Guide To Simply Successful Investing-Audey Press (2018).azw3"
+      },
+      {
+        "time": "2025-03-29T21:02:29.996101",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T21:02:30.012036",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T21:02:30.014880",
+        "message": "Chunked text into 5 segments for processing"
+      },
+      {
+        "time": "2025-03-29T21:02:30.015327",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T21:02:30.018546",
+        "message": "Generating embedding for chunk 1/5"
+      },
+      {
+        "time": "2025-03-29T21:02:30.314087",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T21:02:30.314597",
+        "message": "Generating embedding for chunk 2/5"
+      },
+      {
+        "time": "2025-03-29T21:02:30.574165",
+        "message": "Warning: Failed to process chunk 1"
+      },
+      {
+        "time": "2025-03-29T21:02:30.574833",
+        "message": "Generating embedding for chunk 3/5"
+      },
+      {
+        "time": "2025-03-29T21:02:30.842221",
+        "message": "Warning: Failed to process chunk 2"
+      },
+      {
+        "time": "2025-03-29T21:02:30.842787",
+        "message": "Generating embedding for chunk 4/5"
+      },
+      {
+        "time": "2025-03-29T21:02:35.415783",
+        "message": "Warning: Failed to process chunk 3"
+      },
+      {
+        "time": "2025-03-29T21:02:35.416410",
+        "message": "Generating embedding for chunk 5/5"
+      },
+      {
+        "time": "2025-03-29T21:02:37.616934",
+        "message": "Warning: Failed to process chunk 4"
+      },
+      {
+        "time": "2025-03-29T21:02:38.117933",
+        "message": "Verifying document processing"
+      },
+      {
+        "time": "2025-03-29T21:02:38.118531",
+        "message": "No chunks were successfully processed"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:29.996105",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:30.314091",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:30.574169",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:30.842225",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:35.415786",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:37.616939",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:38.118533",
+        "error": "All chunks failed processing"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:38.118525"
+  },
+  "Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf": {
+    "start_time": "2025-03-29T21:02:38.119566",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:38.119574",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:38.120304",
+        "message": "Extracting text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:38.552217",
+        "message": "Unable to extract text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:38.552220",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:38.552204"
+  },
+  "Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw": {
+    "start_time": "2025-03-29T21:02:38.553078",
+    "status": "error",
+    "progress": 95,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:38.553087",
+        "message": "Started processing Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:02:38.554081",
+        "message": "Extracting text from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:02:38.581024",
+        "message": "Extracted 2980 characters from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:02:38.581773",
+        "message": "Generating comprehensive metadata for Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:02:38.582728",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T21:02:38.584808",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T21:02:38.586924",
+        "message": "Chunked text into 3 segments for processing"
+      },
+      {
+        "time": "2025-03-29T21:02:38.587577",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T21:02:38.590454",
+        "message": "Generating embedding for chunk 1/3"
+      },
+      {
+        "time": "2025-03-29T21:02:38.779863",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T21:02:38.780567",
+        "message": "Generating embedding for chunk 2/3"
+      },
+      {
+        "time": "2025-03-29T21:02:38.952361",
+        "message": "Warning: Failed to process chunk 1"
+      },
+      {
+        "time": "2025-03-29T21:02:38.953461",
+        "message": "Generating embedding for chunk 3/3"
+      },
+      {
+        "time": "2025-03-29T21:02:39.134582",
+        "message": "Warning: Failed to process chunk 2"
+      },
+      {
+        "time": "2025-03-29T21:02:39.635449",
+        "message": "Verifying document processing"
+      },
+      {
+        "time": "2025-03-29T21:02:39.636342",
+        "message": "No chunks were successfully processed"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:38.582731",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:38.779866",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:38.952365",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:39.134586",
+        "error": "'NoneType' object has no attribute 'get'"
+      },
+      {
+        "time": "2025-03-29T21:02:39.636345",
+        "error": "All chunks failed processing"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.636334"
+  },
+  "Taylor Larimore The Bogleheads' Guide to Investing.epub": {
+    "start_time": "2025-03-29T21:02:39.637455",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:39.637460",
+        "message": "Started processing Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:39.638421",
+        "message": "Extracting text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:39.642471",
+        "message": "Unable to extract text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:39.642473",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.642466"
+  },
+  "Technical Analysis of the Financial Market - Murphy, John J_.pdf": {
+    "start_time": "2025-03-29T21:02:39.643178",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:39.643186",
+        "message": "Started processing Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:39.644187",
+        "message": "Extracting text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:39.735842",
+        "message": "Unable to extract text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:39.735845",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.735831"
+  },
+  "Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf": {
+    "start_time": "2025-03-29T21:02:39.736826",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:39.736835",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:39.740156",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:39.775727",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:39.775729",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.775717"
+  },
+  "The Little Book of Common Sense - John C. Bogle.epub": {
+    "start_time": "2025-03-29T21:02:39.776841",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:39.776849",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:39.777922",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:02:39.807843",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:39.807846",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.807833"
+  },
+  "The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf": {
+    "start_time": "2025-03-29T21:02:39.810393",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:02:39.810401",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:39.811770",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:02:39.948462",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:02:39.948466",
+        "error": "Text extraction failed"
+      }
+    ],
+    "last_updated": "2025-03-29T21:02:39.948445"
+  }
+}

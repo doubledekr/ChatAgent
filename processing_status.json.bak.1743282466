@@ -1,0 +1,238 @@
+{
+  "Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw": {
+    "start_time": "2025-03-29T21:06:56.113354",
+    "status": "error",
+    "progress": 95,
+    "messages": [
+      {
+        "time": "2025-03-29T21:06:56.113366",
+        "message": "Extracting text from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:06:56.135482",
+        "message": "Extracted 2980 characters from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:06:56.135752",
+        "message": "Generating comprehensive metadata for Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:06:56.136096",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T21:06:56.136405",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T21:06:56.137741",
+        "message": "Chunked text into 3 segments for processing"
+      },
+      {
+        "time": "2025-03-29T21:06:56.137988",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T21:06:56.138237",
+        "message": "Generating embedding for chunk 1/3"
+      },
+      {
+        "time": "2025-03-29T21:06:56.402592",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T21:06:56.402950",
+        "message": "Generating embedding for chunk 2/3"
+      },
+      {
+        "time": "2025-03-29T21:06:56.603575",
+        "message": "Warning: Failed to process chunk 1"
+      },
+      {
+        "time": "2025-03-29T21:06:56.604007",
+        "message": "Generating embedding for chunk 3/3"
+      },
+      {
+        "time": "2025-03-29T21:06:56.891601",
+        "message": "Warning: Failed to process chunk 2"
+      },
+      {
+        "time": "2025-03-29T21:06:57.392161",
+        "message": "Verifying document processing"
+      },
+      {
+        "time": "2025-03-29T21:06:57.392598",
+        "message": "No chunks were successfully processed"
+      },
+      {
+        "time": "2025-03-29T21:07:05.149859",
+        "message": "Started processing Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:05.152610",
+        "message": "Extracting text from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:05.170022",
+        "message": "Extracted 2980 characters from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:05.170723",
+        "message": "Generating comprehensive metadata for Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:05.173274",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T21:07:05.174150",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T21:07:05.177626",
+        "message": "Chunked text into 3 segments for processing"
+      },
+      {
+        "time": "2025-03-29T21:07:05.178318",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T21:07:05.179436",
+        "message": "Generating embedding for chunk 1/3"
+      },
+      {
+        "time": "2025-03-29T21:07:05.349918",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T21:07:05.350798",
+        "message": "Generating embedding for chunk 2/3"
+      },
+      {
+        "time": "2025-03-29T21:07:05.702488",
+        "message": "Warning: Failed to process chunk 1"
+      },
+      {
+        "time": "2025-03-29T21:07:05.703375",
+        "message": "Generating embedding for chunk 3/3"
+      },
+      {
+        "time": "2025-03-29T21:07:06.029001",
+        "message": "Warning: Failed to process chunk 2"
+      },
+      {
+        "time": "2025-03-29T21:07:06.530175",
+        "message": "Verifying document processing"
+      },
+      {
+        "time": "2025-03-29T21:07:06.531230",
+        "message": "No chunks were successfully processed"
+      },
+      {
+        "time": "2025-03-29T21:07:13.917891",
+        "message": "Started processing Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:13.919194",
+        "message": "Extracting text from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:13.942398",
+        "message": "Extracted 2980 characters from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:13.943564",
+        "message": "Generating comprehensive metadata for Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:13.945247",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T21:07:13.946649",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T21:07:13.948866",
+        "message": "Chunked text into 3 segments for processing"
+      },
+      {
+        "time": "2025-03-29T21:07:13.949924",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T21:07:13.951476",
+        "message": "Generating embedding for chunk 1/3"
+      },
+      {
+        "time": "2025-03-29T21:07:14.175106",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T21:07:14.176424",
+        "message": "Generating embedding for chunk 2/3"
+      },
+      {
+        "time": "2025-03-29T21:07:14.405573",
+        "message": "Warning: Failed to process chunk 1"
+      },
+      {
+        "time": "2025-03-29T21:07:14.406969",
+        "message": "Generating embedding for chunk 3/3"
+      },
+      {
+        "time": "2025-03-29T21:07:14.715804",
+        "message": "Warning: Failed to process chunk 2"
+      },
+      {
+        "time": "2025-03-29T21:07:15.217641",
+        "message": "Verifying document processing"
+      },
+      {
+        "time": "2025-03-29T21:07:15.219621",
+        "message": "No chunks were successfully processed"
+      },
+      {
+        "time": "2025-03-29T21:07:23.135533",
+        "message": "Started processing Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:23.139642",
+        "message": "Extracting text from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:23.162169",
+        "message": "Extracted 2980 characters from Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:23.164218",
+        "message": "Generating comprehensive metadata for Philip A. Fisher - Common Stocks and Uncommon Profits and Other Writings.azw"
+      },
+      {
+        "time": "2025-03-29T21:07:23.175524",
+        "message": "Warning: Metadata generation failed, proceeding without metadata"
+      },
+      {
+        "time": "2025-03-29T21:07:23.177777",
+        "message": "Chunking text content"
+      },
+      {
+        "time": "2025-03-29T21:07:23.189471",
+        "message": "Chunked text into 3 segments for processing"
+      },
+      {
+        "time": "2025-03-29T21:07:23.191958",
+        "message": "Processing batch 1 of 1"
+      },
+      {
+        "time": "2025-03-29T21:07:23.193801",
+        "message": "Generating embedding for chunk 1/3"
+      },
+      {
+        "time": "2025-03-29T21:07:23.430078",
+        "message": "Warning: Failed to process chunk 0"
+      },
+      {
+        "time": "2025-03-29T21:07:23.432384",
+        "message": "Generating embedding for chunk 2/3"
+      

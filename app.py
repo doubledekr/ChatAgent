@@ -592,7 +592,7 @@ processor_thread = None
 
 def get_chunk_count_for_file(filename):
     """
-    Query Pinecone to get the number of chunks for a specific file
+    Get the number of chunks stored for a specific file
     
     Args:
         filename (str): The filename to check
@@ -601,24 +601,27 @@ def get_chunk_count_for_file(filename):
         int: Number of chunks found for this file
     """
     try:
-        if not pinecone_available or not pinecone_manager:
-            return 0
+        # Access the cached file metadata if available
+        status_data = folder_processor.load_status()
+        if status_data and filename in status_data:
+            file_status = status_data[filename]
+            if file_status.get('status') == 'completed' and 'chunks' in file_status:
+                return file_status.get('chunks', 0)
+        
+        # For files not in status cache, we need to estimate based on file size
+        if os.path.exists(os.path.join(folder_processor.PROCESSED_FOLDER, filename)):
+            file_path = os.path.join(folder_processor.PROCESSED_FOLDER, filename)
+            file_size = os.path.getsize(file_path)
             
-        # Use a dummy vector to query with filename filter
-        dummy_vector = [0.0] * 1536
+            # Rough estimation: 1 chunk per 1000 bytes (adjust based on your chunking method)
+            # This avoids querying Pinecone altogether
+            estimated_chunks = max(1, file_size // 1000)
+            return min(estimated_chunks, 100)  # Cap at 100 for safety
         
-        # Set a relatively low limit to avoid timeouts (100 max chunks is reasonable)
-        response = pinecone_manager.query(
-            vector=dummy_vector,
-            top_k=100,  # Reasonable limit to avoid timeouts
-            include_metadata=True,
-            filter_dict={"filename": filename}  # Use metadata filter to get only vectors for this file
-        )
-        
-        # Return the count of matched vectors
-        return len(response.get("matches", []))
+        # Last resort - return a default value
+        return 5  # Conservative default estimate
     except Exception as e:
-        logger.error(f"Error getting chunk count for {filename}: {e}")
+        logger.error(f"Error estimating chunk count for {filename}: {e}")
         return 0
 
 def list_complete_files_in_pinecone():

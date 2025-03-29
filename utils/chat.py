@@ -44,10 +44,29 @@ def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8, 
     
     import time
     
+    # Define default metadata structure with safe values
+    default_metadata = {
+        "general_tags": [],
+        "subject": "general",
+        "subcategory": "document",
+        "skill_level": "all levels",
+        "chunk_summary": "Document without detailed analysis",
+        "key_points": "• Document content",
+        "chunk_type": "document",
+        "concepts_covered": "",
+        "prerequisites": "",
+        "next_steps": [],
+        "learning_objective": "Understanding document content",
+        "application_context": "general knowledge",
+        "education_use_case": "reading",
+        "question_tags": []
+    }
+    
     # Clean and prepare text
     if not text or text.strip() == "":
         logger.warning("Empty text provided for metadata generation")
-        return {"general_tags": [], "subject": "unknown", "chunk_summary": "Empty document"}
+        default_metadata["chunk_summary"] = "Empty document"
+        return default_metadata
     
     # Truncate text if it's very long
     if len(text) > 15000:
@@ -126,7 +145,8 @@ def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8, 
                     retries += 1
                     if retries > max_retries:
                         logger.error("Max retries reached for JSON parsing")
-                        return {"general_tags": [], "error": "JSON parse error"}
+                        default_metadata["error"] = "JSON parse error"
+                        return default_metadata
                     else:
                         logger.info(f"Retrying after JSON parse error (attempt {retries}/{max_retries})")
                         time.sleep(1)  # Brief pause before retry
@@ -139,17 +159,14 @@ def generate_comprehensive_metadata(text, filename="", file_ext="", max_tags=8, 
                 # If it's an API key issue, don't retry
                 if "API key" in str(e):
                     logger.error("OpenAI API key is invalid or missing")
-                    return {"general_tags": [], "error": "API key invalid"}
+                    default_metadata["error"] = "API key invalid"
+                    return default_metadata
                     
                 # If we've reached max retries, return default metadata
                 if retries > max_retries:
                     logger.error(f"Failed to generate metadata after {max_retries} attempts: {e}")
-                    return {
-                        "general_tags": [],
-                        "subject": "unknown",
-                        "chunk_summary": "Could not analyze document content",
-                        "error": str(e)
-                    }
+                    default_metadata["error"] = str(e)
+                    return default_metadata
                     
                 # Wait with exponential backoff before retrying
                 wait_time = 2 ** (retries - 1)
