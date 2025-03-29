@@ -268,6 +268,82 @@ def upload_file():
 @app.route('/chat', methods=['POST'])
 def chat():
     """Process chat messages and return AI responses"""
+    # Check if streaming is requested
+    data = request.get_json()
+    stream_mode = data.get('stream', False)  # Default to non-streaming
+    
+    # If streaming requested, use the streaming endpoint
+    if stream_mode:
+        return chat_stream()
+    
+    # Otherwise, use the original non-streaming implementation
+    # Check if required API keys are available
+    if not openai_available:
+        error_message = "OpenAI API key is required for chat. Please set the OPENAI_API_KEY environment variable."
+        return jsonify({
+            'answer': f"<p class='text-danger'>{error_message}</p>",
+            'keywords': [],
+            'follow_up_questions': []
+        }), 400
+    
+    if not pinecone_available:
+        error_message = "Pinecone API key is required for document retrieval. Please set the PINECONE_API_KEY environment variable."
+        return jsonify({
+            'answer': f"<p class='text-danger'>{error_message}</p>",
+            'keywords': [],
+            'follow_up_questions': []
+        }), 400
+        
+    try:
+        query = data.get('message', '')
+        
+        if not query:
+            return jsonify({'error': 'No message provided'}), 400
+        
+        # Generate embedding for the query with retry
+        try:
+            query_embedding = generate_embeddings(query, max_retries=2)
+        except Exception as embed_error:
+            logger.error(f"Error generating query embedding: {embed_error}")
+            return jsonify({
+                'answer': f"<p class='text-danger'>Error generating embedding: {str(embed_error)}</p>",
+                'keywords': [],
+                'follow_up_questions': []
+            }), 500
+        
+        # Query Pinecone for relevant chunks
+        try:
+            results = pinecone_manager.query(
+                vector=query_embedding,
+                top_k=5,
+                include_metadata=True
+            )
+        except Exception as query_error:
+            logger.error(f"Error querying Pinecone: {query_error}")
+            return jsonify({
+                'answer': f"<p class='text-danger'>Error retrieving relevant documents: {str(query_error)}</p>",
+                'keywords': [],
+                'follow_up_questions': []
+            }), 500
+        
+        # Generate response using OpenAI
+        response = generate_chat_response(query, results, max_retries=2)
+        
+        return jsonify(response)
+        
+    except Exception as e:
+        logger.error(f"Error in chat endpoint: {e}")
+        return jsonify({
+            'answer': f"<p class='text-danger'>Error: {str(e)}</p>",
+            'keywords': [],
+            'follow_up_questions': []
+        }), 500
+
+@app.route('/chat-stream', methods=['POST'])
+def chat_stream():
+    """Process chat messages and return AI responses with streaming"""
+    from flask import Response, stream_with_context
+    
     # Check if required API keys are available
     if not openai_available:
         error_message = "OpenAI API key is required for chat. Please set the OPENAI_API_KEY environment variable."
@@ -318,13 +394,14 @@ def chat():
                 'follow_up_questions': []
             }), 500
         
-        # Generate response using OpenAI
-        response = generate_chat_response(query, results, max_retries=2)
-        
-        return jsonify(response)
-        
+        # Generate streaming response
+        def generate():
+            for chunk in generate_streaming_chat_response(query, results):
+                yield f"data: {json.dumps(chunk)}\n\n"
+                
+        return Response(stream_with_context(generate()), mimetype='text/event-stream')
     except Exception as e:
-        logger.error(f"Error in chat endpoint: {e}")
+        logger.error(f"Error in chat-stream endpoint: {e}")
         return jsonify({
             'answer': f"<p class='text-danger'>Error: {str(e)}</p>",
             'keywords': [],

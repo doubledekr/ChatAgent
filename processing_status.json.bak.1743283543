@@ -1,0 +1,68 @@
+{}  "Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub": {
+    "start_time": "2025-03-29T21:25:33.450783",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:25:33.450793",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:25:33.451174",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:25:33.461752",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:25:33.461754",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:25:33.461747"
+  },
+  "William J Bernstein - The Four Pillars of Investing.epub": {
+    "start_time": "2025-03-29T21:25:33.462106",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:25:33.462133",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:25:33.462469",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:25:33.472409",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:25:33.472410",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:25:33.472403"
+  },
+  "Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf": {
+    "start_time": "2025-03-29T21:25:38.473286",
+    "status": "processing",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:25:38.473296",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      }
+    ],
+    "errors": [],
+    "chunks": 0
+  }
+}

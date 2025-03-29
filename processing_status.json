@@ -1,1 +1,298 @@
-{}
+{
+  "The Little Book of Common Sense - John C. Bogle.epub": {
+    "start_time": "2025-03-29T21:35:20.359427",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:35:20.359438",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:20.359868",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:25.817893",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:25.820561",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:25.823969",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:31.168233",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:31.178899",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:35:31.182888",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:35:20.359870",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:25.823972",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:31.182891",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:35:31.182878"
+  },
+  "The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf": {
+    "start_time": "2025-03-29T21:35:20.360108",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:35:20.360130",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:20.360367",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:20.578850",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.824746",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.828715",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.954081",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.183623",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.196255",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.412132",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.796289",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.799472",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.932877",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:42.097616",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:42.098868",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:42.223607",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:47.224895",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:47.225919",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:47.359628",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:35:20.578854",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:25.954085",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:31.412136",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:36.932880",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:42.223610",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:47.359630",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:35:47.359618"
+  },
+  "DM Technical Analysis of the Financial Market - Murphy, John J.pdf": {
+    "start_time": "2025-03-29T21:35:20.579540",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:35:20.579547",
+        "message": "Started processing DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:20.579961",
+        "message": "Extracting text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:20.749794",
+        "message": "Unable to extract text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.954835",
+        "message": "Started processing DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.957515",
+        "message": "Extracting text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:26.116809",
+        "message": "Unable to extract text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.415565",
+        "message": "Started processing DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.416598",
+        "message": "Extracting text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.738881",
+        "message": "Unable to extract text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.933662",
+        "message": "Started processing DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.934941",
+        "message": "Extracting text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:37.096349",
+        "message": "Unable to extract text from DM Technical Analysis of the Financial Market - Murphy, John J.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:35:20.749796",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:26.116813",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:31.738883",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:37.096351",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:35:37.096339"
+  },
+  "Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf": {
+    "start_time": "2025-03-29T21:35:25.750626",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:35:25.750636",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.751245",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:25.817234",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.118433",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.118928",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:31.160728",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.740087",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.740882",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:35:36.795275",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:35:25.817238",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:31.160731",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:35:36.795278",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:35:36.795261"
+  }
+}

@@ -1,0 +1,127 @@
+{}  "The Little Book of Common Sense - John C. Bogle.epub": {
+    "start_time": "2025-03-29T21:24:16.965392",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:24:16.965415",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:24:16.965855",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:24:16.966439",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:24:16.966442",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:24:16.966432"
+  },
+  "The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf": {
+    "start_time": "2025-03-29T21:24:16.966698",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:24:16.966704",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:24:16.966958",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:24:17.089176",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:24:17.089179",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:24:17.089163"
+  },
+  "Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub": {
+    "start_time": "2025-03-29T21:24:17.089638",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:24:17.089646",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:24:17.089990",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:24:17.134333",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:24:17.134336",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:24:17.134323"
+  },
+  "William J Bernstein - The Four Pillars of Investing.epub": {
+    "start_time": "2025-03-29T21:24:17.134949",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:24:17.134958",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:24:17.136240",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:24:17.174830",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:24:17.174834",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:24:17.174819"
+  },
+  "Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf": {
+    "start_time": "2025-03-29T21:24:22.175813",
+    "status": "processing",
+    "progress": 5,
+    "messages": [
+      {
+        "time": "2025-03-29T21:24:22.175828",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:24:22.176659",
+        "message": "Extracting text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      }
+    ],
+    "errors": [],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:24:22.176650"
+  }
+}

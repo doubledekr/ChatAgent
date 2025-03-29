@@ -275,38 +275,157 @@
             // Clear input
             userMessage.value = '';
             
-            // Show typing indicator
-            const typingIndicator = document.createElement('div');
-            typingIndicator.className = 'message ai-message typing-indicator';
-            typingIndicator.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-            chatHistory.appendChild(typingIndicator);
+            // Create a streaming message container with an empty message-content div
+            const aiMessageElement = document.createElement('div');
+            aiMessageElement.className = 'message ai-message';
+            
+            // Add AI icon
+            aiMessageElement.innerHTML = `
+                <div class="message-icon">
+                    <i class="fas fa-robot text-success"></i>
+                </div>
+                <div class="message-content streaming-message"></div>
+            `;
+            
+            // Add message to chat
+            chatHistory.appendChild(aiMessageElement);
+            
+            // Get the message content div for streaming updates
+            const messageContentDiv = aiMessageElement.querySelector('.message-content');
+            
+            // Add initial typing indicator
+            messageContentDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+            
+            // Scroll to bottom
             chatHistory.scrollTop = chatHistory.scrollHeight;
             
-            // Send message to backend
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: message
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Remove typing indicator
-                chatHistory.removeChild(typingIndicator);
+            // Stream mode flag - true = use event stream, false = use regular fetch
+            const useStreamMode = true;
+            
+            if (useStreamMode) {
+                // Stream mode: use server-sent events for streaming
                 
-                // Add AI response to chat
-                appendMessage('ai', data.answer, data.keywords, data.follow_up_questions);
-            })
-            .catch(error => {
-                // Remove typing indicator
-                chatHistory.removeChild(typingIndicator);
+                // Close any existing event source
+                if (window.activeEventSource) {
+                    window.activeEventSource.close();
+                }
                 
-                // Show error message
-                appendMessage('ai', `<p>Sorry, an error occurred: ${error.message}</p>`);
-            });
+                // Set up event source for streaming
+                const fetchController = new AbortController();
+                
+                // First fetch to start the streaming process
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        stream: true  // Tell the server we want streaming
+                    }),
+                    signal: fetchController.signal
+                })
+                .then(response => {
+                    // Create a reader for the response body
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = '';
+                    
+                    // Remove typing indicator
+                    messageContentDiv.innerHTML = '';
+                    
+                    // Function to process chunks
+                    function processStream() {
+                        return reader.read().then(({ done, value }) => {
+                            if (done) {
+                                return;
+                            }
+                            
+                            // Decode and buffer the chunk
+                            buffer += decoder.decode(value, { stream: true });
+                            
+                            // Process complete SSE messages
+                            const lines = buffer.split('\n\n');
+                            buffer = lines.pop(); // Keep the last incomplete chunk in the buffer
+                            
+                            for (const line of lines) {
+                                if (line.startsWith('data: ')) {
+                                    try {
+                                        const jsonStr = line.substring(6);
+                                        const data = JSON.parse(jsonStr);
+                                        
+                                        if (data.status === 'streaming') {
+                                            // Append token to the message
+                                            messageContentDiv.innerHTML = data.full_answer;
+                                            chatHistory.scrollTop = chatHistory.scrollHeight;
+                                        } 
+                                        else if (data.status === 'complete') {
+                                            // Final message
+                                            messageContentDiv.innerHTML = data.full_answer;
+                                            
+                                            // Set up the event listeners for interactive elements
+                                            setupButtonEventListeners();
+                                            
+                                            // Stop the stream
+                                            fetchController.abort();
+                                            return;
+                                        }
+                                        else if (data.status === 'error') {
+                                            // Error occurred
+                                            messageContentDiv.innerHTML = data.answer || '<p>An error occurred during streaming</p>';
+                                            fetchController.abort();
+                                            return;
+                                        }
+                                    } catch (e) {
+                                        console.error('Error parsing SSE data:', e);
+                                    }
+                                }
+                            }
+                            
+                            // Continue reading
+                            return processStream();
+                        }).catch(error => {
+                            if (error.name !== 'AbortError') {
+                                console.error('Stream reading error:', error);
+                                messageContentDiv.innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
+                            }
+                        });
+                    }
+                    
+                    return processStream();
+                })
+                .catch(error => {
+                    // Show error message
+                    messageContentDiv.innerHTML = `<p class="text-danger">Sorry, an error occurred: ${error.message}</p>`;
+                });
+            } 
+            else {
+                // Legacy mode: use regular fetch (non-streaming)
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Remove typing indicator
+                    messageContentDiv.innerHTML = '';
+                    
+                    // Add AI response to message content
+                    messageContentDiv.innerHTML = data.answer;
+                    
+                    // Set up event listeners for interactive elements
+                    setupButtonEventListeners();
+                })
+                .catch(error => {
+                    // Show error message
+                    messageContentDiv.innerHTML = `<p class="text-danger">Sorry, an error occurred: ${error.message}</p>`;
+                });
+            }
         });
         
         // Function to append a message to the chat

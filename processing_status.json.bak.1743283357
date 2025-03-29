@@ -1,0 +1,617 @@
+{}  "Taylor Larimore The Bogleheads' Guide to Investing.epub": {
+    "start_time": "2025-03-29T21:22:10.249923",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.249937",
+        "message": "Extracting text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.253255",
+        "message": "Unable to extract text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.033755",
+        "message": "Started processing Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.245865",
+        "message": "Extracting text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.249785",
+        "message": "Unable to extract text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.150582",
+        "message": "Started processing Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.152149",
+        "message": "Extracting text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.156613",
+        "message": "Unable to extract text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.001623",
+        "message": "Started processing Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.011587",
+        "message": "Extracting text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.032696",
+        "message": "Unable to extract text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:34.601767",
+        "message": "Started processing Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:34.618969",
+        "message": "Extracting text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:34.659005",
+        "message": "Unable to extract text from Taylor Larimore The Bogleheads' Guide to Investing.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.253257",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.249788",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.156615",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.032699",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:34.659007",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:34.658995"
+  },
+  "Technical Analysis of the Financial Market - Murphy, John J_.pdf": {
+    "start_time": "2025-03-29T21:22:10.253548",
+    "status": "processing",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.253554",
+        "message": "Started processing Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:10.253788",
+        "message": "Extracting text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:10.324803",
+        "message": "Unable to extract text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.251887",
+        "message": "Started processing Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.252828",
+        "message": "Extracting text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.326237",
+        "message": "Unable to extract text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.157508",
+        "message": "Started processing Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.186819",
+        "message": "Extracting text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.268251",
+        "message": "Unable to extract text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.050963",
+        "message": "Started processing Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.053878",
+        "message": "Extracting text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.120299",
+        "message": "Unable to extract text from Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:34.683418",
+        "message": "Started processing Technical Analysis of the Financial Market - Murphy, John J_.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.324806",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.326241",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.268253",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.120301",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:34.683408"
+  },
+  "Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf": {
+    "start_time": "2025-03-29T21:22:10.325280",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.325288",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:10.325621",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:10.359606",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.327167",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.328525",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.356609",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.269385",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.275676",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.319540",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.121698",
+        "message": "Started processing Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.155415",
+        "message": "Extracting text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.193240",
+        "message": "Unable to extract text from Technical-Analysis-Using-Multiple-Timeframes-Understanding-Market-Structure-and-Profit-from-Trend-Alignment.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.359609",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.356611",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.319542",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.193242",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:28.193232"
+  },
+  "The Little Book of Common Sense - John C. Bogle.epub": {
+    "start_time": "2025-03-29T21:22:10.360137",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.360147",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.361243",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.362494",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.357524",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.360649",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.365989",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.335448",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.358949",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.368015",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.194286",
+        "message": "Started processing The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.230360",
+        "message": "Extracting text from The Little Book of Common Sense - John C. Bogle.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.261231",
+        "message": "Unable to extract text from The Little Book of Common Sense - John C. Bogle.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.362497",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.365993",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.368019",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.261233",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:28.261222"
+  },
+  "The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf": {
+    "start_time": "2025-03-29T21:22:10.364174",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.364182",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:10.368342",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:10.485056",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.366840",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.419446",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.534956",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.382648",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.386190",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.535468",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.268453",
+        "message": "Started processing The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.281844",
+        "message": "Extracting text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.424409",
+        "message": "Unable to extract text from The Three Skills of Top Trading Behavioral Systems Building, Pattern Recognition, and Mental State Management.pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.485058",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.534959",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.535471",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.424411",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:28.424398"
+  },
+  "Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub": {
+    "start_time": "2025-03-29T21:22:10.485705",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.485714",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.512199",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.521813",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.641281",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.663988",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.679464",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.536960",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.568396",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.587248",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.426018",
+        "message": "Started processing Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.434510",
+        "message": "Extracting text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.450026",
+        "message": "Unable to extract text from Why Buy Bitcoin_ Investing Today in the Money of Tomorrow.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.521815",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.679466",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.587250",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.450028",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:28.450020"
+  },
+  "William J Bernstein - The Four Pillars of Investing.epub": {
+    "start_time": "2025-03-29T21:22:10.528261",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:10.528270",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.543665",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:10.558264",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.685004",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.696646",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:16.730446",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.611967",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.620688",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:22.630300",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.451400",
+        "message": "Started processing William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.452882",
+        "message": "Extracting text from William J Bernstein - The Four Pillars of Investing.epub"
+      },
+      {
+        "time": "2025-03-29T21:22:28.462855",
+        "message": "Unable to extract text from William J Bernstein - The Four Pillars of Investing.epub"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:10.558266",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:16.730450",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.630302",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.462857",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:28.462849"
+  },
+  "Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf": {
+    "start_time": "2025-03-29T21:22:15.567036",
+    "status": "error",
+    "progress": 0,
+    "messages": [
+      {
+        "time": "2025-03-29T21:22:15.567046",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:15.567711",
+        "message": "Extracting text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:16.032859",
+        "message": "Unable to extract text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:21.756411",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:21.757548",
+        "message": "Extracting text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:22.149529",
+        "message": "Unable to extract text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:27.631710",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:27.632857",
+        "message": "Extracting text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:28.000476",
+        "message": "Unable to extract text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:33.464394",
+        "message": "Started processing Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:33.465852",
+        "message": "Extracting text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      },
+      {
+        "time": "2025-03-29T21:22:34.600392",
+        "message": "Unable to extract text from Hetzel - The Monetary Policy of the Federal Reserve (2008).pdf"
+      }
+    ],
+    "errors": [
+      {
+        "time": "2025-03-29T21:22:16.032862",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:22.149531",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:28.000478",
+        "error": "Text extraction failed"
+      },
+      {
+        "time": "2025-03-29T21:22:34.600394",
+        "error": "Text extraction failed"
+      }
+    ],
+    "chunks": 0,
+    "last_updated": "2025-03-29T21:22:34.600379"
+  }
+}

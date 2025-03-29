@@ -197,6 +197,166 @@ def generate_tags(text, max_tags=8, filename="", file_ext=""):
     # Return general tags if available, otherwise empty list
     return metadata.get("general_tags", [])
 
+def generate_streaming_chat_response(query, search_results, max_retries=2):
+    """
+    Generate streaming context-aware responses using OpenAI's GPT-4o model
+    
+    Args:
+        query (str): User's question
+        search_results (dict): Results from Pinecone query
+        max_retries (int): Maximum number of retry attempts for API calls
+        
+    Yields:
+        dict: Streaming chunks of the response
+    """
+    global client, OPENAI_API_KEY
+    
+    # Check if client is available
+    if client is None:
+        # Try to get API key again in case it was added after initialization
+        OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+        if OPENAI_API_KEY:
+            client = OpenAI(api_key=OPENAI_API_KEY)
+        else:
+            logger.error("OpenAI client not initialized - API key is missing")
+            yield {
+                "answer": "<p>Error: OpenAI API key missing</p>",
+                "status": "error"
+            }
+            return
+    
+    import time
+    
+    try:
+        # Extract context from search results
+        contexts = []
+        for match in search_results.get('matches', []):
+            if match.get('metadata') and match['metadata'].get('text'):
+                contexts.append(match['metadata']['text'])
+        
+        # If no contexts found, use a generic response
+        if not contexts:
+            contexts = ["No specific information found in the documents."]
+        
+        # Combine contexts
+        combined_context = "\n\n---\n\n".join(contexts)
+        
+        # Create system message with instructions
+        system_message = """
+        You are a witty, friendly educational assistant that explains complex concepts with clarity and humor.
+        Use metaphors and analogies to make concepts more understandable. Be conversational but educational.
+        Format your response in HTML. Identify key concepts that could be useful for further learning,
+        and format them as clickable buttons using HTML <button class="keyword">Concept</button> tags.
+        
+        Include 2-3 follow-up questions at the end of your response as buttons with the class "follow-up-question".
+        
+        For example: <button class="follow-up-question">Tell me more about X?</button>
+        
+        Format the response as follows:
+        1. Main answer with metaphors, analogies, and highlighted <button class="keyword">keywords</button>
+        2. A brief summary section (in a <div class="summary"></div>)
+        3. Follow-up questions (as buttons with class "follow-up-question")
+        """
+        
+        # Prepare conversation for OpenAI
+        messages = [
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": f"Question: {query}\n\nContext from documents: {combined_context}"}
+        ]
+        
+        # Retry logic
+        retries = 0
+        last_error = None
+        full_response = ""
+        
+        while retries <= max_retries:
+            try:
+                # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+                # do not change this unless explicitly requested by the user
+                stream = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=messages,
+                    temperature=0.7,
+                    max_tokens=1200,
+                    stream=True
+                )
+                
+                # Initial chunk with empty content
+                yield {
+                    "token": "",
+                    "status": "streaming",
+                    "full_answer": "",
+                    "done": False
+                }
+                
+                for chunk in stream:
+                    if chunk.choices[0].delta.content is not None:
+                        token = chunk.choices[0].delta.content
+                        full_response += token
+                        
+                        # Send the token and the full response so far
+                        yield {
+                            "token": token,
+                            "status": "streaming",
+                            "full_answer": full_response,
+                            "done": False
+                        }
+                
+                # Stream complete - extract keywords and follow-up questions
+                keywords = re.findall(r'<button class="keyword">(.*?)</button>', full_response)
+                follow_up_questions = re.findall(r'<button class="follow-up-question">(.*?)</button>', full_response)
+                
+                # Final chunk with complete data
+                yield {
+                    "token": "",
+                    "status": "complete",
+                    "full_answer": full_response,
+                    "keywords": keywords,
+                    "follow_up_questions": follow_up_questions,
+                    "done": True
+                }
+                
+                # Break out of retry loop
+                break
+                
+            except Exception as e:
+                last_error = e
+                retries += 1
+                logger.warning(f"Error in streaming response (attempt {retries}/{max_retries}): {e}")
+                
+                # If it's an API key issue, don't retry
+                if "API key" in str(e):
+                    logger.error("OpenAI API key is invalid or missing")
+                    yield {
+                        "answer": "<p>I apologize, but the OpenAI API key is invalid or missing. Please check your configuration.</p>",
+                        "status": "error",
+                        "done": True
+                    }
+                    return
+                
+                # If we've reached max retries, return error response
+                if retries > max_retries:
+                    logger.error(f"Failed to generate streaming response after {max_retries} attempts: {e}")
+                    yield {
+                        "answer": f"<p>I apologize, but I encountered an error after multiple attempts: {str(e)}</p>",
+                        "status": "error",
+                        "done": True
+                    }
+                    return
+                
+                # Wait with exponential backoff before retrying
+                wait_time = 2 ** (retries - 1)
+                logger.info(f"Waiting {wait_time}s before retrying streaming response generation...")
+                time.sleep(wait_time)
+                
+    except Exception as e:
+        logger.error(f"Error in streaming chat response: {e}")
+        yield {
+            "answer": f"<p>I apologize, but I encountered an error: {str(e)}</p>",
+            "status": "error",
+            "done": True
+        }
+
 def generate_chat_response(query, search_results, max_retries=3):
     """
     Generate context-aware responses using OpenAI's GPT-4o model

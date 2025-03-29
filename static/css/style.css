@@ -85,6 +85,48 @@ button.keyword {
     transition: background-color 0.2s;
 }
 
+/* Streaming message styling */
+.streaming-message {
+    position: relative;
+    min-height: 1.5rem;
+}
+
+/* Typing indicator animation */
+.typing-dots {
+    display: inline-flex;
+    align-items: center;
+    height: 1.5rem;
+}
+
+.typing-dots span {
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: var(--bs-light);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typingDot 1.4s infinite ease-in-out both;
+}
+
+.typing-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes typingDot {
+    0%, 80%, 100% { 
+        transform: scale(0.6);
+        opacity: 0.6;
+    }
+    40% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 button.keyword:hover {
     background-color: var(--bs-primary);
 }
