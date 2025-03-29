@@ -14,7 +14,7 @@ import json
 from utils.extract_text import extract_text_from_file, chunk_text
 from utils.embedding import generate_embeddings
 from utils.pinecone_manager import PineconeManager
-from utils.chat import generate_chat_response, generate_tags, generate_comprehensive_metadata
+from utils.chat import generate_chat_response, generate_streaming_chat_response, generate_tags, generate_comprehensive_metadata
 import utils.embedding as embedding_module
 import utils.chat as chat_module
 
