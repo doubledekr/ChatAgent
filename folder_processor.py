@@ -90,6 +90,21 @@ def load_status():
                 return json.load(f)
         except Exception as e:
             logger.error(f"Error loading status file: {e}")
+            # If the file exists but is corrupted, create a new empty status file
+            logger.warning("Creating a new empty status file due to corruption")
+            try:
+                # Backup the corrupted file
+                if os.path.getsize(STATUS_FILE) > 0:
+                    backup_file = f"{STATUS_FILE}.bak.{int(time.time())}"
+                    shutil.copy(STATUS_FILE, backup_file)
+                    logger.info(f"Backed up corrupted status file to {backup_file}")
+                
+                # Create a new empty file
+                with open(STATUS_FILE, 'w') as f:
+                    json.dump({}, f)
+                logger.info("Created new empty status file")
+            except Exception as backup_error:
+                logger.error(f"Error creating backup or new status file: {backup_error}")
     return {}
 
 
